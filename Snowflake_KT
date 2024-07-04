@@ -1,0 +1,86 @@
+CREATE TABLE P2L_BO_OWNER.ACTINST_DIM (  
+  ACT_KEY  NUMBER(10)  NOT NULL,
+  INST_KEY  NUMBER(10)  NOT NULL,
+  PRIMARYIND  NUMBER(10)  NOT NULL,
+  ISQUALIFIED  NUMBER(10)  NOT NULL,
+  ISRESPONSIBLE  NUMBER(10)  NOT NULL,
+  CONFIRMED  NUMBER(10)  NOT NULL,
+  INHERITED  NUMBER(10)  NOT NULL,
+  LSTUPD  TIMESTAMP  NOT NULL 
+);
+
+
+create or replace view P2L_BO_STAGING_OWNER.V_SR_USER(
+	REQSTR_LN,
+	REQSTR_FN,
+	REQSTR_NTID,
+	REQSTR_PH,
+	REQSTR_EMAIL,
+	COUNTRY,
+	CITY
+) as 
+SELECT CLD_TBLEMP.emp_lname, CLD_TBLEMP.emp_fname, CLD_IWC_USR.usr_ntlogin,
+          CLD_TBLEMP.emp_phn1, CLD_TBLEMP.emp_email, CLD_TBLEMP.emp_cntry,
+          CLD_TBLEMP.emp_city
+     FROM CLD_IWC_USR, CLD_TBLEMP
+    WHERE CLD_TBLEMP.emp_pk = CLD_IWC_USR.usr_empfk;
+
+
+Step 2. Create an External Stage: 
+   Once the integration is set up, you need to create an external stage in Snowflake that points to your S3 bucket. This stage acts as a reference to the location of the data files in S3. Here's an example of how to create an external stage: 
+```sql 
+CREATE OR REPLACE STAGE P2L_BO_OWNER.HLDS_EXT_STAGE_PROD
+STORAGE_INTEGRATION = HLDS_S3_LEARNHUB_INT2
+URL = 's3://sfa-hlds-oracle-us-east-1-prod/PROD'
+FILE_FORMAT = P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT;
+``` 
+Step 3. Create a File Format (if needed):  
+  If your data files have a specific format (e.g., CSV, JSON, Parquet), you may need to define a file format in Snowflake to specify how to interpret the files during loading. You can skip this step if your files are in a format that Snowflake recognizes by default. 
+```sql 
+CREATE OR REPLACE FILE FORMAT P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT
+TYPE=CSV,
+FIELD_DELIMITER=',',
+TRIM_SPACE=FALSE,
+FIELD_OPTIONALLY_ENCLOSED_BY = '"', 
+REPLACE_INVALID_CHARACTERS=TRUE,
+TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS.ff9'
+ESCAPE_UNENCLOSED_FIELD = None;
+``` 
+1.	CREATE FILE FORMAT my_file_format: This line initiates the creation of a new file format named `my_file_format`. You can replace `my_file_format` with any meaningful name for your file format. 
+2.	TYPE = (CSV | JSON | PARQUET | AVRO | ORC | XML | ...): The `TYPE` parameter specifies the format of the data files. Snowflake supports various file formats, including CSV, JSON, Parquet, Avro, ORC, XML, and others. Choose the appropriate type based on the format of your data files. 
+3.	FIELD_DELIMITER = '<field_delimiter>': This parameter specifies the character used to delimit fields in the data file. For example, in CSV files, fields are typically separated by a comma (`,`), so you would specify `,` as the field delimiter. Adjust this parameter according to the delimiter used in your data files. 
+4.	RECORD_DELIMITER = '<record_delimiter>': The `RECORD_DELIMITER` parameter specifies the character used to delimit records (rows) in the data file. For example, in newline-delimited files, each record is separated by a newline character (`\n`). Adjust this parameter based on the record delimiter used in your data files. 
+5.	SKIP_HEADER = <number_of_header_lines_to_skip>: This parameter specifies the number of header lines to skip at the beginning of the data file. Header lines typically contain column names or metadata and may need to be skipped during data loading. Set this parameter to the appropriate value based on the structure of your data files 
+ 
+Step 4. Load Data using `COPY INTO` Command: 
+   Now you can use the `COPY INTO` command to load data from S3 into a Snowflake table. Here's an example: 
+```sql 
+COPY INTO P2L_BO_OWNER.ACTINST_DIM FROM @P2L_BO_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_OWNER/ACTINST_DIM/ on_error=continue;
+
+COPY INTO P2L_BO_STAGING_OWNER.ACTIVITY FROM @P2L_BO_STAGING_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_STAGING_OWNER/ACTIVITY/ on_error=continue;
+``` 
+   Replace `<table-name> ` with the name of the Snowflake table you want to load data into, `my_stage` with the name of the external stage you created, and `my_file_format` with the name of the file format you defined (if applicable).  
+ 
+5. Verify Data Load: 
+   After executing the `COPY INTO` command, you can verify that the data has been loaded into the specified table by querying the table: 
+```sql 
+SELECT * FROM <database-name>.<schema-name>.<table-name>; 
+SELECT * FROM LDW2D.P2L_BO_STAGING_OWNER.ACTIVITY;
+``` 
+ 
+
+
+Syntax for Copy command:  
+
+ COPY INTO <table_name  FROM @ExternalStage
+ FILES = ( '<file_name>','<file_name2>') 
+ FILE_FORMAT = <file_format_name>
+CopyOptions
+
+
+COPY INTO PUBLIC.LOAN_PAYMENT
+    FROM s3://bucketsnowflakes3/Loan_payments_data.csv
+    file_format = (type = csv , field_delimiter = ',' , skip_header=1);    
+
+
+
