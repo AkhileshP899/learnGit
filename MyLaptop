@@ -1,0 +1,251 @@
+### Project Documentation for Snowflake Data Integration and Loading
+
+#### Step 1: Create Table and Views
+
+First, we need to create the required table and views in the Snowflake database. Below are the SQL commands for creating the table `ACTINST_DIM` and the view `V_SR_USER`.
+
+**Create Table `ACTINST_DIM`:**
+```sql
+CREATE TABLE P2L_BO_OWNER.ACTINST_DIM (  
+  ACT_KEY NUMBER(10) NOT NULL,
+  INST_KEY NUMBER(10) NOT NULL,
+  PRIMARYIND NUMBER(10) NOT NULL,
+  ISQUALIFIED NUMBER(10) NOT NULL,
+  ISRESPONSIBLE NUMBER(10) NOT NULL,
+  CONFIRMED NUMBER(10) NOT NULL,
+  INHERITED NUMBER(10) NOT NULL,
+  LSTUPD TIMESTAMP NOT NULL
+);
+```
+- **ACT_KEY**: Activity key, a numerical identifier.
+- **INST_KEY**: Instance key, a numerical identifier.
+- **PRIMARYIND**: Indicator for primary status, a numerical value.
+- **ISQUALIFIED**: Qualification status, a numerical value.
+- **ISRESPONSIBLE**: Responsibility status, a numerical value.
+- **CONFIRMED**: Confirmation status, a numerical value.
+- **INHERITED**: Inherited status, a numerical value.
+- **LSTUPD**: Last update timestamp.
+
+**Create View `V_SR_USER`:**
+```sql
+create or replace view P2L_BO_STAGING_OWNER.V_SR_USER(
+    REQSTR_LN,
+    REQSTR_FN,
+    REQSTR_NTID,
+    REQSTR_PH,
+    REQSTR_EMAIL,
+    COUNTRY,
+    CITY
+) as 
+SELECT CLD_TBLEMP.emp_lname, CLD_TBLEMP.emp_fname, CLD_IWC_USR.usr_ntlogin,
+          CLD_TBLEMP.emp_phn1, CLD_TBLEMP.emp_email, CLD_TBLEMP.emp_cntry,
+          CLD_TBLEMP.emp_city
+     FROM CLD_IWC_USR, CLD_TBLEMP
+    WHERE CLD_TBLEMP.emp_pk = CLD_IWC_USR.usr_empfk;
+```
+- **REQSTR_LN**: Requester last name.
+- **REQSTR_FN**: Requester first name.
+- **REQSTR_NTID**: Requester NT login ID.
+- **REQSTR_PH**: Requester phone number.
+- **REQSTR_EMAIL**: Requester email address.
+- **COUNTRY**: Requester country.
+- **CITY**: Requester city.
+  
+This view joins the `CLD_TBLEMP` and `CLD_IWC_USR` tables on the `emp_pk` and `usr_empfk` columns to provide a combined dataset.
+
+#### Step 2: Create an External Stage
+
+The external stage in Snowflake points to your S3 bucket. This stage acts as a reference to the location of the data files in S3.
+
+**Create External Stage:**
+```sql
+CREATE OR REPLACE STAGE P2L_BO_OWNER.HLDS_EXT_STAGE_PROD
+STORAGE_INTEGRATION = HLDS_S3_LEARNHUB_INT2
+URL = 's3://sfa-hlds-oracle-us-east-1-prod/PROD'
+FILE_FORMAT = P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT;
+```
+- **STORAGE_INTEGRATION**: Specifies the storage integration object.
+- **URL**: S3 bucket URL.
+- **FILE_FORMAT**: Specifies the file format to be used.
+
+#### Step 3: Create a File Format
+
+Define a file format in Snowflake to specify how to interpret the files during loading. This step can be skipped if your files are in a format that Snowflake recognizes by default.
+
+**Create File Format:**
+```sql
+CREATE OR REPLACE FILE FORMAT P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT
+TYPE = CSV,
+FIELD_DELIMITER = ',',
+TRIM_SPACE = FALSE,
+FIELD_OPTIONALLY_ENCLOSED_BY = '"', 
+REPLACE_INVALID_CHARACTERS = TRUE,
+TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS.ff9'
+ESCAPE_UNENCLOSED_FIELD = None;
+```
+- **TYPE**: Specifies the type of file, e.g., CSV.
+- **FIELD_DELIMITER**: Character that separates fields, e.g., a comma.
+- **TRIM_SPACE**: Whether to trim spaces.
+- **FIELD_OPTIONALLY_ENCLOSED_BY**: Character that optionally encloses fields, e.g., double quotes.
+- **REPLACE_INVALID_CHARACTERS**: Whether to replace invalid characters.
+- **TIMESTAMP_FORMAT**: Format of timestamp fields.
+- **ESCAPE_UNENCLOSED_FIELD**: Character used to escape unclosed fields.
+
+#### Step 4: Load Data Using `COPY INTO` Command
+
+Use the `COPY INTO` command to load data from S3 into a Snowflake table.
+
+**Load Data:**
+```sql
+COPY INTO P2L_BO_OWNER.ACTINST_DIM FROM @P2L_BO_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_OWNER/ACTINST_DIM/ on_error=continue;
+
+COPY INTO P2L_BO_STAGING_OWNER.ACTIVITY FROM @P2L_BO_STAGING_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_STAGING_OWNER/ACTIVITY/ on_error=continue;
+```
+- **COPY INTO**: Command to copy data into a table.
+- **FROM**: Specifies the stage and path from which to copy the data.
+- **on_error=continue**: Continues loading despite errors.
+
+#### Step 5: Verify Data Load
+
+After executing the `COPY INTO` command, verify that the data has been loaded into the specified table by querying the table.
+
+**Verify Data Load:**
+```sql
+SELECT * FROM <database-name>.<schema-name>.<table-name>; 
+SELECT * FROM LDW2D.P2L_BO_STAGING_OWNER.ACTIVITY;
+```
+- **SELECT \***: Query to select all data from the specified table.
+
+By following these steps, you will successfully set up the Snowflake data integration and load process, ensuring that your data from S3 is accurately loaded into the Snowflake tables.
+
+
+
+
+*********************************************************************************
+
+
+
+## Snowflake Data Integration and Loading Project Documentation
+
+### Step 1: Create Table and Views
+
+**Create Table:**
+
+```sql
+CREATE TABLE P2L_BO_OWNER.ACTINST_DIM (  
+  ACT_KEY  NUMBER(10)  NOT NULL,
+  INST_KEY  NUMBER(10)  NOT NULL,
+  PRIMARYIND  NUMBER(10)  NOT NULL,
+  ISQUALIFIED  NUMBER(10)  NOT NULL,
+  ISRESPONSIBLE  NUMBER(10)  NOT NULL,
+  CONFIRMED  NUMBER(10)  NOT NULL,
+  INHERITED  NUMBER(10)  NOT NULL,
+  LSTUPD  TIMESTAMP  NOT NULL 
+);
+```
+- **Table Explanation:**
+  - The `P2L_BO_OWNER.ACTINST_DIM` table is created with the following columns:
+    - `ACT_KEY`: Numeric identifier for the activity.
+    - `INST_KEY`: Numeric identifier for the instance.
+    - `PRIMARYIND`: Numeric indicator for primary status.
+    - `ISQUALIFIED`: Numeric indicator for qualification status.
+    - `ISRESPONSIBLE`: Numeric indicator for responsibility status.
+    - `CONFIRMED`: Numeric indicator for confirmation status.
+    - `INHERITED`: Numeric indicator for inheritance status.
+    - `LSTUPD`: Timestamp for the last update.
+
+**Create View:**
+
+```sql
+create or replace view P2L_BO_STAGING_OWNER.V_SR_USER(
+	REQSTR_LN,
+	REQSTR_FN,
+	REQSTR_NTID,
+	REQSTR_PH,
+	REQSTR_EMAIL,
+	COUNTRY,
+	CITY
+) as 
+SELECT CLD_TBLEMP.emp_lname, CLD_TBLEMP.emp_fname, CLD_IWC_USR.usr_ntlogin,
+          CLD_TBLEMP.emp_phn1, CLD_TBLEMP.emp_email, CLD_TBLEMP.emp_cntry,
+          CLD_TBLEMP.emp_city
+     FROM CLD_IWC_USR, CLD_TBLEMP
+    WHERE CLD_TBLEMP.emp_pk = CLD_IWC_USR.usr_empfk;
+```
+- **View Explanation:**
+  - The view `P2L_BO_STAGING_OWNER.V_SR_USER` is created to provide a user-friendly interface for querying user information by joining the `CLD_IWC_USR` and `CLD_TBLEMP` tables. It includes the following columns:
+    - `REQSTR_LN`: Requestor's last name.
+    - `REQSTR_FN`: Requestor's first name.
+    - `REQSTR_NTID`: Requestor's NT login ID.
+    - `REQSTR_PH`: Requestor's phone number.
+    - `REQSTR_EMAIL`: Requestor's email address.
+    - `COUNTRY`: Requestor's country.
+    - `CITY`: Requestor's city.
+
+### Step 2: Create an External Stage
+
+Once the integration is set up, you need to create an external stage in Snowflake that points to your S3 bucket. This stage acts as a reference to the location of the data files in S3. Here's an example of how to create an external stage:
+
+```sql 
+CREATE OR REPLACE STAGE P2L_BO_OWNER.HLDS_EXT_STAGE_PROD
+STORAGE_INTEGRATION = HLDS_S3_LEARNHUB_INT2
+URL = 's3://sfa-hlds-oracle-us-east-1-prod/PROD'
+FILE_FORMAT = P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT;
+```
+- **Explanation:**
+  - `CREATE OR REPLACE STAGE P2L_BO_OWNER.HLDS_EXT_STAGE_PROD`: Creates or replaces an external stage named `HLDS_EXT_STAGE_PROD` in the `P2L_BO_OWNER` schema.
+  - `STORAGE_INTEGRATION = HLDS_S3_LEARNHUB_INT2`: Specifies the storage integration to use for accessing the S3 bucket.
+  - `URL = 's3://sfa-hlds-oracle-us-east-1-prod/PROD'`: Points to the S3 bucket location.
+  - `FILE_FORMAT = P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT`: Specifies the file format to use for the data files.
+
+### Step 3: Create a File Format
+
+If your data files have a specific format (e.g., CSV, JSON, Parquet), you may need to define a file format in Snowflake to specify how to interpret the files during loading. You can skip this step if your files are in a format that Snowflake recognizes by default.
+
+```sql 
+CREATE OR REPLACE FILE FORMAT P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT
+TYPE=CSV,
+FIELD_DELIMITER=',',
+TRIM_SPACE=FALSE,
+FIELD_OPTIONALLY_ENCLOSED_BY = '"', 
+REPLACE_INVALID_CHARACTERS=TRUE,
+TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS.ff9'
+ESCAPE_UNENCLOSED_FIELD = None;
+```
+- **Explanation:**
+  - `CREATE OR REPLACE FILE FORMAT P2L_BO_OWNER.HLDS_CSV_DATA_FORMAT`: Creates or replaces a file format named `HLDS_CSV_DATA_FORMAT` in the `P2L_BO_OWNER` schema.
+  - `TYPE=CSV`: Specifies that the file format is CSV.
+  - `FIELD_DELIMITER=','`: Specifies that fields are delimited by a comma.
+  - `TRIM_SPACE=FALSE`: Specifies that spaces should not be trimmed.
+  - `FIELD_OPTIONALLY_ENCLOSED_BY = '"'`: Specifies that fields may be optionally enclosed by double quotes.
+  - `REPLACE_INVALID_CHARACTERS=TRUE`: Specifies that invalid characters should be replaced.
+  - `TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS.ff9'`: Specifies the format for timestamp fields.
+  - `ESCAPE_UNENCLOSED_FIELD = None`: Specifies no escape character for unescaped fields.
+
+### Step 4: Load Data using `COPY INTO` Command
+
+Now you can use the `COPY INTO` command to load data from S3 into a Snowflake table. Here's an example:
+
+```sql 
+COPY INTO P2L_BO_OWNER.ACTINST_DIM FROM @P2L_BO_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_OWNER/ACTINST_DIM/ on_error=continue;
+
+COPY INTO P2L_BO_STAGING_OWNER.ACTIVITY FROM @P2L_BO_STAGING_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_STAGING_OWNER/ACTIVITY/ on_error=continue;
+```
+- **Explanation:**
+  - `COPY INTO P2L_BO_OWNER.ACTINST_DIM FROM @P2L_BO_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_OWNER/ACTINST_DIM/`: Loads data into the `ACTINST_DIM` table from the specified stage and path.
+  - `COPY INTO P2L_BO_STAGING_OWNER.ACTIVITY FROM @P2L_BO_STAGING_OWNER.HLDS_EXT_STAGE_STAGE/P2L_BO_STAGING_OWNER/ACTIVITY/`: Loads data into the `ACTIVITY` table from the specified stage and path.
+  - `on_error=continue`: Specifies that the load should continue even if there are errors.
+
+### Step 5: Verify Data Load
+
+After executing the `COPY INTO` command, you can verify that the data has been loaded into the specified table by querying the table:
+
+```sql 
+SELECT * FROM <database-name>.<schema-name>.<table-name>; 
+SELECT * FROM LDW2D.P2L_BO_STAGING_OWNER.ACTIVITY;
+```
+- **Explanation:**
+  - `SELECT * FROM <database-name>.<schema-name>.<table-name>`: Queries all data from the specified table to verify the data load.
+  - `SELECT * FROM LDW2D.P2L_BO_STAGING_OWNER.ACTIVITY`: Queries all data from the `ACTIVITY` table in the `LDW2D.P2L_BO_STAGING_OWNER` schema to verify the data load.
+
+By following these steps, you can successfully integrate and load data into Snowflake from an external S3 bucket.
