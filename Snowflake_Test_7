@@ -1,0 +1,1609 @@
+Question 1
+Skipped
+Which object does an external function make use of to hold security related information? Choose one correct value.
+
+API Keystore.
+
+Storage Integration.
+
+Security folder.
+
+Correct answer
+API Integration.
+
+Overall explanation
+An API integration object stores information about an HTTPS proxy service, including information about:
+
+The cloud platform provider
+
+The type of proxy service
+
+The identifier and access credentials for a cloud platform role that has sufficient privileges to use the proxy service.
+
+Resources
+Question 2
+Skipped
+The following query can make use of the results cache: SELECT NAME, EMP_ID, CURRENT_TIME() FROM EMPLOYEE. True of false?
+
+Correct answer
+False
+
+True
+
+Overall explanation
+If time context functions are used, such as CURRENT_TIME(), the result cache will not be used.
+
+Resources
+Question 3
+Skipped
+Materialized views contribute to both compute and storage costs. True or false?
+
+False
+
+Correct answer
+True
+
+Overall explanation
+Compute: background maintenance is performed on Materialized views to keep them up to date with their base table.
+
+Storage: each materialized view stores its query result, adding to the monthly storage usage for an account.
+
+Resources
+Question 4
+Skipped
+Snowflake uses the following access control schemes: role based access control (RBAC) and _________. Choose one correct value.
+
+Imperative Access Control (IAC)
+
+Mandatory Access Control (MAC)
+
+Compulsory Access Control (CAC)
+
+Correct answer
+Discretionary Access Control (DAC)
+
+Resources
+Question 5
+Skipped
+External tables can be cloned. True or false?
+
+Correct answer
+False
+
+True
+
+Overall explanation
+External tables and internal named stages are never cloned.
+
+Resources
+Question 6
+Skipped
+What is the query to remove a virtual warehouse? Choose one correct value.
+
+DELETE WAREHOUSE MY_WAREHOUSE;
+
+CLEAR WAREHOUSE MY_WAREHOUSE;
+
+REMOVE WAREHOUSE MY_WAREHOUSE;
+
+Correct answer
+DROP WAREHOUSE MY_WAREHOUSE;
+
+Resources
+Question 7
+Skipped
+Which semi-structured data formats do Snowflake natively store and query? Select all that apply.
+
+Correct selection
+AVRO
+
+SequenceFile
+
+Correct selection
+ORC
+
+CSV
+
+RCFile
+
+PDF
+
+Correct selection
+PARQUET
+
+Correct selection
+XML
+
+Correct selection
+JSON
+
+Resources
+Question 8
+Skipped
+Users can SSH (Secure Shell) into the compute instances which make up a Virtual Warehouse. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Users have no access to the underlying resources of a virtual warehouse.
+
+Resources
+Question 9
+Skipped
+What is the function of the AUTO_SUSPEND property of a Virtual Warehouse? Choose one correct value.
+
+Specifies the max threshold of queries after which point a virtual warehouse will be automatically suspended.
+
+Specifies whether to automatically resume a warehouse when a SQL statement is submitted to it.
+
+Specifies if a Virtual Warehouse should be suspended immediately after its created.
+
+Correct answer
+Specifies the number of seconds of inactivity after which a warehouse is automatically suspended.
+
+Resources
+Question 10
+Skipped
+When copying files from a table to an internal stage using the COPY INTO <location> command, the results are split into multiple files. Which copy option would I use to ensure only one file is produced? Choose one correct value.
+
+MAX_FILE_SIZE
+
+OVERWRITE
+
+Correct answer
+SINGLE
+
+INCLUDE_QUERY_ID
+
+Overall explanation
+SINGLE accepts a boolean that specifies whether to generate a single file or multiple files.
+
+Resources
+Question 11
+Skipped
+Which type of view bypasses some query optimizations to improve data security? Choose one correct value.
+
+Correct answer
+Secure
+
+Recursive
+
+Standard
+
+Materialized
+
+Protected
+
+Overall explanation
+This may result is poorer query performance than a standard view but makes the view more secure.
+
+Resources
+Question 12
+Skipped
+A data engineer is running some transformation jobs using a M virtual warehouse. The virtual warehouse seems to be suspending between the jobs, making subsequent jobs take longer. What could be the issue? Choose one correct value.
+
+The Virtual Warehouse INITIALLY_SUSPEND property is set to TRUE.
+
+The Virtual Warehouse is too small for the workload they're running.
+
+Correct answer
+The Virtual Warehouse AUTO_SUSPEND property (in seconds) is set too low.
+
+The Virtual Warehouse AUTO_RESUME property is set to FALSE.
+
+Overall explanation
+If the AUTO_SUSPEND property is set too low this can cause the virtual warehouse to go into the suspended state quicker than is desired. This can cause subsequent jobs to run slower because virtual warehouse will purge their cache when suspended.
+
+Resources
+Question 13
+Skipped
+You can execute commands as the ACCOUNTADMIN using the SnowSQL CLI tool. True or False?
+
+False
+
+Correct answer
+True
+
+Overall explanation
+You can execute commands using the SnowSQL CLI tool with any role you have the privileges to assume.
+
+Resources
+Question 14
+Skipped
+Which layers are in Snowflake’s Multi-cluster Shared Data Architecture? Choose two correct values.
+
+Metadata Layer
+
+Correct selection
+Compute / Query Processing Layer
+
+ETL Layer
+
+Unloading Layer
+
+Correct selection
+Storage Layer
+
+Resources
+Question 15
+Skipped
+How many database objects can a data provider add to a SHARE object? Choose one correct value.
+
+2
+
+5
+
+1
+
+Correct answer
+Unlimited
+
+Overall explanation
+Only one database can be added per share.
+
+Resources
+Question 16
+Skipped
+Which queries are examples of selective point lookups? Select all that apply.
+
+SELECT * FROM EMPLOYEES;
+
+SELECT NAME, ADDRESS, COUNT(FLAG) FROM EMPLOYEES GROUP BY NAME, ADDRESS;
+
+Correct selection
+SELECT NAME, ADDRESS FROM EMPLOYEES WHERE EMP_EMAIL = ‘support.help@corp.com’;
+
+Correct selection
+SELECT NAME, ADDRESS FROM EMPLOYEES WHERE EMP_ID IN (‘12867’,’0987SS’);
+
+Resources
+Question 17
+Skipped
+On which version of Snowflake is Secure Data Sharing not available? Choose one correct value.
+
+Business Critical
+
+Correct answer
+Virtual Private Snowflake (VPS)
+
+Enterprise
+
+Standard
+
+Overall explanation
+Due to the stricter security requirements and isolated environment the account exists in, VPS does not support secure data sharing.
+
+Resources
+Question 18
+Skipped
+Which types of notation are used to traverse semi-structured data natively in Snowflake? Select all that apply.
+
+Dollar notation.
+
+Colon notation.
+
+Correct selection
+Dot notation.
+
+Correct selection
+Bracket notation.
+
+Resources
+Question 19
+Skipped
+Which symbols are used when referencing a user stage via SQL? Choose one correct value.
+
+@%
+
+@
+
+Correct answer
+@~
+
+@*
+
+Resources
+Question 20
+Skipped
+A Snowflake user creates a clone of a 'TABLE_A' and names it 'TABLE_B'. When new records are inserted into 'TABLE A' what is expected to happen to 'TABLE B'? Choose one correct value.
+
+The inserted records show immediately in TABLE B.
+
+The inserted records show after a short delay in TABLE B.
+
+The inserted records do not show at all in TABLE B until TABLE A is dropped.
+
+Correct answer
+The inserted records do not show at all in TABLE B.
+
+Overall explanation
+Changes made to the source or the clone are not reflected between each other, they are completely independent.
+
+Resources
+Question 21
+Skipped
+Snowflake partitions files loaded into Snowflake automatically. True or false?
+
+False
+
+Correct answer
+True
+
+Resources
+Question 22
+Skipped
+Which sentence most accurately describes what a Virtual Warehouse is? Choose one correct value.
+
+A virtual warehouse is a cluster of compute nodes the user sets up and maintains.
+
+A virtual warehouse is a way of logically grouping schemas.
+
+Correct answer
+A Virtual warehouse is a named abstraction for one or more compute nodes.
+
+A Virtual Warehouse is another name for the persistent storage layer.
+
+Resources
+Question 23
+Skipped
+What’s the maximum number of days a user could set the table property DATA_RETENTION_TIME_IN_DAYS to for a transient table on a business critical edition Snowflake account? Choose one correct value.
+
+0
+
+10
+
+Correct answer
+1
+
+90
+
+Overall explanation
+The maximum DATA_RETENTION_TIME_IN_DAYS  is 0 or 1 for temporary and transient tables regardless of the edition of Snowflake.
+
+Resources
+Question 24
+Skipped
+What is the default value for the table property DATA_RETENTION_TIME_IN_DAYS for an account on the enterprise edition of Snowflake? Choose one correct value.
+
+90
+
+10
+
+Correct answer
+1
+
+0
+
+Overall explanation
+The default value for DATA_RETENTION_TIME_IN_DAYS is 1 for all editions of Snowflake.
+
+Resources
+Question 25
+Skipped
+Which queries would not require the use of a Virtual Warehouse and instead would make use of the metadata cache? Select all that apply.
+
+Correct selection
+DESCRIBE TABLE EMPLOYEE;
+
+SELECT * FROM TABLE(FLATTEN(INPUT => PARSE_JSON('[1, ,77]'))) F;
+
+Correct selection
+SELECT COUNT(*) FROM EMPLOYEE;
+
+SELECT EMP_ID,  NAME,  ADDRESS FROM EMPLOYEE;
+
+Overall explanation
+The number of rows along with a description of tables is maintained in the metadata cache and so doesn't need a Virtual Warehouse to compute the result.
+
+Resources
+Question 26
+Skipped
+Snowflake provides a suite of powerful features that ensure the highest possible levels of data security. Which statements are correct regarding Snowflake? Select all that apply.
+
+Correct selection
+Tri-secret secure makes use of a composite key made up of a customer managed key and a Snowflake managed key.
+
+Correct selection
+Snowflake makes use of key-pair authentication for programmatic access.
+
+Correct selection
+Snowflake support discretionary access control. (DAC)
+
+Correct selection
+Snowflake uses a hierarchical key model which is rooted in a hardware key.
+
+Question 27
+Skipped
+Which query would result in an error when parsing a column of type VARIANT given the following JSON:
+
+{
+
+“employee” : {
+
+“name” : “Jason Rojas”,
+
+“_id” : “UNX789544”
+
+},
+
+“joined_on” : “10-09-2019”,
+
+“skills” : [“Java”, “Kotlin”, “Android”]
+
+}
+
+
+
+Choose one correct value.
+
+SELECT Src:employee.name FROM EMPLOYEES;
+
+SELECT Src:employee.name FROM employees;
+
+SELECT SRC:employee.name FROM EMPLOYEES;
+
+Correct answer
+SELECT SRC:employee.Name FROM EMPLOYEES;
+
+Overall explanation
+Column names are case insensitive but elements are case sensitive, so referring to the element 'name' with a capital N would result in an error.
+
+Resources
+Question 28
+Skipped
+Natural clustering is determined by the order in which data is loaded. True or false?
+
+Correct answer
+True
+
+False
+
+Overall explanation
+Table data is partitioned and stored in the order it was loaded.
+
+Resources
+Question 29
+Skipped
+Micro-partitions can be modified once they have been created. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Micro-partitions are immutable.
+
+Resources
+Question 30
+Skipped
+If the query profile indicates queries are regularly spilling to remote storage what are the recommended solutions? Select all that apply.
+
+Correct selection
+Increase the size of the Virtual Warehouse.
+
+Process data in larger batches.
+
+Decrease the size of the Virtual Warehouse.
+
+Correct selection
+Process data in smaller batches.
+
+Resources
+Question 31
+Skipped
+What is the recommended compressed file size when loading data into Snowflake? Choose one correct value.
+
+100-200mb
+
+50-100mb
+
+10-50mb
+
+Correct answer
+100-250mb
+
+Resources
+Question 32
+Skipped
+The ACCOUNTADMIN can perform the same functions as the SECURITYADMIN, SYSADMIN & ORGAMIN. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+ORGADMIN is for managing operation at an organization level and is not possible with the ACCOUNTADMIN role.
+
+Resources
+Question 33
+Skipped
+Which table type does have the fail-safe feature? Choose one correct value.
+
+Correct answer
+Permanent
+
+Transient
+
+External
+
+Temporary
+
+Resources
+Question 34
+Skipped
+What is the purpose of the TYPE option when creating a file format object? Choose one correct value.
+
+Specifies the type of compression the file format will use to uncompress files.
+
+If the file format object will be permanent or temporary.
+
+If the file format object will be used with views or tables.
+
+Correct answer
+Specifies the type of file the file format object will be configured to parse.
+
+Resources
+Question 35
+Skipped
+How would a user choose the size of a virtual warehouse? Choose one correct value.
+
+Always use x-small as it’s the cheapest.
+
+Create multiple x-small clusters and if queueing occurs direct users to a different x-small virtual warehouse.
+
+Correct answer
+Experimenting with a representative query of a workload on a variety of virtual warehouse sizes to find the correct fit that matches desired run-times.
+
+Experimenting with a representative query of a workload on the largest virtual warehouse size and monitor its performance in order to assess if it matches desired run-times.
+
+Resources
+Question 36
+Skipped
+What is the recommended maximum number of columns (or expressions) defined per clustering key? Choose one correct value.
+
+Correct answer
+3 or 4
+
+1
+
+2
+
+2 or 3
+
+Resources
+Question 37
+Skipped
+Which properties are not available to a file format object of type CSV? Select all that apply.
+
+SKIP_HEADER
+
+TYPE
+
+FIELD_DELIMITER
+
+Correct selection
+STRIP_NULL_VALUES
+
+RECORD_DELIMITER
+
+Correct selection
+STRIP_OUTER_ARRAY
+
+Overall explanation
+These properties are available if the type property of a file format object is set to JSON.
+
+Resources
+Question 38
+Skipped
+To reuse the results cache which of the following requirements must be met? Select all that apply.
+
+Correct selection
+The role executing the query must have the necessary access privileges for all the tables used in the cached query when executing a SELECT.
+
+Correct selection
+The new query exactly matches the cached query.
+
+The same user is used as in the cached query.
+
+The underlying table data has changed since the cached query.
+
+Resources
+Question 39
+Skipped
+Databases are not required to have a unique identifier. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Database objects are required to have a unique identifier within an account.
+
+Resources
+Question 40
+Skipped
+The COPY INTO <table> statement does NOT require a virtual warehouse to run. True or false?
+
+True
+
+Correct answer
+False
+
+Resources
+Question 41
+Skipped
+Time Travel is not possible on transient tables. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Regardless of the Snowflake edition, transient tables can only set a Time Travel retention period of up to 1 day.
+
+Resources
+Question 42
+Skipped
+What is the behavior of the COPY INTO <table> command when the ON_ERROR option is set to CONTINUE? Choose one correct value.
+
+Abort load operation.
+
+Skip file when error is found.
+
+Correct answer
+Load the file if errors are found.
+
+Skip a file when a certain number of errors is found.
+
+Resources
+Question 43
+Skipped
+Which Snowflake object would be ideal to schedule an execution to refresh a secondary database for replication? Choose one correct value.
+
+Pipe
+
+Table
+
+Stream
+
+Correct answer
+Task
+
+Stage
+
+Overall explanation
+A task object can execute a single SQL statement.
+
+Resources
+Question 44
+Skipped
+Which statement is incorrect regarding snowflake editions? Choose one correct value.
+
+The Business Critical edition has additional support for regulation compliance around data protection.
+
+The Standard edition has the Time Travel feature.
+
+Correct answer
+The Enterprise edition contains all the features of the Business Critical edition.
+
+The Enterprise edition contains all the features of the Standard edition.
+
+Overall explanation
+In reality this statement is reversed. The Business Critical edition contains all the features of the Enterprise edition.
+
+Resources
+Question 45
+Skipped
+What is the function of the INITIALLY_SUSPENDED property of a Virtual Warehouse? Choose one correct value.
+
+Specifies whether to automatically resume a warehouse when a SQL statement is submitted to it.
+
+Specifies the number of seconds of inactivity after which a warehouse is automatically suspended.
+
+Correct answer
+Specifies if a Virtual Warehouse should be suspended immediately after its created.
+
+Specifies the max threshold of queries after which point a virtual warehouse will be automatically suspended.
+
+Resources
+Question 46
+Skipped
+Which of the following values are Snowflake editions? Choose two correct values.
+
+Premium
+
+Plus
+
+Correct selection
+Enterprise
+
+Economy
+
+Correct selection
+Standard
+
+Resources
+Question 47
+Skipped
+Which configuration of min_cluster_count & max_cluster_count would put a muti-cluster warehouse in maximized mode? Choose two correct values.
+
+MIN_CLUSTER_COUNT=1 & MAX_CLUSTER_COUNT=10
+
+Correct selection
+MIN_CLUSTER_COUNT=2 & MAX_CLUSTER_COUNT=2
+
+Correct selection
+MIN_CLUSTER_COUNT=4 & MAX_CLUSTER_COUNT=4
+
+MIN_CLUSTER_COUNT=1 & MAX_CLUSTER_COUNT=5
+
+Resources
+Question 48
+Skipped
+Which function can be used to automatically detect a schema definition? Choose one correct value.
+
+IMPLY_SCHEMA()
+
+DETECT_SCHEMA()
+
+Correct answer
+INFER_SCHEMA()
+
+AUTO_SCHEMA()
+
+Overall explanation
+A sample command making use of the INFER_SCHEMA function: 
+
+CREATE TABLE SS_TABLE
+
+USING TEMPLATE (
+
+  SELECT ARRAY_AGG(OBJECT_CONSTRUCT(*))
+
+  FROM TABLE(
+
+      INFER_SCHEMA(
+
+      LOCATION=>'@MYSTAGE',
+
+      FILE_FORMAT=>'FF_PARQUET'
+
+)));
+
+Resources
+Question 49
+Skipped
+How many days is the query history maintained in the history tab of the classic UI? Choose one correct value.
+
+21
+
+Correct answer
+14
+
+7
+
+10
+
+Resources
+Question 50
+Skipped
+A schema cannot be cloned. True or false?
+
+Correct answer
+False
+
+True
+
+Overall explanation
+A clone can be created with the following command: CREATE SCHEMA <SCHEMA_CLONE> CLONE <SCHEMA>;
+
+Resources
+Question 51
+Skipped
+Automatic clustering improves performance on queries that include which of the following constructs? Select all that apply.
+
+Correct selection
+JOIN
+
+SELECT
+
+SYSTEM$WHITELIST
+
+COPY INTO <location>
+
+Correct selection
+WHERE
+
+Overall explanation
+Clustering improves performance of queries that frequently filter or sort on the clustered keys.
+
+Resources
+Question 52
+Skipped
+What attributes make Snowflake a SaaS solution? Choose two correct values.
+
+The ability to SSH into underlying compute instances.
+
+Correct selection
+No hardware to manage.
+
+Correct selection
+Pay for what you use pricing plan.
+
+The user must upgrade software.
+
+Snowflake can be installed on a local machine.
+
+Resources
+Question 53
+Skipped
+Which system function is called to retrieve clustering metadata for a column or columns? Choose one correct value.
+
+system$clustering_metadata
+
+system$natural_clustering_information
+
+system$allowlist
+
+Correct answer
+system$clustering_information
+
+Resources
+Question 54
+Skipped
+Which is the most accurate description of the Snowflake Partner Connect? Choose one correct value.
+
+The Snowflake Partner Connect allows an account to securely import data from a business partners Snowflake account.
+
+The Snowflake Partner Connect exposes contact details for third-party data providers, so a user can connect with them in their own time.
+
+The Snowflake Partner Connect allows Snowflake data to be exported to a business partners Snowflake account.
+
+Correct answer
+The Snowflake Partner Connect allows you to easily create trial account with selected Snowflake business partners and integrate these accounts with Snowflake.
+
+Overall explanation
+The Snowflake Partner Connect is a service which expedites the process of getting up and running with selected third-party tools.
+
+Resources
+Question 55
+Skipped
+Why would a materialized view be used? Select all that apply.
+
+Materialized views are cheaper than storing data in a table.
+
+Correct selection
+Materialized views can be created on top of external tables to improve their query performance.
+
+Correct selection
+Materialized views make complex queries that are commonly executed readily available.
+
+Materialized views store data temporarily during the data loading process.
+
+Resources
+Question 56
+Skipped
+What is the default compression format used when unloading files from Snowflake using the GET command? Choose one correct value.
+
+Bz2
+
+BROTLI
+
+SNAPPY
+
+Correct answer
+GZIP
+
+Resources
+Question 57
+Skipped
+What is the function of a row access policy? Choose one correct value.
+
+Giving read access to a table to non-ownership roles.
+
+Giving access to table data to non-snowflake users.
+
+Restricting users from inserting rows into certain tables.
+
+Correct answer
+Restricting which rows are returned in a query.
+
+Overall explanation
+Row access policies enable a security team to restrict which rows are return in a query.
+
+Resources
+Question 58
+Skipped
+Which layer of the Multi-cluster Shared Data Architecture handles user authentication? Choose one correct value.
+
+Storage.
+
+ETL.
+
+Compute.
+
+Correct answer
+Services.
+
+Resources
+Question 59
+Skipped
+Every securable object is owned by a single role. True or false?
+
+Correct answer
+True
+
+False
+
+Resources
+Question 60
+Skipped
+User defined functions can NOT be executed in the context of another statement. For example, in a SELECT statement. True or false?
+
+Correct answer
+False
+
+True
+
+Overall explanation
+This command shows how we can execute a UDF in the context of another SQL statement: SELECT AREA_OF_CIRCLE(col1) FROM MY_TABLE;
+
+Resources
+Question 61
+Skipped
+Filters should be used as _________ as possible. Choose one correct value.
+
+Correct answer
+early
+
+infrequently
+
+late
+
+regularly
+
+Overall explanation
+Use filters such as a WHERE clause as early as possible to improve pruning for subsequent processing steps such as a GROUP BY.
+
+Resources
+Question 62
+Skipped
+In which state is a Virtual Warehouse billable? Choose one correct value.
+
+RESUME
+
+SUSPENDED
+
+Correct answer
+STARTED
+
+INITIATED
+
+Overall explanation
+When a Virtual Warehouse is in the ‘STARTED’ state it will accrue Snowflake credits regardless of whether queries are being executed using it or not.
+
+Resources
+Question 63
+Skipped
+Which system-defined role is it recommended to assign custom roles to? Choose one correct value.
+
+Correct answer
+SYSADMIN
+
+USERADMIN
+
+ORGADMIN
+
+SECURITYADMIN
+
+ACCOUNTADMIN
+
+Overall explanation
+If custom roles are not assigned to the SYSADMIN role, system admins will not be able to manage the objects owned by the custom role.
+
+Resources
+Question 64
+Skipped
+Which cloud platforms can a Snowflake account be hosted in? Choose three correct values.
+
+Correct selection
+Amazon Web Services (AWS)
+
+Correct selection
+Google Cloud Platform
+
+Oracle
+
+Correct selection
+Microsoft Azure
+
+Alibaba Cloud
+
+Resources
+Question 65
+Skipped
+Which SQL commands would show the contents of a stage? Select all that apply.
+
+SHOW STAGE MY_STAGE;
+
+Correct selection
+ls @MY_STAGE;
+
+SHOW STAGE @MY_STAGE;
+
+Correct selection
+LIST @MY_STAGE;
+
+Resources
+Question 66
+Skipped
+What is the purpose of the VALIDATE function? Choose one correct value.
+
+Outputs a pdf to a configured stage of all the errors of a past execution.
+
+Correct answer
+Allows a user to view all errors encountered during a previous COPY INTO execution.
+
+Allows a user to perform a dry-run of the load process to expose errors.
+
+Allows a user to view all errors encountered during all previous runs of a COPY INTO execution.
+
+Resources
+Question 67
+Skipped
+Of the following options which is the most accurate definition of a materialized view? Choose one correct value.
+
+A query is executed once and the results are stored for later user and are not refreshed in the future.
+
+Correct answer
+Stores results of a query definition and periodically refreshes its data.
+
+The underlying query definition is only visible to authorized users.
+
+Does not store data only a query definition.
+
+Resources
+Question 68
+Skipped
+Which objects are schema-level objects? Select all that apply.
+
+Correct selection
+Table.
+
+Network Policy.
+
+Correct selection
+Stream.
+
+Database.
+
+Virtual Warehouse.
+
+Correct selection
+Stored Procedure.
+
+Resources
+Question 69
+Skipped
+When setting DATA_RETENTION_TIME_IN_DAYS to 0 on a table, Time Travel is effectively disabled for that table. True or false?
+
+Correct answer
+True
+
+False
+
+Overall explanation
+DATA_RETENTION_TIME_IN_DAYS can be set to 0 on the account level or object level to effectively disable time travel.
+
+Resources
+Question 70
+Skipped
+How many databases objects can a data provider add to a SHARE object? Choose one correct value.
+
+Correct answer
+1
+
+Unlimited
+
+2
+
+5
+
+Overall explanation
+Only one database can be added per share.
+
+Resources
+Question 71
+Skipped
+If enabled, periodic rekeying happens every ___  months. Choose one correct value.
+
+1
+
+24
+
+Correct answer
+12
+
+6
+
+Overall explanation
+"If periodic rekeying is enabled, then when the retired encryption key for a table is older than one year, Snowflake automatically creates a new encryption key and re-encrypts all data previously protected by the retired key using the new key. The new key is used to decrypt the table data going forward." - https://docs.snowflake.com/en/user-guide/security-encryption-manage.html#periodic-rekeying
+
+Resources
+Question 72
+Skipped
+The following command is permitted when interacting with a Virtual Warehouse: ALTER WAREHOUSE DE_VW SET WAREHOUSE_SIZE=LARGE. True or false?
+
+Correct answer
+True
+
+False
+
+Resources
+Question 73
+Skipped
+Virtual warehouses are billed on a per second basis. What is the minimum number of seconds a virtual warehouse is billed for? Choose one correct value.
+
+Correct answer
+60
+
+30
+
+10
+
+120
+
+Overall explanation
+Snowflake credits are calculated with a minimum of 60 seconds.
+
+Resources
+Question 74
+Skipped
+What does it mean to overload a User Defined Function (UDF)? Choose one correct value.
+
+Correct answer
+The ability for multiple UDFs to exist with the same identifier but different input arguments. 
+
+The ability to call a UDF from within another UDF.
+
+The ability of a UDF to accept more than one argument.
+
+A UDF can returning more than one row.
+
+Resources
+Question 75
+Skipped
+Which languages can be used to develop a User Defined Function (UDF)? Choose four correct values.
+
+Correct selection
+Python
+
+C++
+
+Correct selection
+SQL
+
+GO
+
+C#
+
+Correct selection
+JavaScript
+
+Correct selection
+Java
+
+Resources
+Question 76
+Skipped
+Data loading typically requires the use of a XXL Virtual Warehouse. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Data loading does not typically require large Virtual Warehouses and sizing up does not guarantee increased data loading performance.
+
+Resources
+Question 77
+Skipped
+What is the maximum number of Time Travel days for a table of the permanent type? Choose one correct value.
+
+0
+
+Correct answer
+90
+
+14
+
+1
+
+Overall explanation
+This is true for permanent tables on the Enterprise edition or higher. For the standard edition of Snowflake the maximum number of Time Travel days (also called retention period) is 1 day.
+
+Resources
+Question 78
+Skipped
+Which result from the APPROXIMATE_SIMILARITY estimation function would indicate two sets of rows overlap significantly but are not identical? Choose one correct value.
+
+Correct answer
+0.8
+
+0.0
+
+0.1
+
+1
+
+Overall explanation
+0 indicates no overlap and 1 indicates the two sets are identical. 0.8 would indicate two sets are very similar.
+
+Resources
+Question 79
+Skipped
+How many accounts can a data consumer share a shared database with? Choose one correct value.
+
+1
+
+5
+
+Correct answer
+0
+
+10
+
+Overall explanation
+Data consumers cannot re-share shared database objects.
+
+Resources
+Question 80
+Skipped
+When is a table stage not appropriate to use for data loading? Select all that apply.
+
+Correct selection
+When a single user wants to load data into multiple tables.
+
+Correct selection
+When multiple users want to load data into multiple tables.
+
+When multiple users want to load data into a single table.
+
+When a single user wants to load data into a single table.
+
+Resources
+Question 81
+Skipped
+Network policies currently support which type of IP address? Choose one correct value.
+
+Correct answer
+IPv4
+
+IPv6
+
+IPv5
+
+IPv7
+
+Resources
+Question 82
+Skipped
+What level of cardinality is it recommended a column have when selected in a query that makes use of a GROUP BY? Choose one correct value.
+
+No cardinality.
+
+High cardinality.
+
+Medium cardinality.
+
+Correct answer
+Low cardinality.
+
+Overall explanation
+Having many distinct values can be a very memory-intensive operation, a lot of data will be spilled to disk and there will be high network usage.
+
+Resources
+Question 83
+Skipped
+What is the SnowSQL CLI tool used for? Choose one correct value.
+
+Diagnosing network connectivity to Snowflake from client tools.
+
+Troubleshoot data corruption issues in storage layer.
+
+Correct answer
+Connecting to and issuing SQL commands to Snowflake via the command line.
+
+Formatting SQL queries.
+
+Resources
+Question 84
+Skipped
+If the PURGE copy option were set to TRUE what would happen to data files that are successfully loaded into Snowflake from an external stage? Choose one correct value.
+
+They would be removed from Snowflake long-term table storage.
+
+They would be transferred to a different cloud storage bucket.
+
+They would be removed from the external stage and Snowflake long-term table storage.
+
+Correct answer
+They would be removed from the external stage.
+
+Resources
+Question 85
+Skipped
+Which symbols are used when referencing a table stage via SQL? Choose one correct value.
+
+@*
+
+@
+
+Correct answer
+@%
+
+@~
+
+Resources
+Question 86
+Skipped
+Fail-safe is available for external tables. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+It is only available for permanent table types.
+
+Resources
+Question 87
+Skipped
+Cloning a table copies the underlying data effectively doubling storage costs. True or false?
+
+True
+
+Correct answer
+False
+
+Overall explanation
+Cloning does not contribute to storage costs until data is modified or new data is added to the clone.
+
+Resources
+Question 88
+Skipped
+Which of the following locations is data storage calculated based on the on-disk bytes? Choose three correct values.
+
+Correct selection
+Internal stages.
+
+External stages.
+
+Correct selection
+Materialized views.
+
+Correct selection
+Database tables including time travel & fail-safe.
+
+Overall explanation
+Materialized views, database tables and internal stages add to the average terabytes per month stored in a Snowflake Account on which data storage cost is calculated. Read more about billing here: https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf
+
+Resources
+Question 89
+Skipped
+What do you configure a SHARE object with? Choose two correct values.
+
+A retention period in days.
+
+URL.
+
+Correct selection
+Account identifiers.
+
+Correct selection
+Object privileges.
+
+Resources
+Question 90
+Skipped
+Which SQL extensions did Snowflake add for use with the Time Travel feature? Select all that apply.
+
+EXISTS
+
+DEDROP
+
+Correct selection
+AT
+
+Correct selection
+BEFORE
+
+Correct selection
+UNDROP
+
+ON
+
+SELECT
+
+Resources
+Question 91
+Skipped
+What does each database created in an account automatically include? Choose one correct value.
+
+Directory table.
+
+Auditing table.
+
+Correct answer
+Information schema.
+
+Information table.
+
+Overall explanation
+Each database created in an account automatically includes a built-in, read-only schema named INFORMATION_SCHEMA based on the SQL-92 ANSI Information Schema.
+
+Resources
+Question 92
+Skipped
+Which INSERT query would return an error? Choose one correct value.
+
+INSERT INTO TABLE MY_TABLE (ID, NAME) SELECT ‘001’, ‘Irene Adler’;
+
+
+
+INSERT INTO TABLE MY_TABLE SELECT * FROM MY_TABLE_2;
+
+INSERT INTO TABLE EMPLOYEE SELECT ‘001’, ‘Irene Adler’, ‘10/10/1976’;
+
+
+
+Correct answer
+INSERT INTO TABLE MY_TABLE (ID, NAME) SELECT ‘001’, ‘Irene Adler’, ‘10/10/1976’;
+
+
+
+Overall explanation
+If specifying the columns in an INSERT statement you cannot include additional data in the select query.
+
+Resources
+Question 93
+Skipped
+As a data engineer I want to create a file URL that is only valid for 24hours. Which file function would I use? Choose one correct value.
+
+Correct answer
+BUILD_SCOPED_FILE_URL
+
+BUILD_URL
+
+BUILD_STAGE_FILE_URL
+
+BUILD_24_URL
+
+Overall explanation
+Outputs an encoded URL granting access to a file for 24 hours to the user that requested it.
+
+Resources
+Question 94
+Skipped
+The account usage share contains a database called SNOWFLAKE. The views in this database are used to provide fine-grained metrics at the account and object level. What is the maximum number of months data in these views available for? Choose one correct value.
+
+6
+
+3
+
+9
+
+Correct answer
+12
+
+Overall explanation
+Certain account usage views provide historical usage metrics. The retention period for these views is 1 year.
+
+Resources
+Question 95
+Skipped
+What is the process of eliminating unrequired micro-partitions called during a query? Choose one correct value.
+
+Correct answer
+Pruning
+
+Limiting
+
+Narrowing
+
+Limiting
+
+Overall explanation
+This is the process of ignoring micro-partitions which aren't required to fulfil a user query.
+
+Resources
+Question 96
+Skipped
+Data providers can share data with a data consumer in a different cloud region or cloud provider. True or false?
+
+Correct answer
+False
+
+True
+
+Overall explanation
+Replication to an account in the data consumer’s region is a prerequisite.
+
+Resources
+Question 97
+Skipped
+What is the section in bold of the following Snowflake account URL referred to as: xy12345.us-east-2.aws.snowflakecomputing.com? Choose one correct value.
+
+Correct answer
+Account Identifier
+
+Account Region
+
+Cloud Platform
+
+Organisation Name
+
+Overall explanation
+The account locator, account region and account cloud platform taken together are referred to as the account identifier.
+
+Resources
+Question 98
+Skipped
+What is the definition of Tri-secret secure? Choose one correct value.
+
+The use of a hardware module to store a customer managed key.
+
+The use of three passwords to log-in.
+
+Correct answer
+A composite encryption key to encrypt data files made up a user provider key and a Snowflake key.
+
+Rekeying of data every 14 days.
+
+Overall explanation
+More information - https://docs.snowflake.com/en/user-guide/security-encryption-manage.html#tri-secret-secure
+
+Resources
+Question 99
+Skipped
+What are the two scaling policies that can be defined when creating a multi-cluster warehouse? Choose two correct values.
+
+Maximized
+
+Minimum
+
+Correct selection
+Standard
+
+Conservative
+
+Correct selection
+Economy
+
+Resources
+Question 100
+Skipped
+How many geographic regions in a cloud platform can a Snowflake account be deployed into? Choose one correct value.
+
+2
+
+5
+
+Correct answer
+1
+
+10
+
+Overall explanation
+Each account is provisioned in a single geographic region.
+
+Resources
