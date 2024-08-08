@@ -1,0 +1,94 @@
+A newly created stored procedure defaults to run under the owner's privileges.
+A stored procedure can be altered to configure if it runs under owner's rights or caller's rights.
+
+The variant data type can hold up to 16MB of data per row.
+If your JSON is larger then that, you will need to think of alternate techniques, such as splitting the JSON into multiple rows.
+
+
+
+Sharing is managed through the Snowflake metadata services layer.
+
+https://docs.snowflake.com/en/user-guide/ui-query-profile
+
+A file URL is a permanent Snowflake-hosted URL to a staged file. File URLs don't expire.
+A scoped URL is a temporary and encoded URL that allows temporary access to a staged file without requiring any privileges on the stage. A scoped URL expires after 24 hours.
+A pre-signed URL is a simple HTTPS URL for accessing a file using a web browser. The expiry duration of a pre-signed URL is configurable and can be set to the required duration.
+
+
+
+When a database or a schema is cloned, which of the following objects will NOT be cloned?
+Internal Snowflake Stages
+External Tables
+Snowpipes that point to a Named Internal Snowflake Stage
+
+
+Resource monitors cannot control the credit usage of serverless features such as Snowpipe, Automatic Reclustering, and Materialized View maintenance. So, resource monitors can only manage virtual warehouses created by the customer, and their resource monitors can only suspend virtual warehouses operated by the user. Any Snowflake-managed compute resource, such as Snowpipe, Serverless tasks, etc., can not be tracked or managed by resource monitors. In addition, a Resource Monitor can not control the costs of cloud services. A warehouse-level resource monitor can monitor credit usage by Cloud Services, but the resource monitor can not suspend the cloud services.
+
+
+While connecting to a Partner application, Snowflake automatically creates several objects, such as an empty database, virtual warehouse, default user, and custom role. When the partner app reads or writes to your account, it uses these objects.
+
+If the base table of a materialized view is dropped, the materialized view is NOT automatically dropped; however, it is suspended. You must manually drop the materialized view.
+
+
+Which of the following does Snowflake Scripting support?
+Declaring & using variables
+Looping Constructs such as FOR, WHILE, REPEAT, and LOOP.
+Branching constructs such as IF-ELSE and CASE statements
+Handling exceptions
+
+Resource monitors are not meant to precisely control how much is used every hour (or minute). Instead, they are meant to track and control how much is used daily, weekly, monthly, etc. They are not meant to set exact limits on how many credits can be used. When a resource monitor's credit limits are reached, it may take a while for the assigned warehouses to be put on hold, even if the action is "Suspend Immediately.", which may result in more credit than the credit limit to be used.
+
+
+The cloud service layer manages Authentication, Infrastructure Management, Metadata Management, Query parsing and optimization, and Access control services.
+
+
+Snowflake Query history page allows you to view the details of all the queries executed in the last 14 days. You can query the Query_History view in Snowflake's Account Usage schema for older queries.
+
+
+BUILD_STAGE_FILE_URL generates a Snowflake-hosted file URL to a staged file using the stage name and relative file path as inputs.
+
+
+The SHOW PARAMETERS command determines whether a network policy is set on the account or for a specific user.
+
+For Account level: SHOW PARAMETERS LIKE 'network_policy' IN ACCOUNT;
+
+For User level : SHOW PARAMETERS LIKE 'network_policy' IN USER <username>; 
+
+Example - SHOW PARAMETERS LIKE 'network_policy' IN USER john;
+
+Database and share replication are available in all editions, including the Standard edition. Replication of all other objects is only available for Business Critical Edition (or higher).
+
+ Snowflake keep batch load history (from Stage) using COPY statement for 64 days
+
+
+
+If a column for an object name (e.g. the TABLE_NAME column) is NULL, that object has been dropped. In this case, the columns for the names and IDs of the parent objects (e.g. the DATABASE_NAME and SCHEMA_NAME columns) are also NULL.
+Note that in some views, the column for the object name might still contain the name of the object, even if the object has been dropped.
+
+
+access_history vs copy_history vs load_history vs Login_history
+DATABASE_STORAGE_USAGE_HISTORY
+GRANTS_TO_ROLES
+GRANTS_TO_USERS
+METERING_DAILY_HISTORY vs METERING_HISTORY
+
+PIPE_USAGE_HISTORY
+QUERY_HISTORY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
