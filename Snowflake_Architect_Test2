@@ -1,0 +1,1465 @@
+Question 1
+Skipped
+A Snowflake Architect set up a COPY INTO command to continuously load data from an external stage. The destination Snowflake table has much more data than expected.
+
+
+
+Why is this occurring?
+
+LOAD_UNCERTAIN_FILES is set to FALSE.
+
+Correct answer
+The FORCE copy option is set to TRUE, and staged files are being loaded even if they have been loaded already.
+
+The ON_ERROR copy option is set to CONTINUE, which is causing duplicate file loading.
+
+The PURGE option is set to FALSE, and files are not being deleted from the stage after loading.
+
+Overall explanation
+FORCE = TRUE specifies to load all files, regardless of whether they’ve been loaded previously and have not changed since they were loaded. Note that this option reloads files, potentially duplicating data in a table.
+
+
+
+See this link.
+
+Question 2
+Skipped
+An Architect needs to allow a data provider with an Azure account in central Canada to share data with a data consumer on AWS in Australia.
+
+How can this requirement be met?
+
+The data provider uses the GET DATA workflow in the Snowflake Data Marketplace to create a share between Azure Central Canada and AWS Asia Pacific.
+
+The data provider in Azure Central Canada can create a direct share to AWS Asia Pacific, if they are both in the same organization.
+
+Correct answer
+The data provider must replicate the database to a secondary account in AWS Asia Pacific within the same organization then create a share to the data consumer's account
+
+The data consumer and data provider can form a Data Exchange within the same organization to create a share from Azure Central Canada to AWS Asia Pacific.
+
+Overall explanation
+Different regions, different Cloud providers so replication is the key.
+
+See this link.
+
+Question 3
+Skipped
+Which of these Snowflake components/objects is NOT typically used in building continuous ELT pipelines?
+
+Snowflake Connector for Kafka
+
+Snowpipe
+
+Correct answer
+Data Exchange
+
+Streams
+
+Overall explanation
+Data Exchange is your own data hub for securely collaborating around data between a selected group of members you invite. It enables providers to publish data that consumers can then discover. You can use your Data Exchange to exchange data between business units internal to your company and collaborate with external parties such as vendors, suppliers, partners, and customers.
+
+Question 4
+Skipped
+What types of objects does Snowflake return when we execute the function GET_OBJECT_REFERENCES? (Choose two)
+
+Materialized views
+
+UDFs
+
+Streams
+
+Correct selection
+Views (including secure views)
+
+Correct selection
+Tables
+
+Overall explanation
+Only views (including secure views) and tables are returned when getting the object references. Materialized views are not returned at this moment.
+
+
+Question 5
+Skipped
+A SYSADMIN created a number of database objects and granted the ownership privilege to a custom role.
+
+
+
+What will happen if the custom role is not assigned to SYSADMIN or SECURITYADMIN through a role hierarchy? (Select TWO).
+
+As the database objects are created by the SYSADMIN, the custom role will be able to manage the objects.
+
+The SECURITYADMIN role cannot view the objects or modify their access grants.
+
+Correct selection
+The SECURITYADMN role can grant themselves access to the objects and modify their access grants.
+
+Correct selection
+The SYSADMIN role will not be able to manage the objects created by the role.
+
+The objects can be viewed by both the SECURITYADMIN and USERADMIN roles.
+
+Overall explanation
+If a custom role is not assigned to SYSADMIN through a role hierarchy, the system administrators cannot manage the objects owned by the role. Only those roles granted the MANAGE GRANTS privilege (only the SECURITYADMIN role by default) can view the objects and modify their access grants.
+
+
+
+SECURITYADMIN role can manage any object grant globally, as well as create, monitor, and manage users and roles. This role is granted the MANAGE GRANTS security privilege to be able to modify any grant, including revoking it.
+
+
+
+See this link.
+
+Question 6
+Skipped
+A Data Architect is importing JSON data from an external stage into a table with a VARIANT column using the COPY INTO command. During testing, the Architect discovers that the import sometimes fails, with parsing errors, due to malformed JSON values. The Architect decides to set the VARIANT column to NULL when a parsing error is encountered.
+
+
+
+Which function should be used to meet this requirement?
+
+TO_JSON
+
+Correct answer
+TRY_PARSE_JSON
+
+A. PARSE_JSON
+
+VALIDATE
+
+Overall explanation
+TRY_PARSE_JSON
+
+A special version of PARSE_JSON that returns a NULL value if an error occurs during parsing.
+
+See this link.
+
+Question 7
+Skipped
+Which data modeling concepts can be used in Snowflake (Choose two.)
+
+Correct selection
+Foreign Key
+
+Correct selection
+Primary Key
+
+Non-Unique Index
+
+Distribution Key
+
+Unique Index
+
+Overall explanation
+See this link.
+
+Question 8
+Skipped
+Which system functions does Snowflake provide to monitor clustering information within a table (Choose two.)
+
+Correct selection
+SYSTEM$CLUSTERING_INFORMATION
+
+SYSTEM$CLUSTERING_USAGE
+
+SYSTEM$CLUSTERING_KEYS
+
+SYSTEM$CLUSTERING_PERCENT
+
+Correct selection
+SYSTEM$CLUSTERING_DEPTH
+
+Overall explanation
+To view/monitor the clustering metadata for a table, Snowflake provides the following system functions:
+
+SYSTEM$CLUSTERING_DEPTH
+
+SYSTEM$CLUSTERING_INFORMATION (including clustering depth)
+
+See this link.
+
+
+
+Question 9
+Skipped
+An organization is interested in using the Kafka Connector for loading data into Snowflake. The team has the Kafka connector subscribed to a few Kafka topics, but the topics have not been mapped to Snowflake tables.
+
+What is the expected Kafka connector behavior? (Select TWO)
+
+The connector cannot load data until Kafka topics are mapped to the Snowflake tables.
+
+Correct selection
+The connector creates the columns RECORD_CONTENT and RECORD_METADATA in the target table.
+
+The connector creates an external stage to temporarily store data files for each topic.
+
+The connector cannot load data until a Snowpipe is created for each partition.
+
+Correct selection
+The connector creates a new table for each topic using the topic name.
+
+
+
+Overall explanation
+The connector creates the following objects for each topic:
+
+One internal stage to temporarily store data files for each topic.
+
+One pipe to ingest the data files for each topic partition.
+
+One table for each topic. If the table specified for each topic does not exist, the connector creates it; otherwise, the connector creates the RECORD_CONTENT and RECORD_METADATA columns in the existing table and verifies that the other columns are nullable (and produces an error if they are not).
+
+See this link.
+
+Question 10
+Skipped
+Which statements describe characteristics of the use of materialized views in Snowflake? (Choose two.)
+
+They can support inner joins, but not outer joins.
+
+They can include context functions, such as CURRENT_TIME().
+
+Correct selection
+They can support MIN and MAX aggregates.
+
+A. They can include ORDER BY clauses.
+
+Correct selection
+They cannot include nested subqueries.
+
+Overall explanation
+Joins, including self-joins, are not supported.
+
+A materialized view cannot include: UDFs (this limitation applies to all types of user-defined functions, including external functions). Window functions. HAVING clauses. ORDER BY clause. LIMIT clause. GROUP BY. Nested subq
+
+The aggregate functions that are supported in materialized views are MIN MAX etc
+
+Functions used in a materialized view must be deterministic. For example, using CURRENT_TIME or CURRENT_TIMESTAMP is not permitted.
+
+See this link.
+
+Question 11
+Skipped
+Which feature provides the capability to define an alternate cluster key for a table with an existing cluster key?
+
+Search optimization
+
+External table
+
+Result cache
+
+Correct answer
+Materialized view
+
+Overall explanation
+If you cluster both the materialized view(s) and the base table on which the materialized view(s) are defined, you can cluster the materialized view(s) on different columns from the columns used to cluster the base table.
+
+See this link.
+
+Question 12
+Skipped
+A user can change object parameters using which of the following roles?
+
+Correct answer
+ACCOUNTADMIN, USER with PRIVILEGE
+
+SYSADMIN, SECURITYADMIN
+
+SECURITYADMIN, USER with PRIVILEGE
+
+ACCOUNTADMIN, SECURITYADMIN
+
+Overall explanation
+Account
+
+Account administrators can use the ALTER ACCOUNT command to set object parameters for the account. The values set for the account default to the objects created in the account.
+
+
+
+Object
+
+Users with the appropriate privileges can use the corresponding CREATE <object> or ALTER <object> commands to override object parameters for an individual object.
+
+
+
+See this link.
+
+Question 13
+Skipped
+How does a standard virtual warehouse policy work in Snowflake?
+
+It starts only if the system estimates that there is a query load that will keep the cluster busy for at least 6 minutes.
+
+Correct answer
+It prevents or minimizes queuing by starting additional clusters instead of conserving credits.
+
+It conserves credits by keeping running clusters fully loaded rather than starting additional clusters.
+
+It starts only if the system estimates that there is a query load that will keep the cluster busy for at least 2 minutes.
+
+Overall explanation
+Standard (default): Prevents/minimizes queuing by favoring starting additional clusters over conserving credits.
+
+The first cluster starts immediately when either a query is queued or the system detects that there’s one more query than the currently-running clusters can execute. Each successive cluster waits to start 20 seconds
+
+See this link.
+
+
+
+Question 14
+Skipped
+What two requirements are necessary for the remote service to be called by the Snowflake external function? (Choose two.)
+
+Be part of the AWS suite exclusively, as Azure and GCP are not supported yet.
+
+Correct selection
+Expose an HTTPS endpoint.
+
+Correct selection
+Accept JSON inputs and return JSON outputs.
+
+Store security-related external function information in secure storage.
+
+Overall explanation
+See this link.
+
+
+Question 15
+Skipped
+A copy command is executed to load a file.
+
+
+
+After the file has loaded and the metadata has expired, what options can be used to reload the file? (Select TWO).
+
+Correct selection
+Set the LOAD_UNCERTAIN_FILES option to TRUE.
+
+Set the DISABLE_SNOWFLAKE_DATA option to TRUE.
+
+Set the ALLOW_DUPLICATE option to TRUE.
+
+Set the PRESERVE_SPACE option to TRUE.
+
+Correct selection
+Set the FORCE option to TRUE.
+
+Overall explanation
+FORCE = TRUE | FALSE
+
+Definition
+
+Boolean that specifies to load all files, regardless of whether they’ve been loaded previously and have not changed since they were loaded. Note that this option reloads files, potentially duplicating data in a table.
+
+
+
+LOAD_UNCERTAIN_FILES = TRUE | FALSE
+
+Definition
+
+Boolean that specifies to load files for which the load status is unknown. The COPY command skips these files by default.
+
+
+
+See this link.
+
+
+
+Question 16
+Skipped
+Which parameter allows us to schedule the task_1 to run every day with a CRON expression?
+
+SET CRON
+
+Correct answer
+SET SCHEDULE
+
+SET FIXED_TIME
+
+ALTER SCHEDULE
+
+Overall explanation
+An example can be:
+
+
+
+ALTER TASK TASK_1 SET SCHEDULE = 'USING CRON */3 * * * * UTC';
+
+Question 17
+Skipped
+What does the average_overlaps in the output of SYSTEM$CLUSTERING_INFORMATION refer to?
+
+The average number of micro-partitions in the table associated with cloned objects.
+
+The average number of partitions physically stored in the same location.
+
+The average number of micro-partitions stored in Time Travel.
+
+Correct answer
+The average number of micro-partitions which contain overlapping value ranges.
+
+Overall explanation
+See this link.
+
+Question 18
+Skipped
+A company that is in one region wants to share data with two different consumers who are both based in a second region
+
+How can this be accomplished with the MINIMUN duplication of data?
+
+Create a direct share from the first region to the second region, and provide access to both data consumers
+
+Replicate two copies of the data to the second region, but only share one of the copies with the two data consumers
+
+Correct answer
+Replicate one copy of the data to the second region, and share it with the two data consumers
+
+Replicate two copies of the data to the second region and share each one respectively with the two consumers
+
+Overall explanation
+This is a typical case of database replication. As the consumers are in a different region it is necessary to enable the database replication functionality. The LESS way to duplicate data is to do a replication and from there a share to the two consumers.
+
+
+Question 19
+Skipped
+What of these metrics is not a metric that appears in the Execution Time screen of the Query Profiler?
+
+Correct answer
+Bytes scanned
+
+Synchronization
+
+Processing
+
+Remote Disk IO
+
+Initialization
+
+Overall explanation
+“Bytes scanned” metric belongs to the statistics screen, as we can see in the following picture:
+
+
+
+
+Question 20
+Skipped
+What are the limitations about external functions? (Choose two.)
+
+Future grants of privileges on external functions are supported.
+
+Correct selection
+External functions must be scalar, so it returns a single value for each input row.
+
+The maximum response size per batch is 16MB.
+
+Correct selection
+We can only write functions, not stored procedures.
+
+Overall explanation
+You can find more limitations of external functions at the following link.
+
+Question 21
+Skipped
+Two tables have been created in the same schema with the same information. One is a Secure View; the second one is a standard View. When executing a query, the profiler doesn’t show the same information. How is this possible?
+
+The underlying table is corrupted
+
+Correct answer
+Secure views do not expose the underlying tables or internal structural details for a view
+
+The user role doesn’t have access to the view
+
+Overall explanation
+Secure views ensure that users have no access to the underlying data. The view definition and details are visible only to authorized users with secure views. Because of that, the users won’t probably see the table in the profiler, whereas if they query the regular view, they’ll see how it queries the table.
+
+
+Question 22
+Skipped
+After creating the table MY_TABLE, we execute the following commands:
+
+CREATE STREAM MYSTREAM ON TABLE MYTABLE;
+INSERT INTO MYTABLE VALUES (15);
+What will be the output of executing the following command?
+
+SELECT SYSTEM$STREAM_HAS_DATA('MYSTREAM');
+It will return “False”.
+
+It will return “Null”.
+
+Correct answer
+It will return “True”.
+
+It will return “15”.
+
+Overall explanation
+The SYSTEM$STREAM_HAS_DATA indicates whether a specified stream contains change data capture (CDC) records and they haven't been consumed. In this case, it will return True. This function is intended to be used in the "WHEN" expression in the definition of tasks; if the stream has data, then you execute the task. Otherwise, the task can skip the current run. We can see this functionality in the following example, where the task will be skipped if the stream doesn't have data:
+
+CREATE TASK mytask1
+	WAREHOUSE = mywh
+	SCHEDULE =' 5 minute'
+WHEN
+	SYSTEM$STREAM_HAS_DATA('ST1')
+AS
+	INSERT INTO mytable(id,nm) SELECT id, nm FROM st1 WHERE METADATA$ACTION='INSERT';
+Question 23
+Skipped
+An Architect on a new project has been asked to design an architecture that meets Snowflake security, compliance, and governance requirements as follows:
+
+1. Use Tri-Secret Secure in Snowflake
+
+2. Share some information stored in a view with another Snowflake customer
+
+3. Hide portions of sensitive information from some columns
+
+4. Use zero-copy cloning to refresh the non-production environment from the production environment
+
+To meet these requirements, which design elements must be implemented? (Choose three.)
+
+Define row access policies.
+
+Create a materialized view.
+
+Correct selection
+Use the Business Critical edition of Snowflake.
+
+Correct selection
+Create a secure view.
+
+Correct selection
+Use Dynamic Data Masking.
+
+Use the Enterprise edition of Snowflake.
+
+Overall explanation
+Tri Secret Secure requires Business Critical Edition (or higher)
+
+Create a secure view: A secure view can be used to share a subset of data with another Snowflake customer while masking sensitive information. This helps meet the security and compliance requirements.
+
+Use Dynamic Data Masking: Dynamic Data Masking can be used to hide portions of sensitive information from some columns in order to meet security and compliance requirements.
+
+See this link.
+
+Question 24
+Skipped
+Which of the following are characteristics of how row access policies can be applied to external tables? (Choose three.)
+
+Correct selection
+A. An external table can be created with a row access policy, and the policy can be applied to the VALUE column.
+
+While cloning a database, both the row access policy and the external table will be cloned.
+
+Correct selection
+A row access policy can be applied to the VALUE column of an existing external table.
+
+External tables are supported as mapping tables in a row access policy.
+
+Correct selection
+A row access policy cannot be directly added to a virtual column of an external table.
+
+A row access policy cannot be applied to a view created on top of an external table.
+
+Overall explanation
+You can create an external table with a row access policy by executing a CREATE EXTERNAL TABLE statement and apply the policy to the VALUE column.
+
+You can apply the row access policy to VALUE column of an existing external table by executing an ALTER TABLE statement on the external table.
+
+A row access policy cannot be added to a virtual column directly. Instead, create a view on the external table and apply the row access policy to the columns on the view.
+
+See this link.
+
+Question 25
+Skipped
+Which ALTER commands will impact a column's availability in Time Travel?
+
+ALTER TABLE … SET NOT NULL …
+
+Correct answer
+ALTER TABLE … SET DATA TYPE …
+
+ALTER TABLE … RENAME COLUMN …
+
+ALTER TABLE … DROP COLUMN …
+
+Overall explanation
+Decreasing the precision of a number column can impact Time Travel, for example, converting from NUMBER(20,2) to NUMBER(10,2). SET DATA TYPE is the command that can make that.
+
+Question 26
+Skipped
+We want to generate a JSON object with the data from a table called users_table, composed of two columns (AGE and NAME), ordered by the name column. How can we do it?
+
+SELECT object_deconstruct(*) as users_object 
+FROM users_table 
+order by users_object[‘NAME’];
+SELECT to_object(*) as users_object 
+FROM users_table 
+order by users_object[‘NAME’];
+SELECT to_json_object(*) as users_object 
+FROM users_table 
+order by users_object[‘NAME’];
+Correct answer
+SELECT object_construct(*) as users_object 
+FROM users_table 
+order by users_object[‘NAME’];
+Overall explanation
+The OBJECT_CONSTRUCT command returns an OBJECT constructed from the arguments. In the following example (left), the arguments come from the table, whereas in the second (right), we send the arguments to the function.
+
+
+Question 27
+Skipped
+Which steps are recommended best practices for prioritizing cluster keys in Snowflake? (Choose two.)
+
+Correct selection
+Choose cluster columns that are most actively used in selective filters.
+
+Choose TIMESTAMP columns with nanoseconds for the highest number of unique rows.
+
+Correct selection
+Choose columns that are frequently used in join predicates.
+
+Choose cluster columns that are actively used in the GROUP BY clauses.
+
+Choose lower cardinality columns to support clustering keys and cost effectiveness.
+
+Overall explanation
+Snowflake recommends prioritizing keys:
+
+Cluster columns that are most actively used in selective filters.
+
+For many fact tables involved in date-based queries (for example “WHERE invoice_date > x AND invoice date <= y”), choosing the date column is a good idea. For event tables, event type might be a good choice, if there are a large number of different event types. (If your table has only a small number of different event types, then see the comments on cardinality below before choosing an event column as a clustering key.)
+
+If there is room for additional cluster keys, then consider columns frequently used in join predicates, for example “FROM table1 JOIN table2 ON table2.column_A = table1.column_B”.
+
+See this link.
+
+Question 28
+Skipped
+The table STUDENT_DETAIL has the following information:
+
+
+
+
+Which query will give the following output on this table?
+
+{
+"enrollmentId": "1000000000000000",
+"packageCode : null,
+"registrationCode" :"AK00000854"
+}
+
+
+
+A
+
+D
+
+Correct answer
+C
+
+B
+
+Overall explanation
+OBJECT_CONSTRUCT_KEEP_NULL is the function we have to use.
+
+
+Question 29
+Skipped
+A Snowflake Architect is designing an application and tenancy strategy for an organization where strong legal isolation rules as well as multi-tenancy are requirements.
+
+
+
+Which approach will meet these requirements if Role-Based Access Policies (RBAC) is a viable option for isolating tenants?
+
+Create a multi-tenant table strategy if row level security is not viable for isolating tenants.
+
+Correct answer
+Create an object for each tenant strategy if row level security is not viable for isolating tenants.
+
+Create an object for each tenant strategy if row level security is viable for isolating tenants.
+
+Create accounts for each tenant in the Snowflake organization.
+
+Overall explanation
+Security can factor into the decision to use an OPT design pattern. Some customers prefer the OPT model because they don’t want to manage an entitlement table, secure views, or row-level security with strong processes behind them.
+
+See this link.
+
+Question 30
+Skipped
+An Architect would like to save quarter-end financial results for the previous six years.
+
+Which Snowflake feature can the Architect use to accomplish this?
+
+Correct answer
+Zero-copy cloning
+
+Search optimization service
+
+Secure views
+
+Time Travel
+
+Materialized view
+
+Overall explanation
+Snowflake’s zero-copy cloning feature provides a convenient way to quickly take a “snapshot” of any table, schema, or database and create a derived copy of that object which initially shares the underlying storage. This can be extremely useful for creating instant backups that do not incur any additional costs (until changes are made to the cloned object).
+
+
+Question 31
+Skipped
+A company’s daily Snowflake workload consists of a huge number of concurrent queries triggered between 9pm and 11pm. At the individual level, these queries are smaller statements that get completed within a short time period.
+
+
+
+What configuration can the company’s Architect implement to enhance the performance of this workload? (Choose two.)
+
+Increase the size of the virtual warehouse to size X-Large.
+
+Correct selection
+Set the MAX_CONCURRENCY_LEVEL to a higher value than its default value of 8 at the virtual warehouse level.
+
+Reduce the amount of data that is being processed through this workload.
+
+Set the connection timeout to a higher value than its default.
+
+Correct selection
+Enable a multi-clustered virtual warehouse in maximized mode during the workload duration.
+
+Overall explanation
+Enabling a multi-clustered virtual warehouse in maximized mode during the workload duration will provide better query performance as it automatically and dynamically scales the number of clusters and the processing power based on the workload requirements.
+
+Setting the MAX_CONCURRENCY_LEVEL to a higher value than its default value of 8 will allow more queries to run concurrently, which can improve overall query performance.
+
+Question 32
+Skipped
+After how many days does the load activity of the COPY INTO command and Snowpipe of Information Schema expire?
+
+64 days for both.
+
+14 days for the COPY INTO command, 64 days for Snowpipe.
+
+Correct answer
+14 days for both.
+
+64 days for the COPY INTO command, 14 days for Snowpipe.
+
+Overall explanation
+The COPY_HISTORY command retains the loading history for both the COPY into command and Snowpipe for the last 14 days.
+
+You can execute it by running: select * from table(information_schema.copy_history( and check the result in your Snowflake account.
+
+See this link.
+
+Question 33
+Skipped
+A media company needs a data pipeline that will ingest customer review data into a Snowflake table, and apply some transformations. The company also needs to use Amazon Comprehend to do sentiment analysis and make the de-identified final data set available publicly for advertising companies who use different cloud providers in different regions.
+
+
+
+The data pipeline needs to run continuously and efficiently as new records arrive in the object storage leveraging event notifications. Also, the operational complexity, maintenance of the infrastructure, including platform upgrades and security, and the development effort should be minimal.
+
+
+
+Which design will meet these requirements?
+
+Ingest the data into Snowflake using Amazon EMR and PySpark using the Snowflake Spark connector. Apply transformations using another Spark job. Develop a python program to do model inference by leveraging the Amazon Comprehend text analysis API. Then write the results to a Snowflake table and create a listing in the Snowflake Marketplace to make the data available to other companies.
+
+Ingest the data using Snowpipe and use streams and tasks to orchestrate transformations. Export the data into Amazon S3 to do model inference with Amazon Comprehend and ingest the data back into a Snowflake table. Then create a listing in the Snowflake Marketplace to make the data available to other companies.
+
+Correct answer
+Ingest the data using Snowpipe and use streams and tasks to orchestrate transformations. Create an external function to do model inference with Amazon Comprehend and write the final records to a Snowflake table. Then create a listing in the Snowflake Marketplace to make the data available to other companies.
+
+Ingest the data using COPY INTO and use streams and tasks to orchestrate transformations. Export the data into Amazon S3 to do model inference with Amazon Comprehend and ingest the data back into a Snowflake table. Then create a listing in the Snowflake Marketplace to make the data available to other companies.
+
+Overall explanation
+See this link.
+
+Question 34
+Skipped
+A Data Engineer is designing a near real-time ingestion pipeline for a retail company to ingest event logs from Amazon S3 into Snowflake to derive insights. A Snowflake Architect is asked to define security best practices to configure access control privileges for the data load for auto-ingest to Snowpipe.
+
+What are the MINIMUM object privileges required for the Snowpipe user to execute Snowpipe?
+
+USAGE on the named pipe, named stage, target database, and schema, and INSERT and SELECT on the target table.
+
+Correct answer
+OWNERSHIP on the named pipe, USAGE and READ on the named stage, USAGE on the target database and schema, and INSERT and SELECT on the target table.
+
+CREATE on the named pipe, USAGE and READ on the named stage, USAGE on the target database and schema, and INSERT end SELECT on the target table.
+
+OWNERSHIP on the named pipe, USAGE on the named stage, target database, and schema, and INSERT and SELECT on the target table.
+
+Overall explanation
+Using Snowpipe requires a role with the following privileges:
+
+
+See this link.
+
+Question 35
+Skipped
+How is the change of local time due to daylight savings time handled in Snowflake tasks? (Choose two.)
+
+A frequent task execution schedule like minutes may not cause a problem, but will affect the task history.
+
+Correct selection
+A task scheduled in a UTC-based schedule will have no issues with the time changes.
+
+Task schedules can be designed to follow specified or local time zones to accommodate the time changes.
+
+A task will move to a suspended state during the daylight savings time change.
+
+Correct selection
+A task schedule will follow only the specified time and will fail to handle lost or duplicated hours.
+
+Overall explanation
+To avoid unexpected task executions due to daylight saving time, use one of the following: Use a time format that does not apply daylight savings time, such as UTC.
+
+See this link.
+
+Question 36
+Skipped
+Which of the following statements are the best practices for the ACCOUNTADMIN role? (Choose three)
+
+Assign this role to many users.
+
+Correct selection
+Assign this role to at least two users.
+
+Assign this role to only one user.
+
+Correct selection
+All users assigned the ACCOUNTADMIN role should also be required to use multi-factor authentication (MFA) for login.
+
+Correct selection
+Assign this role only to a select/limited number of people in your organization.
+
+Overall explanation
+The first two statements are obvious. Regarding the last one, Snowflake follows strict security procedures for resetting a forgotten or lost password for users with the ACCOUNTADMIN role. These procedures can take up to two business days, and to avoid them, we should assign this role to two users at least, as the users can reset each other’s passwords.
+
+Question 37
+Skipped
+Why does Snowflake recommend using the insertReport endpoint instead of the loadHistoryScan when using Snowpipe?
+
+Because the reports give more information
+
+Because the loadHistoryScan endpoint is deprecated, it will no longer be updated by Snowflake.
+
+Correct answer
+Because an excessive usage of the loadHistoryScan tends to lead to API throttling (and it returns the error code 429).
+
+Overall explanation
+Reading the last 24 hours of history every minute will result in 429 errors indicating a rate limit has been reached. To help avoid it, Snowflake recommends relying more heavily on insertReport than loadHistoryScan. You can see more information about the loadHistoryScan endpoint at the following link.
+
+Question 38
+Skipped
+How many files can the COPY INTO operation load as the maximum when providing a discrete list of files?
+
+Correct answer
+1000
+
+100
+
+10000
+
+There is no limit.
+
+Overall explanation
+Providing a discrete list of files is generally the fastest way to load files into Snowflake; however, the FILES parameter supports a maximum of 1000 files. This can be an example of the COPY INTO functionality providing a list of files:
+
+COPY INTO my_table
+FROM @%my_table/data/
+FILES=('test.csv', 'hello.csv', 'world.csv');
+Question 39
+Skipped
+What Snowflake object executes code outside Snowflake, known as remote service?
+
+Correct answer
+External Function
+
+External Job
+
+External Script
+
+External Function Integration
+
+Overall explanation
+See this link.
+
+
+Question 40
+Skipped
+Which command can we use to convert JSON NULL values to SQL NULL values?
+
+STRIP_OUTER_ARRAY
+
+JSON_TO_SQL
+
+TRANSCRIPT_NULL
+
+Correct answer
+STRIP_NULL_VALUE
+
+Overall explanation
+Just as an example, if the key 'c' from a JSON is NULL:
+
+
+
+SELECT STRIP_NULL_VALUE (src:c) 
+FROM MYTABLE;
+Question 41
+Skipped
+An Architect is designing a pipeline to stream event data into Snowflake using the Snowflake Kafka connector. The Architect’s highest priority is to configure the connector to stream data in the MOST cost-effective manner.
+
+Which of the following is recommended for optimizing the cost associated with the Snowflake Kafka connector? (Choose two.)
+
+Correct selection
+Utilize a higher Buffer.size.bytes in the connector configuration.
+
+Utilize a lower Buffer.count.records in the connector configuration.
+
+Correct selection
+Utilize a higher Buffer.flush.time in the connector configuration.
+
+Utilize a lower Buffer.size.bytes in the connector configuration.
+
+Overall explanation
+Low latency typically means smaller files & higher costs Cost of ingestion: Larger files lower the cost by reducing the total number of files/TB
+
+Question 42
+Skipped
+An Architect needs to allow a user to create a database from an inbound share.
+
+
+
+To meet this requirement, the user’s role must have which privileges? (Choose two.)
+
+IMPORT DATABASE;
+
+CREATE SHARE;
+
+IMPORT PRIVILEGES;
+
+Correct selection
+CREATE DATABASE;
+
+Correct selection
+IMPORT SHARE;
+
+Overall explanation
+Create a database from the share using CREATE DATABASE … FROM SHARE.
+
+Executing this command requires a role with the global CREATE DATABASE and IMPORT SHARE privileges.
+
+
+
+See this link.
+
+Question 43
+Skipped
+Which command can we use to list all the object references of a view?
+
+GET_REFERENCES
+
+Correct answer
+GET_OBJECT_REFERENCES
+
+GET_VIEW_REFERENCES
+
+Overall explanation
+Just as an example, if I wanted to know all the references of the view MY_VIEW, we would execute this command:
+
+select * 
+from table(get_object_references( 
+database_name=>'MY_DB', 
+schema_name=>'MY_SCHEMA',
+ object_name=>’MY_VIEW’) 
+);
+Question 44
+Skipped
+Which command can we use to restore a dropped share?
+
+Correct answer
+We cannot restore a dropped SHARE; we must create it again.
+
+RESTORE SHARE <myShare>
+
+RECOVER SHARE <myShare>
+
+Overall explanation
+A dropped share can not be restored. The share must be created again using the CREATE SHARE command and then configured using GRANT <privilege> … TO SHARE and ALTER SHARE.
+
+See this link.
+
+Question 45
+Skipped
+Which pipes are cloned when cloning a database or schema?
+
+Correct answer
+Pipes that reference external stages
+
+Pipes that reference internal stages
+
+Both
+
+Overall explanation
+Internal named stages are NEVER cloned, so pipes that reference internal stages are not cloned.
+
+Question 46
+Skipped
+After adding the Search Optimization service in a Snowflake table called MY_TABLE, we forgot to add it in two columns, so we ran the same command in the other two columns, as we can see in the following code:
+
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION ON EQUALITY(col1, col2);
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION ON EQUALITY(col3, col4);
+
+
+What is going to be the result?
+
+It will drop the Search Optimization Service from col1 and col2, but it will work for columns col3 and col4.
+
+Correct answer
+It will work as each subsequent command adds the existing configuration to the table.
+
+It will fail as you can only add the Search Optimization Service once. You should drop it first.
+
+Overall explanation
+You can add the Search Optimization service to a table by running the command “ALTER TABLE <table_name> ADD SEARCH OPTIMIZATION. Also, running the two previous queries is the same as running the following command:
+
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION ON EQUALITY(col1, col2, col3, col4);
+Question 47
+Skipped
+What other parameter does Snowflake recommend adding when organizing files into logical paths?
+
+Correct answer
+The date when the data was written
+
+The city where the stage is located
+
+The day of the week when the data was written
+
+Overall explanation
+For example, imagine we are storing data for a European company with locations in different countries. The logical paths could be:
+
+Spain/Madrid/2023/01/10/05/
+
+Spain/Barcelona/2023/01/03/05/
+
+Germany/Berlin/2023/01/07/04/
+
+Question 48
+Skipped
+The Data Engineering team at a large manufacturing company needs to engineer data coming from many sources to support a wide variety of use cases and data consumer requirements which include:
+
+1. Finance and Vendor Management team members who require reporting and visualization
+
+2. Data Science team members who require access to raw data for ML model development
+
+3. Sales team members who require engineered and protected data for data monetization
+
+What Snowflake data modeling approaches will meet these requirements? (Choose two.)
+
+Create a raw database for landing and persisting raw data entering the data pipelines.
+
+Correct selection
+Create a set of profile-specific databases that aligns data with usage patterns.
+
+Consolidate data in the company’s data lake and use EXTERNAL TABLES.
+
+Correct selection
+Create a Data Vault as the sole data pipeline endpoint and have all consumers directly access the Vault.
+
+Create a single star schema in a single database to support all consumers’ requirements.
+
+Overall explanation
+Data Vault modeling is characterized by its flexibility and scalability when integrating new use cases from different sources and tenants. By using H, L, S and other Derived objects it is possible to make a single Vault where all these sources can be integrated in the same model, covering the needs of the different use cases.
+
+On the other hand, podemos definir una arquitectura donde tengamos una base de datos por origen de data, pudiendo alinear el modelado a las necesidades de cada caso de uso.
+
+These modeling functionalities would not be possible through a single star schema.
+
+The other options do not talk about modeling types so they are discarded as not correct.
+
+Question 49
+Skipped
+When loading data into a table that captures the load time in a column with a default value of either CURRENT_TIME() or CURRENT_TIMESTAMP() what will occur?
+
+All rows loaded using a specific COPY statement will have varying timestamps based on when the rows were inserted.
+
+Any rows loaded using a specific COPY statement will have varying timestamps based on when the rows were created in the source.
+
+Any rows loaded using a specific COPY statement will have varying timestamps based on when the rows were read from the source.
+
+Correct answer
+All rows loaded using a specific COPY statement will have the same timestamp value.
+
+Overall explanation
+When loading data into a table that captures the load time in a column with a default value of either CURRENT_TIME() or CURRENT_TIMESTAMP(), all rows loaded using a specific COPY statement have the same timestamp value. It stores the time that the COPY statement began, not when the record is inserted, and it applies both to the CURRENT_TIME() and the CURRENT_TIMESTAMP() functions.
+
+
+Question 50
+Skipped
+A Data Architect has set up continuous data ingestion using Snowpipe. After a few days of successful data ingestion, the Architect must modify the pipe definition of the referenced external stage.
+
+What are the recommended steps the Architect should take?
+
+• Pause the pipe using the SET_PIPE statement and make sure the pending file count is 1
+
+• Recreate the pipe to change the COPY statement
+
+• Review the configuration steps for the cloud message service to ensure settings are accurate
+
+• Resume the pipe using the START_PIPE statement and verify pipe execution status is running
+
+Correct answer
+• Pause the pipe using an ALTER_PIPE statement, confirm the pending file count is 0
+
+• Recreate the pipe to change the COPY statement and pause the pipe
+
+• Review the configuration steps for the cloud message service to ensure settings are accurate
+
+• Resume the pipe and verify the pipe execution status is running
+
+• Pause the pipe using an ALTER_PIPE statement, confirm the pending file count is 0
+
+• Recreate the pipe to change the COPY statement
+
+• Review the configuration steps for the cloud message service to ensure settings are accurate
+
+• Resume the pipe and verify pipe execution status is running
+
+• Create the pipe using the CREATE_PIPE statement, confirm the pending file count is 1
+
+• Recreate the pipe to change the COPY statement and pause the pipe
+
+• Review configuration steps for the cloud message service to ensure settings are accurate
+
+• Resume the pipe using the SET_PIPE statement and verty pipe execution status is running
+
+Overall explanation
+See this link.
+
+Question 51
+Skipped
+Files arrive in an external stage every 10 seconds from a proprietary system. The files range in size from 500 K to 3 MB. The data must be accessible by dashboards as soon as it arrives.
+
+
+
+How can a Snowflake Architect meet this requirement with the LEAST amount of coding? (Choose two.)
+
+Use a combination of a task and a stream.
+
+Use the COPY INTO command.
+
+Correct selection
+Use Snowpipe with auto-ingest.
+
+Use a materialized view on an external table.
+
+Correct selection
+Use a COPY command with a task.
+
+Overall explanation
+To meet the requirement of accessing data as soon as it arrives in the external stage with the least amount of coding, Snowpipe with auto-ingest and COPY command with a task can be used.
+
+Snowpipe with auto-ingest automatically ingests data as soon as it arrives in the external stage, while COPY command with a task can be used to automate the process of copying data from external stage to internal tables.
+
+Option External table + Materialized view would require even more coding and would not be as near real-time.
+
+The other options do not meet the requirements of ingestion and automation.
+
+Question 52
+Skipped
+Will this query cost compute credits considering that the previous query ran 5 minutes ago?
+
+
+
+SELECT * 
+FROM TABLE( 
+RESULT_SCAN(LAST_QUERY_ID()) 
+);
+Correct answer
+No, it will not compute credits because we are re-using from the cache.
+
+We cannot know because we do not know the auto-suspend time of the Warehouse.
+
+It will cost credits if auto-suspend time of the Warehouse is less than 5 minutes.
+
+It will cost credits.
+
+Overall explanation
+The RESULT_SCAN function returns the result set of a previous command (within 24 hours of when you executed the query) as if the result was a table. As we are using the cache, it doesn't cost compute credits. You can find more information about this command at the following link.
+
+Question 53
+Skipped
+After performing the following query:
+
+
+
+SELECT * 
+FROM MYTABLE 
+WHERE email=’test@test.com’
+you see in the query profiler the following information:
+
+
+
+
+
+
+
+Can you spot the issue?
+
+Union without ALL
+
+Correct answer
+There is inefficient pruning
+
+A "exploding join" issue might be the problem.
+
+The query is too large to fit in memory.
+
+Overall explanation
+All the previous answers are the most common query problems you can identify in the Query Profile (essential to know). The pruning efficiency can be observed by comparing Partitions scanned and Partitions total statistics in the TableScan operators.
+
+Pruning is efficient if the former is a small fraction of the latter. If not, the pruning did not have an effect. In this case, Snowflake scans all the partitions to get the rows with the value test@test.com in the email. This means this column is not well clustered, as it shouldn't scan so many partitions. We should create a cluster key on the EMAIL column.
+
+Question 54
+Skipped
+Which Snowflake data modeling approach is designed for BI queries?
+
+Snowflake schema
+
+Data Vault
+
+Correct answer
+Star schema
+
+3 NF
+
+Overall explanation
+Star schema allows faster cube processing.
+
+Question 55
+Skipped
+What will happen to ALTER a column setting it to NOT NULL if it contains NULL values?
+
+NULL values are changed to 0
+
+Snowflake deletes the rows with NULL values.
+
+Correct answer
+Snowflake returns an error
+
+NULL values are changed to an empty string " "
+
+Overall explanation
+When setting a column to NOT NULL, if the column contains NULL values, an error is returned and no changes are applied to the column. This restriction prevents inconsistency between values in rows inserted before the column was added and rows inserted after the column was added.
+
+Question 56
+Skipped
+An Architect needs to grant a group of ORDER_ADMIN users the ability to clean old data in an ORDERS table (deleting all records older than 5 years), without granting any privileges on the table. The group’s manager (ORDER_MANAGER) has full DELETE privileges on the table.
+
+
+
+How can the ORDER_ADMIN role be enabled to perform this data cleanup, without needing the DELETE privilege held by the ORDER_MANAGER role?
+
+Create a stored procedure that runs with caller’s rights, including the appropriate "> 5 years" business logic, and grant USAGE on this procedure to ORDER_ADMIN. The ORDER_MANAGER role owns the procedure.
+
+Create a stored procedure that can be run using both caller’s and owner’s rights (allowing the user to specify which rights are used during execution), and grant USAGE on this procedure to ORDER_ADMIN. The ORDER_MANAGER role owns the procedure.
+
+Correct answer
+Create a stored procedure that runs with owner’s rights, including the appropriate "> 5 years" business logic, and grant USAGE on this procedure to ORDER_ADMIN. The ORDER_MANAGER role owns the procedure.
+
+This scenario would actually not be possible in Snowflake – any user performing a DELETE on a table requires the DELETE privilege to be granted to the role they are using.
+
+Overall explanation
+The stored procedure should run with the owner's rights so that it can perform the DELETE operation on the table, and USAGE on the procedure should be granted to the ORDER_ADMIN role to allow them to execute the procedure without granting them any privileges on the table. The ORDER_MANAGER role should own the procedure to ensure proper access control.
+
+A stored procedure runs with either the caller’s rights or the owner’s rights. It cannot run with both at the same time. This topic describes the differences between a caller’s rights stored procedure and an owner’s rights stored procedure.
+
+The primary advantage of an owner’s rights stored procedure is that the owner can delegate specific administrative tasks, such as cleaning up old data, to another role without granting that role more general privileges, such as privileges to delete all data from a specific table.
+
+See this link.
+
+Question 57
+Skipped
+What is the MINIMUM Snowflake edition needed to integrate a tokenization provider with Snowflake External Tokenization?
+
+Business Critical
+
+Standard
+
+Correct answer
+Enterprise
+
+Virtual Private Snowflake (VPS)
+
+Overall explanation
+External tokenization requires Writing External Functions, which are included in the Snowflake Standard Edition, and you can use external functions with a tokenization provider.
+
+However, if you choose to integrate your tokenization provider with Snowflake External Tokenization, you must upgrade to Enterprise Edition or higher.
+
+See this link.
+
+
+
+Question 58
+Skipped
+What type of authentication does the Kafka connector use?
+
+Username/password requiring a password with numbers and letters
+
+Correct answer
+Key pair Authentication, which requires a 2048-bit (minimum) RSA key pair
+
+Username/password requiring a password with numbers, letters, and symbols
+
+Key pair Authentication, which requires a 1024-bit (minimum) RSA key pair
+
+Overall explanation
+The Kafka connector relies on key pair authentication rather than basic authentication (i.e. username and password). This authentication method requires a 2048-bit (minimum) RSA key pair.
+
+Question 59
+Skipped
+An Architect ran a query that completed in 30 minutes. The Architect wants to tune the query - noting a compilation time of 24 minutes.
+
+
+
+What steps can be taken to address this situation without increasing the size of the virtual warehouse? (Select THREE).
+
+Enable the search optimization service on the tables.
+
+Increase the number of multi-clusters.
+
+Correct selection
+Rewrite the query to reduce or eliminate high compute, resource-intensive functions.
+
+Enable clustering on all the tables in the query.
+
+Correct selection
+Check the query definition to identify if there are high-complexity nested views.
+
+Correct selection
+Materialize some of the resource-intensive operations in the query.
+
+Overall explanation
+Few comments about this question:
+
+
+
+Increasing number of multicluster will help only concurrency issues, not this case.
+
+
+
+The timing problem is caused with the compilation, not with performance, so we discarded options oriented to improve performance: search optimization service, clustering, etc.
+
+
+
+Long compilation times are caused by query complexity and the number of tables and columns involved in the query. It is important to understand that increasing the virtual warehouse size does not always improve query performance. Therefore, it is essential to optimize the query complexity and the schema of the tables involved in the query to reduce the compilation time and improve query performance.
+
+
+
+The top time-consuming activity during the compilation process is query complexity. The complexity is measured based on the number of lines, functions, joins, filters, group by, order by, and union statements. The more complex the query, the longer it takes for the optimizer to create the query plan. As a result, the compilation time can be longer than the execution time.
+
+
+
+The number of tables and columns in the query also affects the compilation time. The optimizer needs to analyze the schema and the statistics of the tables to create an optimized query plan. Therefore, the more tables and columns involved in the query, the longer it takes for the optimizer to create the plan.
+
+Question 60
+Skipped
+What is the meaning of “Local Disk IO” in the query profiler menu when running a query?
+
+The time when the processing was waiting for the network data transfer.
+
+Correct answer
+The time when the processing was blocked by local disk access.
+
+The time spent on data processing by the CPU.
+
+Overall explanation
+This topic is critical; you can see more information about how to analyze the information of the query profiler at the following link.
+
+Question 61
+Skipped
+Which of the following options is not a compression technique for AVRO file formats?
+
+Correct answer
+BZ2
+
+GZIP
+
+ZSTD
+
+AUTO
+
+DEFLATE
+
+Overall explanation
+AVRO compression techniques are very similar to XML, JSON, and CSV; the only difference is that it doesn’t accept BZ2 compression. You can see the different compression types for each file format in the following table:
+
+
+Question 62
+Skipped
+What is the function of Resource Monitors regarding data pipelines?
+
+Make data not being replicated twice in the same pipeline
+
+
+
+It performs backups for your pipelines every 5 minutes
+
+Correct answer
+It helps you monitor and control the costs of your pipelines
+
+Overall explanation
+A Resource Monitor can, among other things, notify the user, notify and suspend the warehouse, etc. It will allow us to establish limits on our account.
+
+See this link.
+
+Question 63
+Skipped
+Person1 is using the role SECURITYADMIN. Person 1 creates a role named DBA_ROLE that will manage the warehouses in the Snowflake account. Person1 now needs to switch to that role.
+
+What command(s) need to be executed to switch the context of this worksheet?
+
+The SECURITYADMIN role is not allowed to GRANT permissions to a role.
+
+Correct answer
+GRANT ROLE DBA_ROLE TO USER PERSON1;
+
+USE ROLE DBA_ROLE;
+
+USE ROLE DBA_ROLE;
+
+GRANT ROLE DBA_ROLE TO ROLE SECURITYADMIN;
+
+Overall explanation
+See this link.
+
+Question 64
+Skipped
+Why does the REMOVE command from a stage improve the COPY INTO command the next time it’s executed?
+
+Because it will have fewer files to copy
+
+Because it will compress files more easily
+
+Correct answer
+Because it will scan fewer files
+
+Overall explanation
+Removing files from a stage using the REMOVE command improves the performance when loading data because it reduces the number of files that the COPY INTO <table> command must scan to verify whether existing files in a stage were loaded already.
+
+Question 65
+Skipped
+When data is transferred from a Snowflake primary account to another target account using database replication, which account is billed for the data transfer and compute charges
+
+Correct answer
+The target account is charged for both the data transfer and compute charges.
+
+The primary account is charged for both the data transfer and compute charges.
+
+The primary account is charged for the compute charges and the target account is charged for the data transfer charges.
+
+The primary account is charged for the data transfer charges and the target account is charged for the compute charges.
+
+Overall explanation
+Charges based on replication are divided into two categories: data transfer and compute resources. Both categories are billed on the target account (i.e. the account that stores the secondary database or secondary replication/failover group that is refreshed).
+
+See this link.
