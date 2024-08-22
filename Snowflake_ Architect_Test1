@@ -1,0 +1,1478 @@
+Question 1
+Skipped
+What is the purpose of the SYSTEM$CLUSTERING_INFORMATION function?
+
+Returns clustering information, including average clustering depth, for a view based on one or more columns in the view.
+
+Returns clustering information, including average clustering depth, for only materialized views, based on one or more columns in the view.
+
+Correct answer
+Returns clustering information, including average clustering depth, for a table, based on one or more columns in the table.
+
+Overall explanation
+It returns, among other data and advice, the total number of micro-partitions that comprise the table; the average number of overlapping micro-partitions for each micro-partition in the table; a histogram depicting the distribution of overlap depth for each micro-partition in the table, etc.
+
+You can see more information about this function at the following link.
+
+Question 2
+Skipped
+To which entity do we grant privileges?
+
+Account
+
+Correct answer
+Roles
+
+Groups
+
+Users
+
+Overall explanation
+Privileges are granted to roles, and roles are granted to users.
+
+Question 3
+Skipped
+An Architect is cloning a database for a new development environment.
+
+
+
+Which of the following should the Architect take into consideration with the cloning process? (Select TWO)
+
+Correct selection
+Tasks will be suspended by default when created.
+
+Pipes that reference an external stage will not be cloned
+
+The cloned database will retain any granted privileges from the source database.
+
+Correct selection
+Unconsumed records in the streams will be inaccessible.
+
+Database tables will be locked during the cloning process.
+
+Overall explanation
+Any pipes that reference an external stage are cloned.
+
+When a database or schema that contains tasks is cloned, the tasks in the clone are suspended by default.
+
+When a database or schema that contains source tables and streams is cloned, any unconsumed records in the streams (in the clone) are inaccessible.
+
+Cloning operations require time to complete, particularly for large tables. During this period, DML transactions can alter the data in a source table.
+
+See this link.
+
+Question 4
+Skipped
+A healthcare company wants to share data with a medical institute. The institute is running a Standard edition of Snowflake; the healthcare company is running a Business Critical edition.
+
+
+
+How can this data be shared?
+
+Contact Snowflake and they will execute the share request for the healthcare company.
+
+By default, sharing is supported from a Business Critical Snowflake edition to a Standard edition.
+
+The healthcare company will need to change the institute’s Snowflake edition in the accounts panel.
+
+Correct answer
+Set the share_restriction parameter on the shared object to false.
+
+Overall explanation
+See this link.
+
+Question 5
+Skipped
+Which role can view account-level Credit and Storage Usage? (Choose two.)
+
+Correct selection
+ACCOUNTADMIN
+
+STORAGEADMIN
+
+SECURITYADMIN
+
+SYSADMIN
+
+Correct selection
+A role that has been granted the MONITOR USAGE global privilege
+
+Overall explanation
+MONITOR USAGE global privilege grants the ability to monitor account-level usage and historical information for databases and warehouses.
+
+See this link.
+
+Question 6
+Skipped
+The following commands are run in sequence:
+
+
+
+
+If an Architect creates a new table in the schema PROD_DB.PUBLIC, what would be the value of the table's DATA_RETENTION_TIME_IN_DAYS parameter?
+
+30
+
+10
+
+Correct answer
+20
+
+60
+
+Overall explanation
+Changing the retention period for your account or individual objects changes the value for all lower-level objects that do not have a retention period explicitly set. For example:
+
+If you change the retention period at the account level, all databases, schemas, and tables that do not have an explicit retention period automatically inherit the new retention period.
+
+If you change the retention period at the schema level, all tables in the schema that do not have an explicit retention period inherit the new retention period.
+
+But values defined in objects of the hierarchy will be overridden if they are defined in objects lower in the hierarchy (in this case the schema).
+
+See this link.
+
+Question 7
+Skipped
+An Architect has a VPN_ACCESS_LOGS table in the SECURITY_LOGS schema containing timestamps of the connection and disconnection, username of the user, and summary statistics.
+
+
+
+What should the Architect do to enable the Snowflake search optimization service on this table?
+
+Assume role with ALL PRIVILEGES including ADD SEARCH OPTIMIZATION in the SECURITY LOGS schema.
+
+Correct answer
+Assume role with OWNERSHIP on VPN_ACCESS_LOGS and ADD SEARCH OPTIMIZATION in the SECURITY_LOGS schema.
+
+Assume role with OWNERSHIP on future tables and ADD SEARCH OPTIMIZATION on the SECURITY_LOGS schema.
+
+Assume role with ALL PRIVILEGES on VPN_ACCESS_LOGS and ADD SEARCH OPTIMIZATION in the SECURITY_LOGS schema.
+
+Overall explanation
+To add, configure, or remove search optimization for a table, you must have the following privileges:
+
+You must have OWNERSHIP privilege on the table.
+
+You must have ADD SEARCH OPTIMIZATION privilege on the schema that contains the table.
+
+
+
+See this link.
+
+Question 8
+Skipped
+An Architect uses COPY INTO with the ON_ERROR=SKIP_FILE option to bulk load CSV files into a table called TABLEA, using its table stage. One file named file5.csv fails to load. The Architect fixes the file and re-loads it to the stage with the exact same file name it had previously.
+
+
+
+Which commands should the Architect use to load only file5.csv file from the stage? (Choose two.)
+
+COPY INTO tablea FROM @%tablea FORCE = TRUE;
+
+Correct selection
+COPY INTO tablea FROM @%tablea;
+
+COPY INTO tablea FROM @%tablea RETURN_FAILED_ONLY = TRUE;
+
+COPY INTO tablea FROM @%tablea NEW_FILES_ONLY = TRUE;
+
+Correct selection
+COPY INTO tablea FROM @%tablea FILES = ('file5.csv');
+
+COPY INTO tablea FROM @%tablea MERGE = TRUE;
+
+Overall explanation
+We want to load the file we have to point it explicitly - this is FILES = ('file5.csv'); option or load all unloaded files (with file5.csv) FROM @%tablea;.
+
+See this link.
+
+Question 9
+Skipped
+Which statements are true about database replication? (Select THREE).
+
+Correct selection
+The secondary database can be on a different cloud provider from the primary database provider.
+
+Correct selection
+The secondary database can be in a different region from the primary database.
+
+The secondary database cannot be on a different cloud provider than the primary database provider.
+
+Data transfer charges will be incurred on the account hosting the secondary database.
+
+Correct selection
+The secondary database is read-only
+
+Each transaction on the primary database is automatically transmitted in real time to the secondary database.
+
+Overall explanation
+Database replication is supported across regions and across cloud platforms
+
+All DML/DDL operations are executed on the primary database. Each read-only, secondary database can be refreshed periodically with a snapshot of the primary database, replicating all data as well as DDL operations on database objects (i.e. schemas, tables, views, etc.).
+
+All secondary objects in a target account, including secondary databases and shares, are read-only.
+
+See this link.
+
+See this link.
+
+
+
+Question 10
+Skipped
+The following DDL command was used to create a task based on a stream:
+
+
+Assuming MY_WH is set to auto_suspend – 60 and used exclusively for this task, which statement is true?
+
+The warehouse MY_WH will be made active every five minutes to check the stream.
+
+The warehouse MY_WH will never suspend.
+
+The warehouse MY_WH will automatically resize to accommodate the size of the stream.
+
+Correct answer
+The warehouse MY_WH will only be active when there are results in the stream.
+
+Overall explanation
+SYSTEM$STREAM_HAS_DATA is the only function supported for evaluation in the SQL expression. This function indicates whether a specified stream contains change tracking data. A task evaluates whether the specified stream contains change data before starting the current run. If the result is FALSE, then the task does not run. Note that this function is designed to avoid false negatives (i.e. returning a false value even when the stream contains change data); however, the function is not guaranteed to avoid false positives (i.e. returning a true value when the stream contains no change data).
+
+Validating the conditions of the WHEN expression does not require compute resources. The validation is instead processed in the cloud services layer.
+
+See this link.
+
+Question 11
+Skipped
+When using the ALLOW_CLIENT_MFA_CACHING parameter, how long is a cached Multi-Factor Authentication (MFA) token valid for?
+
+1 hour
+
+Correct answer
+4 hours
+
+8 hours
+
+2 hours
+
+Overall explanation
+MFA token caching can help to reduce the number of prompts that must be acknowledged while connecting and authenticating to Snowflake, especially when multiple connection attempts are made within a relatively short time interval. A cached MFA token is valid for up to four hours.
+
+See this link.
+
+Question 12
+Skipped
+What is the meaning of “Percentage scanned from cache” in the query profiler menu when running a query?
+
+The percentage of data scanned from the query cache.
+
+The percentage of data scanned from the metadata cache.
+
+Correct answer
+The percentage of data scanned from the local disk cache.
+
+Overall explanation
+This topic is critical; you can see more information about how to analyze the information of the query profiler at the following link.
+
+Question 13
+Skipped
+How do Snowflake databases that are created from shares differ from standard databases that are not created from shares? (Choose three.)
+
+Shared databases can also be created as transient databases.
+
+Correct selection
+Shared databases are not supported by Time Travel.
+
+Shared databases can be cloned.
+
+Shared databases must be refreshed in order for new data to be visible.
+
+Correct selection
+Shared databases will not have the PUBLIC or INFORMATION_SCHEMA schemas without explicitly granting these schemas to the share.
+
+Correct selection
+Shared databases are read-only.
+
+Overall explanation
+Shared databases are read-only.
+
+Users in a consumer account can view/query data, but cannot insert or update data, or create any objects in the database.
+
+The following actions are not supported:
+
+Creating a clone of a shared database or any schemas/tables in the database.
+
+Time Travel for a shared database or any schemas/tables in the database.
+
+Editing the comments for a shared database.
+
+Databases created from shares differ from standard databases in the following ways:
+
+They do not have the PUBLIC or INFORMATION_SCHEMA schemas unless these schemas were explicitly granted to the share.
+
+They cannot be cloned.
+
+Properties, such as TRANSIENT and DATA_RETENTION_TIME_IN_DAYS, do not apply.
+
+
+
+See this link.
+
+Question 14
+Skipped
+An Architect creates a view to fetch data which is aggregated on SALES_DATE and LOCATION, using the following command:
+
+
+
+
+The view results are slow to process as millions of records are retrieved.
+
+How could the Architect use cluster keys to address this latency?
+
+Cluster the columns from this view that are most actively used in selective filters.
+
+Use the command ALTER VIEW VW_FETCHAGGREGATEDDATA CLUSTER BY (SALES_DATE, LOCATION);
+
+Use the command ALTER VIEW VW_FETCHAGGREGATEDDATA RECLUSTER;
+
+Correct answer
+Recreate this view to be a materialized view then execute the command ALTER MATERIALIZED VIEW VW_FETCHAGGREGATEDDATA CLUSTER BY (SALES_DATE, LOCATION);
+
+Overall explanation
+The options with CLUSTER operations on non-materialized views are not valid, so we discard them.
+
+About the other two options, this is what the Snowflake documentation says:
+
+In some cases, clustering on columns used in GROUP BY or ORDER BY clauses can be helpful. However, clustering on these columns is usually less helpful than clustering on columns that are heavily used in filter or JOIN operations. If you have some columns that are heavily used in filter/join operations and different columns that are used in ORDER BY or GROUP BY operations, then favor the columns used in the filter and join operations.
+
+But in this case, although the filter option is technically feasible, the view does not include any filter, only an aggregation.
+
+The use of materialized views is recommended to improve performance. Materialized Views contain a copy of a subset of the data in a table. Depending upon the amount of data in the table and in the materialized view, scanning the materialized view can be much faster than scanning the table. Materialized views also support clustering
+
+See this link.
+
+See this link.
+
+Question 15
+Skipped
+An Architect is designing a data model and needs to decide how to generate and store primary keys with hashed values for a large amount of data.
+
+
+
+Which hash function in Snowflake will MINIMIZE the likelihood of collisions?
+
+MD5
+
+MD5_NUMBER_LOWER64
+
+SHA2
+
+Correct answer
+SHA2 with digest_size set to 512
+
+Overall explanation
+This question is not 100% related to Snowflake but they are cryptographic functions available in Snowflake.
+
+The topic of collisions will sound familiar if you are used to modeling in the Data Vault 2.0 paradigm.
+
+SHA2 with digest_size set to 512 is the best choice to minimize the likelihood of collisions. The increased digest size provides a larger range of possible hash values, which drastically reduces the chances of two different inputs resulting in the same hash output (a collision). This makes it ideal for scenarios where maintaining uniqueness is critical and a large amount of data is involved such as defining business keys in DV 2.0.
+
+Question 16
+Skipped
+When creating a table using the command:
+
+
+
+CREATE TABLE MY_TABLE
+(NAME STRING(100));
+
+
+What would the command "DESC TABLE MY_TABLE;" display as the column type?
+
+Char
+
+Text
+
+String
+
+Correct answer
+Varchar
+
+Overall explanation
+Varchar has different synonyms, like STRING , TEXT , NVARCHAR , CHAR , CHARACTER…, but in the end, they are all VARCHAR type when describing the table. Take a look at the following example, where all the column types are VARCHAR
+
+
+Question 17
+Skipped
+A large manufacturing company runs a dozen individual Snowflake accounts across its business divisions. The company wants to increase the level of data sharing to support supply chain optimizations and increase its purchasing leverage with multiple vendors.
+
+
+
+The company’s Snowflake Architects need to design a solution that would allow the business divisions to decide what to share, while minimizing the level of effort spent on configuration and management. Most of the company divisions use Snowflake accounts in the same cloud deployments with a few exceptions for European-based divisions.
+
+
+
+According to Snowflake recommended best practice, how should these requirements be met?
+
+Deploy a Private Data Exchange in combination with data shares for the European accounts.
+
+Deploy to the Snowflake Marketplace making sure that invoker_share() is used in all secure views.
+
+Correct answer
+Deploy a Private Data Exchange and use replication to allow European data shares in the Exchange.
+
+Migrate the European accounts in the global region and manage shares in a connected graph architecture. Deploy a Data Exchange.
+
+Overall explanation
+The key is this: Most of the company divisions use Snowflake accounts in the same cloud deployments with a few exceptions for European-based divisions.
+
+This makes necessary to use database replication as the solution needs to integrate data from differente clouds.
+
+See this link.
+
+Question 18
+Skipped
+How do managed access schemas help with data governance?
+
+Correct answer
+They provide centralized privilege management with the schema owner.
+
+They enforce identical privileges across all tables and views in a schema.
+
+They log all operations and enable fine-grained auditing.
+
+They require the use of masking and row access policies across every table and view in the schema.
+
+Overall explanation
+With managed access schemas, object owners lose the ability to make grant decisions. Only the schema owner (i.e. the role with the OWNERSHIP privilege on the schema) or a role with the MANAGE GRANTS privilege can grant privileges on objects in the schema, including future grants, centralizing privilege management.
+
+See this link.
+
+
+
+You can see the differences between a schema owner and an object owner when granting privileges in regular and managed access schemas in the following image:
+
+
+
+
+
+
+
+Question 19
+Skipped
+What are some of the characteristics of result set caches? (Choose three.)
+
+The result set cache is not shared between warehouses.
+
+Correct selection
+Snowflake persists the data results for 24 hours.
+
+Correct selection
+The retention period can be reset for a maximum of 31 days.
+
+The data stored in the result cache will contribute to storage costs.
+
+Time Travel queries can be executed against the result set cache.
+
+Correct selection
+Each time persisted results for a query are used, a 24-hour retention period is reset.
+
+Overall explanation
+See this link.
+
+Question 20
+Skipped
+A stream stores data with the same columns as the source data but with additional columns. What are those additional columns? (Choose two.)
+
+Correct selection
+METADATA$ACTION
+
+METADATA$ROW_NUM
+
+METADATA$DELETE
+
+METADATA$INSERT
+
+Correct selection
+METADATA$ISUPDATE
+
+Overall explanation
+See this link.
+
+Question 21
+Skipped
+A company wants to deploy its Snowflake accounts inside its corporate network with no visibility on the internet. The company is using a VPN infrastructure and Virtual Desktop Infrastructure (VDI) for its Snowflake users. The company also wants to re-use the login credentials set up for the VDI to eliminate redundancy when managing logins.
+
+
+
+What Snowflake functionality should be used to meet these requirements? (Choose two.)
+
+Correct selection
+Set up SSO for federated authentication.
+
+Correct selection
+Use private connectivity from a cloud provider.
+
+Use a proxy Snowflake account outside the VPN, enabling client redirect for user logins.
+
+Set up replication to allow users to connect from outside the company VPN.
+
+Provision a unique company Tri-Secret Secure key.
+
+Overall explanation
+Use private connectivity from a cloud provider: Private connectivity enables a secure, dedicated network connection between Snowflake and the company’s on-premises infrastructure over a VPN. This approach can provide the required network isolation and security while maintaining high performance and low latency.
+
+Set up SSO for federated authentication: Setting up SSO with a supported identity provider (IdP) allows the company to use its existing user accounts and credentials for authenticating and authorizing user access to Snowflake. This can help reduce the burden of managing multiple sets of credentials and improve the overall user experience.
+
+Question 22
+Skipped
+What built-in Snowflake features make use of the change tracking metadata for a table? (Choose two.)
+
+The MERGE command
+
+The CHANGE_DATA_CAPTURE command
+
+Correct selection
+The CHANGES clause
+
+The UPSERT command
+
+Correct selection
+A STREAM object
+
+Overall explanation
+The built-in Snowflake features that make use of the change tracking metadata for a table are the CHANGES clause and a STREAM object.
+
+Question 23
+Skipped
+What command can we use to delete a share from the Snowflake account?
+
+Correct answer
+DROP SHARE <myShare>
+
+ALTER SHARE <myShare> SET REMOVED = True
+
+DELETE SHARE <myShare>
+
+REMOVE SHARE <myShare>
+
+Overall explanation
+DROP SHARE <name> 
+
+Removes the specified share from the system and immediately revokes access for all consumers (i.e. accounts who have created a database from the share).
+
+See this link.
+
+Question 24
+Skipped
+What is the purpose of external functions in Snowflake?
+
+Correct answer
+Call executable code developed, maintained, stored, and executed outside Snowflake.
+
+Connect to a repository of functions outside Snowflake.
+
+Download executable code maintained outside Snowflake.
+
+Overall explanation
+In external functions, the code is executed outside Snowflake, also known as Remote Service, which acts like a function, and the information sent is usually relayed through a proxy service. Snowflake stores security-related external function information in an API integration.
+
+
+Question 25
+Skipped
+What does a response error code of 429 from the insertFiles, insertReport, or loadHistoryScan API of Snowpipe mean?
+
+Failure. Invalid request due to an invalid format or limit exceeded
+
+Failure. PipeName not recognized
+
+Correct answer
+Failure. Request rate limit exceeded
+
+Overall explanation
+You can see all the errors from the insertFiles API at the following link.
+
+Question 26
+Skipped
+Company A would like to share data in Snowflake with Company B. Company B is not on the same cloud platform as Company A.
+
+
+
+What is required to allow data sharing between these two companies?
+
+Company A and Company B must agree to use a single cloud platform: Data sharing is only possible if the companies share the same cloud provider.
+
+Correct answer
+Setup data replication to the region and cloud platform where the consumer resides.
+
+Create a pipeline to write shared data to a cloud storage location in the target cloud provider.
+
+Ensure that all views are persisted, as views cannot be shared across cloud platforms.
+
+Overall explanation
+As both companies are not in the same region, we need to use database replication.
+
+See this link.
+
+Question 27
+Skipped
+The IT Security team has identified that there is an ongoing credential stuffing attack on many of their organization’s system.
+
+What is the best way to find recent and ongoing login attempts to Snowflake?
+
+View the Users section in the Account tab in the Snowflake UI and review the last login column.
+
+Query the LOGIN_HISTORY view in the ACCOUNT_USAGE schema in the SNOWFLAKE database.
+
+View the History tab in the Snowflake UI and set up a filter for SQL text that contains the text "LOGIN".
+
+Correct answer
+Call the LOGIN_HISTORY Information Schema table function.
+
+Overall explanation
+The word recent in the question is key. Remember that the ACCOUNT_USAGE has a latency of 2 or 3 hours but the Information Schema is instantaneous.
+
+See this link.
+
+Question 28
+Skipped
+Can a System Administrator enable Snowflake Multi-Factor Authentication (MFA) for another user?
+
+Yes. the SECURITYADMIN role can enable it through the ALTER USER command
+
+Yes, this can be selected when a user account is created
+
+No, to enable MFA users would need to create a support ticket
+
+Correct answer
+No, to enable MFA users would have to enroll themselves
+
+Overall explanation
+Can MFA be enabled for another user?
+
+No. 'EXT_AUTHN_DUO' property cannot be set directly while creating or altering user. This is set or unset based on when user enrolls in MFA or MFA is disabled for the user, respectively.
+
+This property is set when the user enrolls in MFA.
+
+This property is unset when MFA is disabled for the user (e.g. DISABLE_MFA = TRUE or user cancels their enrollment in MFA).
+
+To enable MFA, users must enroll themselves to use MFA.
+
+See this link.
+
+Question 29
+Skipped
+Several users are using the same virtual warehouse. The users report that the queries are running slowly, and that many queries are being queued.
+
+
+How can the Architect solve this issue?
+
+Correct answer
+Increase the warehouse MAX_CLUSTER_COUNT parameter.
+
+Increase the warehouse MAX_CONCURRENCY_LIMIT parameter.
+
+Reduce the warehouse AUTO_SUSPEND parameter.
+
+Reduce the warehouse STATEMENT_QUEUED_TIMEOUT_IN SECONDS parameter.
+
+Overall explanation
+We have to solve concurrency issues here and scale out is the solution so most suitable option is increase the cluster count.
+
+See this link.
+
+Question 30
+Skipped
+Which scaling policies does Snowflake support for multi-cluster warehouses? (Choose two.)
+
+Maximized
+
+Minimized
+
+Auto-scale
+
+Correct selection
+Economy
+
+Correct selection
+Standard (default)
+
+Overall explanation
+The scaling policy for a multi-cluster warehouse only applies if it is running in Auto-scale mode. In Maximized mode, all clusters run concurrently so there is no need to start or shut down individual clusters.
+
+See this link.
+
+Question 31
+Skipped
+A company security requirement states that encryption keys used for encrypting files in Snowflake need to be re-encrypted using new keys every 12 months. The company is using an Enterprise edition of Snowflake.
+
+
+
+How can this requirement be met?
+
+Create a task to run the rekeying function on a 12-month schedule.
+
+Correct answer
+Set the periodic_data_rekeying parameter to true.
+
+Upgrade to a Business Critical edition of Snowfiake.
+
+Contact Snowflake Support to enable periodic rekeying.
+
+Overall explanation
+This requirement can be met using periodic rekeying.
+
+Periodic rekeying requires Enterprise Edition (or higher).
+
+If periodic rekeying is enabled, then when the retired encryption key for a table is older than one year, Snowflake automatically creates a new encryption key and re-encrypts all data previously protected by the retired key using the new key.
+
+For Enterprise Edition accounts, users with the ACCOUNTADMIN role (i.e. your account administrators) can enable rekeying using ALTER ACCOUNT and the PERIODIC_DATA_REKEYING parameter:
+
+ALTER ACCOUNT SET PERIODIC_DATA_REKEYING = true;
+
+See this link
+
+
+
+
+
+Question 32
+Skipped
+Which of the following features is not supported by Snowpipe for data loading?
+
+Semi-structured data loading
+
+Transaction management
+
+Correct answer
+PURGE copy (after loading)
+
+Detection of duplication of files while loading
+
+Column Reordering
+
+Overall explanation
+Pipe objects do not support the PURGE copy option. Snowpipe cannot delete staged files automatically when the data is successfully loaded into tables. To remove staged files you no longer need, Snowflake recommends periodically executing the REMOVE command to delete the files.
+
+See this link.
+
+Question 33
+Skipped
+At which object type level can the APPLY MASKING POLICY, APPLY ROW ACCESS POLICY and APPLY SESSION POLICY privileges be granted?
+
+Correct answer
+Global
+
+Table
+
+Database
+
+Schema
+
+Overall explanation
+These are global privileges to grant.
+
+See this link.
+
+Question 34
+Skipped
+An Architect needs to set up a Data Exchange to allow a selected group of invited members to participate in a secure data collaboration.
+
+
+
+Who can set up the Data Exchange?
+
+A user with the SECURITYADMIN role
+
+A user with the ACCOUNTADMIN role
+
+Correct answer
+The Snowflake Support team
+
+A user with the ORGADMIN role
+
+Overall explanation
+See this link.
+
+Question 35
+Skipped
+Which are the two VARIANT columns each schema has in every Snowflake table loaded by the Kafka connector? (Choose two.)
+
+RECORD_ISCORRECT
+
+RECORD_SUMMARY
+
+RECORD_PRIVILEGES
+
+Correct selection
+RECORD_CONTENT
+
+Correct selection
+RECORD_METADATA
+
+Overall explanation
+The RECORD_CONTENT column contains the Kafka message, and RECORD_METADATA is the metadata about the message (the amount of metadata is configurable using the Kafka configuration properties). You can find all the metadata from this message at the following link.
+
+Question 36
+Skipped
+What is the best option to clone a table called MYTABLE?
+
+CREATE TABLE MYTABLE_2 AS INSERT INTO MYTABLE VALUES (SELECT * FROM MYTABLE);
+
+Correct answer
+CREATE TABLE MYTABLE_2 CLONE MYTABLE;
+
+CREATE TABLE MYTABLE_2 AS SELECT * FROM MYTABLE;
+
+Overall explanation
+Using the zero-copy cloning functionality from Snowflake will always be the best way of cloning objects as it doesn’t duplicate the data, it duplicates the metadata of the micro-partitions, saving us storage costs.
+
+You can see this behavior in the following diagram:
+
+
+Question 37
+Skipped
+Which organization-related tasks can be performed by the ORGADMIN role? (Choose three.)
+
+Correct selection
+Creating an account
+
+Deleting an account in an organization with a single account
+
+Correct selection
+Enabling the replication of a database
+
+Changing the name of the organization
+
+Correct selection
+Viewing a list of organization accounts
+
+Changing the name of an account while they are logged in to it
+
+Overall explanation
+The organization administrator (ORGADMIN) system role is responsible for managing operations at the organization level.
+
+A user with the ORGADMIN role can perform the following actions:
+
+Create an account in the organization.
+
+View/show all accounts within the organization.
+
+View/show a list of regions enabled for the organization.
+
+View usage information for all accounts in the organization.
+
+Enable database replication for an account in the organization.
+
+See this link.
+
+An organization administrator (i.e. a user granted the ORGADMIN role) can use the ALTER ACCOUNT command to rename an account, but they cannot rename an account while they are logged in to it, so option Changing the name of an account while they are logged in to it is not correct.
+
+See this link.
+
+Question 38
+Skipped
+An architect wants to extract the content of PDF files stored in Snowflake stages.
+
+How can this requirement be met?
+
+Window function
+
+HyperLogLog (HLL) function
+
+FLATTEN function
+
+Correct answer
+Java User-Defined Function (UDF)
+
+Overall explanation
+See this link.
+
+This quickstart is a good example.
+
+Question 39
+Skipped
+An Architect is using the Snowflake table function INFER_SCHEMA to automatically detect the file metadata schema in a set of staged data files. The files contain semi-structured data, and the function automatically retrieves the column definitions.
+
+Which statement will successfully create a table using the INFER_SCHEMA function?
+
+
+C
+
+Correct answer
+D
+
+B
+
+A
+
+Overall explanation
+The CREATE TABLE or CREATE EXTERNAL TABLE command with the USING TEMPLATE clause can be executed to create a new table or external table with the column definitions derived from the INFER_SCHEMA function output.
+
+See this link.
+
+Question 40
+Skipped
+How does Snowflake charge for the compute resources of the cloud services layer?
+
+The typical utilization of the cloud services layer (up to 10% of daily compute credits) is included for free. You pay the excess after this 20%.
+
+It’s included in the computing cost
+
+It’s a stable cost of 10$ per month
+
+Correct answer
+The typical utilization of the cloud services layer (up to 10% of daily compute credits) is included for free. You pay the excess after this 10%.
+
+Overall explanation
+See this link.
+
+Question 41
+Skipped
+By default, what is the MAXIMUM timeout value that is enforced before a SQL statement that is running is canceled by the system?
+
+Correct answer
+172800 seconds (2 days)
+
+216000 seconds (2.5 days)
+
+86400 seconds (1 day)
+
+43200 seconds (0.5 days)   
+
+Overall explanation
+STATEMENT_TIMEOUT_IN_SECONDS parameter defines the amount of time, in seconds, after which a running SQL statement (query, DDL, DML, etc.) is canceled by the system.
+
+See this link.
+
+
+
+
+
+Question 42
+Skipped
+What is the function of the insertReport Snowpipe endpoint?
+
+Insert reports into a table
+
+Insert files into a table
+
+Correct answer
+Retrieves a report of files submitted via insertFiles whose contents were recently ingested into a table.
+
+Overall explanation
+This endpoint has two limitations thought. The first one is that only the 10,000 most recent events are retained. Another one is that events are retained for a maximum of 10 minutes. An event occurs when data from a file submitted via insertFiles has been committed to the table and is available to queries.
+
+See this link.
+
+Question 43
+Skipped
+Which command can we use to drop pipes from the Kafka connector?
+
+Correct answer
+DROP PIPE <kafkaPipe>
+
+DELETE KAFKA_PIPE <kafkaPipe>
+
+DROP KAFKA_PIPE <kafkaPipe>
+
+DELETE PIPE <kafkaPipe>
+
+Overall explanation
+You can drop a Kafka pipe as if you were dropping another pipe.
+
+See this link.
+
+Question 44
+Skipped
+What is the output of the command?
+
+
+
+SELECT TOP 100 AGE 
+FROM USERS;
+Correct answer
+Non-deterministic list of 100 grades
+
+The TOP 100 grades ordered by the creation date of the data
+
+The TOP 100 grades in ascendent order
+
+The TOP 100 grades in descendent order
+
+Overall explanation
+We’d need the ORDER BY clause if we want to generate the other results. Without an ORDER BY clause, the results are non-deterministic because results within a result set are not necessarily in any particular order. To control the results returned, use an ORDER BY clause.
+
+See this link.
+
+Question 45
+Skipped
+Which clustering indicator will show if a large table in Snowflake will benefit from explicitly defining a clustering key?
+
+Total partition count
+
+Percentage
+
+Ratio
+
+Correct answer
+Depth
+
+Overall explanation
+See this link.
+
+Question 46
+Skipped
+What are the supported values for the VALIDATION_MODE parameter while using the COPY INTO <TABLE> command? (Choose three.)
+
+EXCLUDE_<N>_ERRORS
+
+Correct selection
+RETURN_ERRORS
+
+Correct selection
+RETURN_ALL_ERRORS
+
+EXCLUDE_ALL_ERRORS
+
+Correct selection
+RETURN_<N>_ROWS
+
+EXCLUDE_ERRORS
+
+Overall explanation
+The VALIDATION_MODE parameter tells the COPY command to validate the data files instead of loading them into the specified table. So, for example, it tests the files for errors but does not load them. These are the three modes it accepts. You cannot use transformations if you are using the VALIDATION_MODE either.
+
+See this link.
+
+Question 47
+Skipped
+One query takes a lot of time, and you see in the query profiler the following information:
+
+
+
+
+What might be the cause of this?
+
+Correct answer
+The amount of memory available for the memory and the local disk of a warehouse node might not be sufficient to hold intermediate results, making Snowflake use the remote storage, thus degrading the performance.
+
+The power of the cloud provider bucket performance is not enough; that's why the performance of the query is degraded.
+
+The size of the AWS S3 bucket is not sufficient
+
+Overall explanation
+When Snowflake warehouse cannot fit an operation in memory, it starts spilling (storing) data first to the local disk of a warehouse node and then to remote storage. As this means extra IO operations, any query requiring spilling will take longer than a similar query running on similar data capable of fitting the operations in memory. You can find more information about this problem and how to solve it at the following link.
+
+Question 48
+Skipped
+Select the correct object hierarchy from the following options. (Choose two.)
+
+Correct selection
+Organization -> Account -> User, Role, Database, Warehouse (at the same level)
+
+Organization -> Account -> Database -> Schema -> Table, Schema, Stage (at the same level)
+
+Correct selection
+Organization -> Account -> Database -> Schema -> Table, View, Stage (at the same level)
+
+Organization -> Account -> User, Role, Schema, Warehouse (at the same level)
+
+Organization -> Account -> User, Role, Table, Warehouse (at the same level)
+
+Overall explanation
+You can see the Snowflake hierarchy in the following image (via docs.snowflake.com):
+
+
+
+Question 49
+Skipped
+Which command will fail if you have a table created with the following DDL query?
+
+
+
+CREATE TABLE MYTABLE 
+(ID INTEGER, NAME VARCHAR)
+SELECT * FROM MYTABLE
+
+SELECT * FROM Mytable
+
+SELECT * FROM “MYTABLE”
+
+Correct answer
+SELECT * FROM “Mytable”
+
+Overall explanation
+If you use the symbol " ", you have to specify the exact name of the table - it is case sensitive.
+
+Question 50
+Skipped
+What is a characteristic of loading data into Snowflake using the Snowflake Connector for Kafka?
+
+The Connector only works in Snowflake regions that use AWS infrastructure.
+
+The Connector works with all file formats, including text, JSON, Avro, Ore, Parquet, and XML.
+
+Correct answer
+The Connector creates and manages its own stage, table, and pipe objects.
+
+The Connector only works in Snowflake regions that use Azure infrastructure.
+
+Overall explanation
+The connector creates the following objects for each topic:
+
+One internal stage to temporarily store data files for each topic.
+
+One pipe to ingest the data files for each topic partition.
+
+One table for each topic
+
+
+
+See this link.
+
+Question 51
+Skipped
+Which security, governance, and data protection features require, at a MINIMUM, the Business Critical edition of Snowflake? (Choose two.)
+
+Periodic rekeying of encrypted data
+
+Extended Time Travel (up to 90 days)
+
+Correct selection
+Customer-managed encryption keys through Tri-Secret Secure
+
+Correct selection
+AWS, Azure, or Google Cloud private connectivity to Snowflake
+
+Federated authentication and SSO
+
+Overall explanation
+See this link.
+
+
+Question 52
+Skipped
+Which types of tables typically benefit from creating a cluster key?
+
+Large tables (around 100GB of data)
+
+Small tables (around 1GB of data)
+
+Correct answer
+Very large tables (multi-terabytes of data)
+
+Medium tables (around 10GB of data)
+
+Overall explanation
+Although clustering can substantially improve the performance and reduce the cost of some queries, the compute resources used to perform clustering consume credits. As such, you should cluster only when queries will benefit substantially from the clustering in huge tables.
+
+See this link.
+
+Question 53
+Skipped
+Which command can we use to refresh a materialized view?
+
+ALTER MATERIALIZED_VIEW <view> REFRESH=TRUE
+
+RESUME MATERIALIZED_VIEW <view>
+
+Correct answer
+Materialized views are automatically refreshed by Snowflake
+
+RESTART MATERIALIZED_VIEW <view>
+
+Overall explanation
+Snowflake automatically and transparently maintains materialized views. To see the last time that Snowflake refreshed a materialized view, check the REFRESHED_ON and BEHIND_BY columns in the output of the command SHOW MATERIALIZED VIEWS.
+
+Question 54
+Skipped
+How can an Architect enable optimal clustering to enhance performance for different access paths on a given table?
+
+Correct answer
+Create multiple materialized views with different cluster keys.
+
+Create a clustering key that contains all columns used in the access paths.
+
+Create multiple clustering keys for a table.
+
+Create super projections that will automatically create clustering.
+
+Overall explanation
+The solution to the problem lies with two new features in Snowflake: materialized views and auto-clustering.
+
+Creating the materialized view with Snowflake allows you to specify the new clustering key, which enables Snowflake to reorganize the data during the initial creation of the materialized view.
+
+See this link.
+
+Question 55
+Skipped
+What integration object should be used to place restrictions on where data may be exported?
+
+API integration
+
+Stage integration
+
+Security integration
+
+Correct answer
+Storage integration
+
+Overall explanation
+A storage integration is a Snowflake object that stores a generated identity and access management (IAM) entity for your external cloud storage, along with an optional set of allowed or blocked storage locations (Amazon S3, Google Cloud Storage, or Microsoft Azure).
+
+Cloud provider administrators in your organization grant permissions on the storage locations to the generated entity.
+
+This option allows users to avoid supplying credentials when creating stages or when loading or unloading data.
+
+See this link.
+
+Question 56
+Skipped
+The table contains five columns and it has millions of records. The cardinality distribution of the columns is shown below:
+
+
+
+
+
+
+Column C4 and C5 are mostly used by SELECT queries in the GROUP BY and ORDER BY clauses. Whereas columns C1, C2 and C3 are heavily used in filter and join conditions of SELECT queries.
+
+The Architect must design a clustering key for this table to improve the query performance.
+
+Based on Snowflake recommendations, how should the clustering key columns be ordered while defining the multi-column clustering key?
+
+C3, C4, C5
+
+C5, C4, C2
+
+C1, C3, C2
+
+Correct answer
+C2, C1, C3
+
+Overall explanation
+If you are defining a multi-column clustering key for a table, the order in which the columns are specified in the CLUSTER BY clause is important. As a general rule, Snowflake recommends ordering the columns from lowest cardinality to highest cardinality
+
+See this link.
+
+Question 57
+Skipped
+Which of the following objects are NOT securable objects?
+
+ROLES
+
+USERS
+
+Correct answer
+PRIVILEGES
+
+VIEWS
+
+TABLES
+
+Overall explanation
+You can see the Snowflake hierarchy in the following image (via docs.snowflake.com):
+
+
+
+
+Question 58
+Skipped
+Which of these commands require a running warehouse?
+
+SELECT COUNT(*) FROM USERS_TABLE;
+
+Correct answer
+SELECT * FROM USERS_TABLE WHERE email=’test@test.com’;
+
+SELECT MAX(AGE) FROM USERS_TABLE;
+
+EXPLAIN USING TABULAR SELECT * FROM USERS_TABLE WHERE email=’test@test.com’;
+
+Overall explanation
+The first query will use compute power, whereas the others don’t need a warehouse running. This is an excellent example to see the use of the EXPLAIN command, which returns the logical execution plan for the specified SQL statement. An explained plan shows the operations (for example, table scans and joins) that Snowflake would perform to execute the query.
+
+For example, running the previous command in my Snowflake account, I generated this result in 101ms:
+
+
+Although EXPLAIN does not consume any compute credits, the compilation of the query does consume Cloud Service credits, just as other metadata operations do. The output is the same as the output of the command EXPLAIN_JSON.
+
+Question 59
+Skipped
+Which of the following REST endpoints does Snowpipe API provide? (Choose three.)
+
+Correct selection
+InsertReport
+
+LoadFiles
+
+Correct selection
+LoadHistoryScan
+
+LoadReport
+
+InsertHistoryScan
+
+Correct selection
+InsertFiles
+
+Overall explanation
+See this link.
+
+Question 60
+Skipped
+Which command will you run to list all privileges granted to a role?
+
+SHOW GRANTS ON ROLE <ROLE>
+
+Correct answer
+SHOW GRANTS TO ROLE <ROLE>
+
+SHOW GRANTS IN ROLE <ROLE>
+
+SHOW GRANTS OF ROLE <ROLE>
+
+Overall explanation
+“SHOW GRANTS OF ROLE” will list the users to which the role is assigned, whereas “SHOW GRANTS TO ROLE” will list the privileges to which this role has access.
+
+For example, this is the result of executing the command “SHOW GRANTS TO ROLE SYSADMIN” in my Snowflake account:
+
+
+
+
+Question 61
+Skipped
+A user has the appropriate privilege to see unmasked data in a column.
+
+
+
+If the user loads this column data into another column that does not have a masking policy, what will occur?
+
+Unmasked data will be loaded into the new column but only users with the appropriate privileges will be able to see the unmasked data.
+
+Masked data will be loaded into the new column.
+
+Unmasked data will be loaded into the new column and no users will be able to see the unmasked data.
+
+Correct answer
+Unmasked data will be loaded in the new column.
+
+Overall explanation
+Use caution when inserting values from a source column that has a masking policy on the source column to a target column without a masking policy on the target column. Since a masking policy is set on the source column, a role that views unmasked column data can insert unmasked data into another column, where any role with sufficient privileges on the table or view can see the value.
+
+See this link.
+
+Question 62
+Skipped
+What is the meaning of “Processing” in the query profiler menu when running a query?
+
+Correct answer
+The time spent on data processing by the CPU.
+
+The time when the processing was waiting for the network data transfer.
+
+The time when the processing was blocked by local disk access.
+
+Overall explanation
+This topic is critical; you can see more information about how to analyze the information of the query profiler at the following link.
+
+Question 63
+Skipped
+When are materialized views NOT recommended?
+
+Query results contain results that require significant processing
+
+The view’s base table does not change frequently.
+
+The query is on an external table
+
+Correct answer
+The view’s base table changes frequently
+
+Overall explanation
+Materialized views are particularly useful when:
+
+Query results contain a small number of rows and/or columns relative to the base table (the table on which the view is defined).
+
+Query results contain results that require significant processing, including:
+
+Analysis of semi-structured data.
+
+Aggregates that take a long time to calculate.
+
+The query is on an external table (i.e. data sets stored in files in an external stage), which might have slower performance compared to querying native database tables.
+
+The view’s base table does not change frequently.
+
+See this link.
+
+Question 64
+Skipped
+When using the Snowflake Connector for Kafka, what data formats are supported for the messages? (Choose two.)
+
+Correct selection
+JSON
+
+XML
+
+CSV
+
+Parquet
+
+Correct selection
+AVRO
+
+Overall explanation
+The Snowflake Connector for Kafka supports the JSON and Avro data formats for the messages. Snowflake does not support CSV, XML, or Parquet data formats for Kafka messages
+
+
+
+See this link.
+
+Question 65
+Skipped
+An Architect is determining how to cluster the following table, which is used to record orders from a food delivery service application:
+
+
+
+CREATE TABLE orders_dashboard (
+id NUMBER, 
+driver_id NUMBER, 
+customer_id NUMBER, 
+restaurant_ id NUMBER, 
+ordered_at TIMESTAMP, 
+item_count INTEGER, 
+total_cost NUMBER, 
+order_location_state CHAR (2), 
+order_comments TEXT);
+
+
+The purpose of this table is to provide metrics for regional sales managers to understand how deliveries in each region are performing over various timeframes
+
+
+
+Given that queries will be run against this table, what would be the MOST efficient clustering statement for this table?
+
+alter table orders_dashboard cluster by (order_location_state, ordered_at);
+
+alter table orders_dashboard cluster by (ordered_at, order_location_state);
+
+Correct answer
+alter table orders_dashboard cluster by (order_location_state, DATE (ordered_at));
+
+alter table orders_dashboard cluster by (DATE (ordered_at), order_location_state);
+
+Overall explanation
+Snowflake recommends ordering the columns from lowest cardinality to highest cardinality. Putting a higher cardinality column before a lower cardinality column will generally reduce the effectiveness of clustering on the latter column.
+
+
+
+For example, if a fact table has a TIMESTAMP column c_timestamp containing many discrete values (many more than the number of micro-partitions in the table), then a clustering key could be defined on the column by casting the values to dates instead of timestamps (e.g. to_date(c_timestamp)). This would reduce the cardinality to the total number of days, which typically produces much better pruning results.
+
+
+
+Cardinality of states is lower than DATE of the timestamp.
+
+
+
+See this link.
