@@ -1,0 +1,1448 @@
+Question 1
+Skipped
+ACCOUNTADMIN role cannot view the results for a query run by another user. (True/ False)
+
+FALSE
+Correct answer
+TRUE
+Overall explanation
+A user cannot view the result set from a query that another user executed. This behavior is intentional. For security reasons, only the user who executed a query can access the query results. This behavior is not connected to the Snowflake access control model for objects. Even a user with the ACCOUNTADMIN role cannot view the results for a query run by another user.
+
+Domain
+Account Access & Security
+Question 2
+Skipped
+If you want to create a warehouse that remains in a suspended state initially, which property do you need to set for that warehouse?
+AUTO_RESUME = TRUE
+Correct answer
+INITIALLY_SUSPENDED = TRUE
+AUTO_SUSPEND = 0
+AUTO_SUSPEND = TRUE
+AUTO_RESUME = FALSE
+Overall explanation
+INITIALLY_SUSPENDED = TRUE | FALSE Specifies whether the warehouse is created initially in the ‘Suspended’ state. The valid values are TRUE and FALSE. TRUE: The warehouse is created, but suspended. FALSE: The warehouse starts running after it is created. Default is FALSE
+Domain
+Performance Concepts
+Question 3
+Skipped
+If you have privileges to view queries executed by another user, the Query Detail page displays the details for the query and the actual query result. (TRUE/FALSE)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+If you have privileges to view queries executed by another user, the Query Detail page displays the details for the query, but, for data privacy reasons, the page does not display the actual query result.
+Domain
+Performance Concepts
+Question 4
+Skipped
+Which role has privileges to create warehouses and databases (and other objects) in an account?
+ORGADMIN
+USERADMIN
+ACCOUNTADMIN
+SECURITYADMIN
+Correct answer
+SYSADMIN
+Overall explanation
+SYSADMIN role has privileges to create warehouses and databases (and other objects) in an account. This role also has the ability to grant privileges on warehouses, databases, and other objects to other roles.
+
+Domain
+Account Access & Security
+Question 5
+Skipped
+Which of these roles is granted the MANAGE GRANTS security privilege to be able to modify any grant globally, including revoking it?
+SYSADMIN
+ACCOUNTADMIN
+ORGADMIN
+Correct answer
+SECURITYADMIN
+USERADMIN
+Overall explanation
+SECURITYADMIN role can manage any object grant globally, as well as create, monitor, and manage users and roles. More specifically, this role:
+
+Is granted the MANAGE GRANTS security privilege to be able to modify any grant, including revoking it.
+
+Inherits the privileges of the USERADMIN role via the system role hierarchy (i.e. USERADMIN role is granted to SECURITYADMIN).
+
+Domain
+Account Access & Security
+Question 6
+Skipped
+Federated Authentication is supported by the following:
+
+(Select all that apply)
+
+Correct selection
+Business Critical
+Correct selection
+Enterprise Edition
+Correct selection
+Standard Edition
+Correct selection
+VPS
+Overall explanation
+Federated authentication is supported by all of the Snowflake editions.
+
+Domain
+Account Access & Security
+Question 7
+Skipped
+Snowflake’s approach to access control combines aspects from which of the following models? (Select 2)
+
+Rule-based access control (RBAC)
+Mandatory Access Control (MAC)
+Correct selection
+Discretionary Access Control (DAC)
+Correct selection
+Role-based Access Control (RBAC)
+Overall explanation
+Snowflake’s approach to access control combines aspects from both of the following models:     
+
+Discretionary Access Control (DAC): Each object has an owner, who can in turn grant access to that object.     
+
+Role-based Access Control (RBAC): Access privileges are assigned to roles, which are in turn assigned to users.
+
+Domain
+Account Access & Security
+Question 8
+Skipped
+The warehouse performance can be evaluated by querying the
+Account Usage LOAD_HISTORY view
+Information Schema LOAD_HISTORY view
+Information Schema QUERY_HISTORY view
+Correct answer
+Account Usage QUERY_HISTORY view
+Overall explanation
+The warehouse performance can be evaluated by querying the Account Usage QUERY_HISTORY view.
+Domain
+Performance Concepts
+Question 9
+Skipped
+Which type of object key is only used for decryption?
+Active key
+Correct answer
+Retired Key
+None of these
+Destroyed key
+Overall explanation
+Active Key is used for both encryption and decryption.  The retired Key is used for decryption only.  The destroyed Key is no longer used.
+
+Domain
+Account Access & Security
+Question 10
+Skipped
+Which of these objects are not replicated? (Select 2)
+Correct selection
+External Tables
+Views
+Correct selection
+Temporary Tables
+Permanent Tables
+Transient Tables
+Overall explanation
+Temporary Tables, External Tables, Stages, Temporary Stages, Streams, and Tasks do not get replicated.
+
+Domain
+Account Access & Security
+Question 11
+Skipped
+Which of the Snowflake shared view can be used to query the Snowflake Query History? (Select 1)
+
+QUERY_HISTORY_VIEW view in INFORMATION_USAGE
+
+QUERY_HISTORY view in INFORMATION_SCHEMA
+QUERY_HISTORY_VIEW view in ACCOUNT_USAGE
+
+Correct selection
+QUERY_HISTORY view in ACCOUNT_USAGE
+
+Overall explanation
+QUERY_HISTORY view in ACCOUNT_USAGE view can be used to query Snowflake query history by various dimensions (time range, session, user, warehouse, etc.) within the last 365 days (1 year).
+
+Domain
+Performance Concepts
+Question 12
+Skipped
+At what frequency does Snowflake rotate the object keys?
+16 Days
+60 Days
+Correct answer
+30 Days
+1 Year
+Overall explanation
+All Snowflake-managed keys are automatically rotated by Snowflake when they are more than 30 days old. Active keys are retired, and new keys are created. When Snowflake determines the retired key is no longer needed, the key is automatically destroyed. When active, a key is used to encrypt data and is available for usage by the customer. When retired, the key is used solely to decrypt data and is only available for accessing the data.
+
+Domain
+Account Access & Security
+Question 13
+Skipped
+Both non-materialized and materialized views can be defined as secure. (True / False)
+Correct answer
+TRUE
+FALSE
+Overall explanation
+Yes, both non-materialized and materialized views can be defined as secure.
+
+Domain
+Account Access & Security
+Question 14
+Skipped
+John has a table EMPLOYEE_DATA, and he wants to create another table EMPLOYEE_DATA_OTHER, which should be the same as EMPLOYEE_DATA table with the same data. What is the best option for John?
+Correct answer
+Clone the table with same data with SQL command as follows - CREATE TABLE EMPLOYEE_DATA_OTHER CLONE EMPLOYEE_DATA;
+Create the table with LIKE SQL command as follows - CREATE TABLE EMPLOYEE_DATA_OTHER LIKE EMPLOYEE_DATA;
+Create the table with same data with SQL command as follows - CREATE TABLE EMPLOYEE_DATA_OTHER AS SELECT * FROM EMPLOYEE_DATA;
+CREATE SHARE EMPLOYEE_DATA;
+Overall explanation
+The best option is to Clone the table as EMPLOYEE_DATA and EMPLOYEE_DATA_OTHER have the same structure and data. It will help save the storage cost. LIKE command only creates the empty table. CREATE TABLE … AS SELECT (also referred to as CTAS) Creates a new table populated with the data returned by a query but consumes additional storage.
+Domain
+Performance Concepts
+Question 15
+Skipped
+What would happen if we suspend the warehouse while it is executing the SQL statement?
+All compute resources of the warehouse will be up until the statement is complete.
+When trying to suspend the warehouse, we will get an error while the same warehouse is executing SQL statements.
+Correct answer
+Only idle compute resources of the warehouse will be shut down, allowing any compute resources executing statements to continue until the statement is complete.
+All the compute resources of the warehouse will be shut down immediately, and the running statement will be canceled.
+Overall explanation
+When we suspend a warehouse, Snowflake immediately shuts down all idle compute resources for the warehouse. However, it allows any compute resources executing statements to continue until the statements are complete. At this time, the resources are shut down, and the warehouse status changes to “Suspended”. Compute resources waiting to shut down are considered to be in “quiesce” mode.
+Domain
+Performance Concepts
+Question 16
+Skipped
+Is it possible to create a user without a password?
+No
+Correct answer
+Yes
+Overall explanation
+Yes, it is possible to create a user in Snowflake without a password. We cannot use the Snowflake web interface to create users with no passwords or remove passwords from existing users, and we must use CREATE USER or ALTER USER. Without a password in Snowflake, a user cannot log in using Snowflake authentication and must use federated authentication instead.
+
+Domain
+Account Access & Security
+Question 17
+Skipped
+An account-level resource monitor overrides the resource monitor assignment for individual warehouses. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+An account-level resource monitor does not override resource monitor assignments for individual warehouses. If either the account resource monitor or the warehouse resource monitor reaches its defined threshold and a suspend action has been defined, the warehouse is suspended.
+Domain
+Performance Concepts
+Question 18
+Skipped
+A row access policy contains an expression that can specify Snowflake database objects (e.g., table or view) and use functions to determine which rows should be visible in a given context. Which of these functions are used in determining row access policy?(Select 2)
+Correct selection
+Conditional Expression Functions
+Conversion Functions
+Metadata Functions
+Correct selection
+Context Functions
+Overall explanation
+A row access policy uses Conditional Expression Functions and Context Functions to determine which rows should be visible in a given context. Context Functions such as CURRENT_USER(), CURRENT_ROLE(), and CURRENT_ACCOUNT(), which act as dynamic filters and are commonly used with secure views to limit row access in a table.
+
+Domain
+Account Access & Security
+Question 19
+Skipped
+When the Virtual Warehouse data cache gets filled up, in which fashion does the data get flushed out from the data cache?
+Last In Last Out (LILO)
+First In First Out (FIFO)
+MOST-RECENTLY USED (MRU)
+Correct answer
+LEAST-RECENTLY USED (LRU)
+Overall explanation
+If the cache does fill up, it is flushed out in a least-recently used fashion.
+Domain
+Performance Concepts
+Question 20
+Skipped
+Materialized views can improve the performance of queries that use the same subquery results repeatedly. (True/False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+Materialized views are designed to improve query performance for workloads composed of common, repeated query patterns. However, materializing intermediate results incur additional costs. As such, before creating any materialized views, you should consider whether the costs are offset by the savings from re-using these results frequently enough.
+Domain
+Performance Concepts
+Question 21
+Skipped
+The major benefits of defining Clustering keys:  (Select 2)
+
+To help in faster data sharing
+Correct selection
+To help improve query performance
+To help in organizing small tables (<1 GB)
+Correct selection
+To help optimize table maintenance
+Overall explanation
+Defining clustering keys for very large tables (in the multi-terabyte range) helps optimize table maintenance and query performance. Small tables are not a good candidate for clustering.
+
+Domain
+Performance Concepts
+Question 22
+Skipped
+If an account has federated authentication enabled. Can Snowflake admins still maintain user IDs and passwords in Snowflake?
+Correct answer
+Yes
+No
+Overall explanation
+With federated authentication enabled on an account, Snowflake still allows maintaining and using Snowflake user credentials (login name and password). In other words:   
+
+Account and security administrators can still create users with passwords maintained in Snowflake.   
+
+Users can still log into Snowflake using their Snowflake credentials.   
+
+However, if federated authentication is enabled for an account, Snowflake does not recommend maintaining user passwords in Snowflake. Instead, user passwords should be maintained solely in your IdP.    
+
+Domain
+Account Access & Security
+Question 23
+Skipped
+What is a key benefit of scaling up a warehouse?
+Scaling up improves concurrency.
+Correct answer
+Scaling up improves performance.
+Overall explanation
+Resizing a warehouse generally improves query performance, particularly for larger, more complex queries. It can also help reduce the queuing that occurs if a warehouse does not have enough compute resources to process all the queries that are submitted concurrently. Note that warehouse resizing is not intended for handling concurrency issues; instead, use additional warehouses to handle the workload or use a multi-cluster warehouse.
+Domain
+Performance Concepts
+Question 24
+Skipped
+When deciding whether to suspend a warehouse or leave it running, what should you consider?
+Consider suspending the warehouse if the warehouse is large and there are no active queries.
+Correct answer
+Consider the trade-off between saving credits by suspending the warehouse versus maintaining the cache of data from the previous queries to help with performance.
+Consider the trade-off between saving credits by suspending the warehouse versus the operational cost of resuming the warehouse when needed.
+Overall explanation
+Consider the trade-off between saving credits by suspending a warehouse versus maintaining the cache of data from previous queries to help with performance.
+Domain
+Performance Concepts
+Question 25
+Skipped
+What will happen if a policy is assigned to a user who is already signed in?
+Correct answer
+The user can't do anything else until signed in and signed back in again.
+The user can continue running the SQL queries in the currently opened session.
+There will be no interruption until the user logoffs and signs in again.
+Overall explanation
+If a policy is assigned to a user who already signed in, they can't do anything else until they sign and signed back in again to make use of the new policy
+
+Domain
+Account Access & Security
+Question 26
+Skipped
+Which of these is not a valid authentication method supported by Snowflake?
+Muti-factor authentication
+Oauth, Key Pair
+Correct answer
+Username and one-time generated pin
+Username and password
+Federated Authentication (SAM 2.0)
+SCIM (System for Cross-domain Identity Management specification)
+Overall explanation
+Snowflake supports the following authentication methods: 
+
+Username and password
+
+MFA
+
+SAML
+
+other authentication methods such as OAuth, Key-pair, and SCIM.
+
+Domain
+Account Access & Security
+Question 27
+Skipped
+Suppose we resize a warehouse to a smaller size while it is executing SQL statements. There will be no impact on already executing SQL statements. (True / False)
+Correct answer
+TRUE
+FALSE
+Overall explanation
+Resizing a warehouse does not impact the statements that the warehouse is executing. When resizing to a smaller size, compute resources are removed from the warehouse only when they are no longer used to execute any current statements.
+Domain
+Performance Concepts
+Question 28
+Skipped
+Which privilege is required to enable changing the state of a warehouse (stop, start, suspend, resume)?
+MONITOR
+Correct answer
+OPERATE
+MODIFY
+USAGE
+Overall explanation
+MODIFY - Enables altering any properties of a warehouse, including changing its size. Required to assign a warehouse to a resource monitor. Note that only the ACCOUNTADMIN role can assign warehouses to resource monitors. MONITOR - Enables viewing current and past queries executed on a warehouse as well as usage statistics on that warehouse. OPERATE - Enables changing the state of a warehouse (stop, start, suspend, resume). In addition, enables viewing current and past queries executed on a warehouse and aborting any executing queries. USAGE - Enables using a virtual warehouse and, as a result, executing queries on the warehouse. If the warehouse is configured to auto-resume when a SQL statement (e.g. query) is submitted to it, the warehouse resumes automatically and executes the statement. OWNERSHIP - Grants full control over a warehouse. Only a single role can hold this privilege on a specific object at a time. ALL [ PRIVILEGES ] - Grants all privileges, except OWNERSHIP, on the warehouse.
+Domain
+Performance Concepts
+Question 29
+Skipped
+You have a dashboard that connects to Snowflake via JDBC. The dashboard is refreshed hundreds of times per day. The data is very stable, only changing once or twice per day. The query run by the dashboard user never changes. How will Snowflake manage changing and non-changing data? Mark all true statements.
+Correct selection
+  Snowflake will re-use data from the Results Cache as long as it is still the most up-to-date data available.  
+
+Correct selection
+Snowflake will spin up a warehouse only if the underlying data has changed.
+
+Correct selection
+Snowflake will show the most up-to-date data each time the dashboard is refreshed.
+Snowflake will compile result cache data from all user results, so no warehouse is needed.
+
+Overall explanation
+Until data has not changed and the query is the same - Snowflake reuses the data from the cache. Please note,  Each time the persisted result for a query is reused, Snowflake resets the 24-hour retention period for the result up to a maximum of 31 days from the date and time that the query was first executed. After 31 days, the result is purged, and the next time the query is submitted, a new result is generated and persisted.
+
+Domain
+Performance Concepts
+Question 30
+Skipped
+What will happen if you add 0.0.0.0/0 to BLOCKED_IP_LIST and your IP address to ALLOWED_IP_LIST of a Network policy?
+Correct answer
+You will not be able to access the Snowflake account from your IP address.
+You will be able to access the Snowflake account from your IP address
+Overall explanation
+If you provide both Allowed IP Addresses and Blocked IP Addresses, Snowflake applies the Blocked List first. This would block your own access.
+
+Additionally, in order to block all IP addresses except a select list, you only need to add IP addresses to ALLOWED_IP_LIST. Snowflake automatically blocks all IP addresses not included in the allowed list.
+
+Domain
+Account Access & Security
+Question 31
+Skipped
+Which features of Snowflake provide Column-level security? (Select 2)
+Correct selection
+External Tokenization
+Correct selection
+Dynamic Data Masking
+Internal Tokenization
+Column Masking
+Overall explanation
+Dynamic Data Masking is a Column-level Security feature that uses masking policies to selectively mask plain-text data in table and view columns at query time.
+
+External Tokenization enables accounts to tokenize data before loading it into Snowflake and detokenize the data at query runtime. Tokenization is the process of removing sensitive data by replacing it with an undecipherable token. External Tokenization makes use of masking policies with external functions.
+
+Domain
+Account Access & Security
+Question 32
+Skipped
+Which AWS service is used to create private VPC endpoints that allow direct, secure connectivity between your AWS VPCs and the Snowflake VPC without traversing the public internet?
+Correct answer
+AWS PrivateLink
+AWS Direct Connect
+AWS PrivateVPC
+Snowflake PrivateLink
+Overall explanation
+AWS PrivateLink is an AWS service for creating private VPC endpoints that allow direct, secure connectivity between your AWS VPCs and the Snowflake VPC without traversing the public internet. The connectivity is for AWS VPCs in the same AWS region.
+
+For External Functions, you can also use AWS PrivateLink with private endpoints.
+
+In addition, if you have an on-premises environment (e.g. a non-hosted data center), you can choose to use AWS Direct Connect, in conjunction with AWS PrivateLink, to connect all your virtual and physical environments in a single, private network.
+
+Domain
+Account Access & Security
+Question 33
+Skipped
+Permissions on database objects such as databases or tables are granted to:
+Correct answer
+Roles
+Virtual Warehouses
+Schemas
+Users
+Overall explanation
+Snowflake supports Role-Based Access control. Permissions on database objects such as databases or tables are granted to Roles.
+
+Domain
+Account Access & Security
+Question 34
+Skipped
+A user can be assigned multiple roles. (True / False)
+Correct answer
+TRUE
+FALSE
+Overall explanation
+Roles are the entities to which privileges on securable objects can be granted and revoked. Roles are assigned to users to allow them to perform actions required for business functions in their organization. A user can be assigned multiple roles. It allows users to switch roles (i.e., choose which role is active in the current Snowflake session) to perform different actions using separate sets of privileges.
+
+Domain
+Account Access & Security
+Question 35
+Skipped
+Snowflake network policies currently support both Internet Protocol versions 4 and 6 (i.e., IPv4 as well as IPv6). (True/False)
+
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Network policies currently support only Internet Protocol version 4 (i.e. IPv4) addresses.
+
+Domain
+Account Access & Security
+Question 36
+Skipped
+Network policies allow restricting access to your account based on_____ (Select all that apply)
+Correct selection
+CIDR Notaion based IP ranges
+User Operating System Type (example - MAC, Windows)
+Correct selection
+IP address
+Overall explanation
+Network policies allow restricting access to your account based on user IP address. Effectively, a network policy enables you to create an IP allowed list, as well as an IP blocked list, if desired.
+
+Domain
+Account Access & Security
+Question 37
+Skipped
+Which of these roles can configure a network policy? (Select 2)
+
+Correct selection
+SECURITYADMIN
+Correct selection
+ACCOUNTADMIN
+USERADMIN
+PUBLIC
+SYSADMIN
+Overall explanation
+Only security administrators (i.e., users with the SECURITYADMIN role) or higher or a role with the global CREATE NETWORK POLICY privilege can create network policies.
+
+Domain
+Account Access & Security
+Question 38
+Skipped
+Which of the Snowflake editions provides a federated authorization feature?
+Business Critical
+Virtual Private Snowflake(VPS)
+Enterprise
+Standard
+Correct answer
+All of the Snowflake Editions
+Overall explanation
+All Snowflake Editions (Standard, Enterprise, Business Critical, Virtual Private Snowflake) provide Federated Authentication.
+
+Domain
+Account Access & Security
+Question 39
+Skipped
+Which privilege is required to execute queries using a virtual warehouse?
+MONITOR
+OPERATE
+Correct answer
+USAGE
+MODIFY
+Overall explanation
+Virtual Warehouse Privileges:  USAGE: Enables using a virtual warehouse and, as a result, executing queries on the warehouse. If the warehouse is configured to auto-resume when a SQL statement (e.g. query) is submitted to it, the warehouse resumes automatically and executes the statement.
+
+MODIFY:  Enables altering any properties of a warehouse, including changing its size.   Required assigning a warehouse to a resource monitor. Note that only the ACCOUNTADMIN role can assign warehouses to resource monitors.
+
+MONITOR: Enables viewing of current and past queries executed on a warehouse as well as usage statistics on that warehouse.  
+
+OPERATE: Enables changing the state of a warehouse (stop, start, suspend, resume). In addition, enables viewing current and past queries executed on a warehouse and aborting any executing queries.      
+
+OWNERSHIP: Grants full control over a warehouse. Only a single role can hold this privilege on a specific object at a time.
+
+Domain
+Account Access & Security
+Question 40
+Skipped
+Readers accounts enable providers to share data with consumers who are not already Snowflake customers without requiring the consumers to become Snowflake Customers. Which role can create the Reader account?
+Correct answer
+ACCOUNTADMIN
+SECURITYADMIN
+SYSADMIN
+USERADMIN
+Overall explanation
+ACCOUNTADMIN role (or a role granted the CREATE ACCOUNT global privilege) only can create the Reader account.
+
+Domain
+Account Access & Security
+Question 41
+Skipped
+In a Snowflake federated environment, Snowflake serves as the Identity provider (IdP). (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+In a Snowflake federated environment, Snowflake serves as the Service Provider (SP). The external, independent entity like Okta serves as the Identify Provider (IdP)
+
+Domain
+Account Access & Security
+Question 42
+Skipped
+Which of these are types of Scaling policies? (Select 2)
+
+Minimized
+Business
+Correct selection
+Standard
+Correct selection
+Economy
+Maximized
+Overall explanation
+There are two different scaling policies, one is the Standard policy, and one is the Economy policy.
+
+Domain
+Performance Concepts
+Question 43
+Skipped
+A user's default role is
+changed each time the user logs in to Snowflake.
+Correct answer
+the role a user gets set to each time the user logs in to Snowflake.
+the name used to log in to the Snowflake WebUI.
+always the default PUBLIC role.
+Overall explanation
+A user's default role is the role a user gets set to each time the user logs in to Snowflake. Snowflake uses roles to control the objects (virtual warehouses, databases, tables, etc.) that users can access: 
+
+Snowflake provides a set of predefined roles, as well as a framework for defining a hierarchy of custom roles.      All Snowflake users are automatically assigned the predefined PUBLIC role, which enables login to Snowflake and basic object access.     
+
+In addition to the PUBLIC role, each user can be assigned additional roles, with one of these roles designated as their default role. A user’s default role determines the role used in the Snowflake sessions initiated by the user; however, this is only a default. Users can change roles within a session at any time.     
+
+Roles can be assigned at user creation or afterward.
+
+Domain
+Account Access & Security
+Question 44
+Skipped
+Which schema can be used to find out about storage, compute, and objects in a Snowflake account?
+USAGE_SCHEMA
+RESOURCE_SCHEMA
+Correct answer
+INFORMATION_SCHEMA
+SNOWFLAKE_SCHEMA
+Overall explanation
+INFORMATION_SCHEMA can be used to find out about storage, compute, and objects in a Snowflake account. Every database that you create on Snowflake has a schema called INFORMATION_SCHEMA that's automatically created, and inside that schema, you can find views and table functions that provide metadata information about objects in your account.
+Domain
+Performance Concepts
+Question 45
+Skipped
+If you drop or disable a user in Snowflake in an Okta IdP federated environment, the user can still access Snowflake login through Okta. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Users who are dropped or disabled in Snowflake are still able to log into their Okta accounts, but they will receive an error message when they attempt to connect to Snowflake. You must recreate or enable the user before they can log in.
+
+Domain
+Account Access & Security
+Question 46
+Skipped
+If you create a Network Policy by providing both 'Allowed IP Addresses' and 'Blocked IP Addresses', which is applied first by Snowflake while validating the access?
+Correct answer
+Blocked IP Addresses
+Allowed IP Addresses
+Overall explanation
+If you provide both Allowed IP Addresses and Blocked IP Addresses, Snowflake applies the Blocked List first.
+Domain
+Account Access & Security
+Question 47
+Skipped
+All files stored in internal stages for data loading and unloading are automatically encrypted using AES-256 strong encryption. (True/False)
+
+Correct answer
+TRUE
+FALSE
+Overall explanation
+All files stored in internal stages for data loading and unloading are automatically encrypted using AES-256 strong encryption.
+
+Domain
+Account Access & Security
+Question 48
+Skipped
+Which command will help you to view the current permissions on a Schema?
+SHOW ROLES ON SCHEMA <database_name>.<schema_name>;
+SHOW GRANTS OF SCHEMA <database_name>.<schema_name>;
+Correct answer
+SHOW GRANTS ON SCHEMA <database_name>.<schema_name>;
+SHOW ALL PREIVILEGE ON SCHEMA <database_name>.<schema_name>;
+Overall explanation
+To view the current set of privileges granted on an object, you can execute the SHOW GRANTS command. To view the current permissions on a schema, execute the following command: SHOW GRANTS ON SCHEMA  <database_name>.<schema_name>;
+
+Domain
+Account Access & Security
+Question 49
+Skipped
+Snowflake prunes micro-partitions based on a predicate with a subquery, even if the subquery result is constant. (TRUE/FALSE)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+Please note, not all predicate expressions can be used to prune. Snowflake does not prune micro-partitions based on a predicate with a subquery, even if the subquery results in a constant.
+
+Domain
+Performance Concepts
+Question 50
+Skipped
+A DBA_ROLE created a database. Later the DBA_ROLE was dropped. Who will own the database now, which was created by the DBA_ROLE?
+No one will be able to access the database.
+The DBA_ROLE can't get dropped as it is the database owner.
+Correct answer
+The role that dropped the DBA_ROLE will own the database.
+The database will get dropped too.
+Overall explanation
+The role that dropped the DBA_ROLE will own the database.
+
+Domain
+Account Access & Security
+Question 51
+Skipped
+Which one is not the Snowflake System-Defined role?
+SECURITYADMIN
+ORGADMIN
+Correct answer
+DATABASEADMIN
+USERADMIN
+ACCOUNTADMIN
+SYSADMIN
+Overall explanation
+The following are the Snowflake System-Defined roles:
+
+ORGADMIN
+
+ACCOUTADMIN
+
+SECURITYADMIN
+
+USERADMIN
+
+SYSADMIN
+
+PUBLIC. 
+
+
+
+System-defined roles cannot be dropped. In addition, the privileges granted to these roles by Snowflake cannot be revoked.
+
+Domain
+Account Access & Security
+Question 52
+Skipped
+There are two modes to set up a multi-cluster warehouse. Select those from the given choices.
+Correct selection
+Maximized mode
+Minimum mode
+Maximum mode
+Minimized mode
+Correct selection
+Auto-scaling mode
+Overall explanation
+There are two ways to set up a multi-cluster warehouse: in maximized mode, or auto-scaling mode. With maximized mode, you simply set your minimum equal to your maximum, and those values are something greater than one.
+Domain
+Performance Concepts
+Question 53
+Skipped
+A role inherits all the privileges of those higher in the hierarchy. (True / False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+A role inherits all the privileges of its underlying roles (those "lower" in the hierarchy). ACOOUNTADMIN inherits privileges from SECURITYADMIN, USERADMIN, SYSADMIN, and PUBLIC. SECURITYADMIN inherits privileges from USERADMIN and PUBLIC. USERADMIN and SYSADMIN inherit privileges from PUBLIC PUBLIC inherits nothing.
+Domain
+Account Access & Security
+Question 54
+Skipped
+What is a key benefit of scaling out a warehouse?
+Scaling out improves performance.
+Correct answer
+Scaling out improves concurrency.
+Overall explanation
+Scaling out is explicitly designed for handling queuing and performance issues related to large numbers of concurrent users and/or queries.
+Domain
+Performance Concepts
+Question 55
+Skipped
+Will these queries be considered as same to get the benefit of the Query Result cache? Query 1 : SELECT * FROM t1; Query 2 : select * FROM t1;
+Correct answer
+NO
+YES
+Overall explanation
+These queries will not be considered as same to get the benefit of the Query Result cache. First Query has 'SELECT' is upper case, and the Second query has 'select' in lower case.
+Domain
+Performance Concepts
+Question 56
+Skipped
+You can create an an account level network policy using _____ (Select all that apply)
+Correct selection
+SQL
+Correct selection
+Classic Web Interface
+Correct selection
+Snowsight
+Only Snowflake Support can create the Account level Network Policy
+Overall explanation
+Only security administrators (i.e., users with the SECURITYADMIN role) or higher or a role with the global CREATE NETWORK POLICY privilege can create network policies using Snowsight, Classic Web Interface, and SQL.
+
+Domain
+Account Access & Security
+Question 57
+Skipped
+Which of these system-defined roles can manage operations at the organizational level?
+
+SECURITYADMIN
+USERADMIN
+ACCOUNTADMIN
+Correct answer
+ORGADMIN
+SYSADMIN
+Overall explanation
+ORGADMIN role manages operations at the organizational level.
+
+More specifically, this role:
+
+Can create accounts in the organization.
+
+Can view all accounts in the organization (using SHOW ORGANIZATION ACCOUNTS) and all regions enabled for the organization (using SHOW REGIONS).
+
+Can view usage information across the organization.
+
+Domain
+Account Access & Security
+Question 58
+Skipped
+Materialized views are particularly useful when:
+
+(Select 3)
+
+Query results contain results that require simple processing.
+Correct selection
+The view’s base table does not change frequently.
+Correct selection
+Query results contain results that require significant processing.
+The view’s base table changes frequently.
+Correct selection
+Query results contain a small number of rows and/or columns relative to the base table (the table on which the view is defined).
+Overall explanation
+Materialized views are particularly useful when: - Query results contain a small number of rows and/or columns relative to the base table (the table on which the view is defined). - Query results contain results that require significant processing, including: Analysis of semi-structured data. Aggregates that take a long time to calculate. - The query is on an external table (i.e., data sets stored in files in an external stage), which might have a slower performance compared to querying native database tables. - The view’s base table does not change frequently.
+Domain
+Performance Concepts
+Question 59
+Skipped
+Which is the required parameter for creating a Network Policy? (Select 1)
+
+Comment
+Blocked IP Addresses
+Allowed IP Addresses
+Correct selection
+Policy Name
+Overall explanation
+The "Policy Name" is the only required parameter because it serves as the unique identifier for the network policy within your Snowflake account. This name is essential for creating, managing, and referencing the network policy within Snowflake.
+
+Other parameters, such as "Allowed IP Addresses" (ALLOWED_IP_LIST), "Blocked IP Addresses" (BLOCKED_IP_LIST), and "Comment," are optional. These parameters allow for further customization of the network policy but are not mandatory for the policy's creation. The flexibility in specifying allowed and blocked IP addresses enables administrators to tailor network access controls according to their security requirements, but the policy can be created with just a name and detailed configurations can be added or adjusted later.
+
+Domain
+Account Access & Security
+Question 60
+Skipped
+If you create a user with MUST_CHANGE_PASSWORD = TRUE in a Snowflake federated environment, will that user be forced to change the password while logging through IdP the first time?
+Yes
+Correct answer
+No
+Overall explanation
+The MUST_CHANGE_PASSWORD user property does not apply for federated authentication and should not be used. In particular, if you choose not to maintain passwords in Snowflake for users, ensure this property is set to FALSE for these users.
+
+Domain
+Account Access & Security
+Question 61
+Skipped
+Snowflake Query history page allows you to view the details of all the queries executed in the last 31 days. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Snowflake Query history page allows you to view the details of all the queries executed in the last 14 days. You can query the Query_History view in Snowflake's Account Usage schema for older queries.
+Domain
+Performance Concepts
+Question 62
+Skipped
+Which of these security features are supported in Snowflake? (Select all that apply)
+Correct selection
+Role-Based Access Control
+Correct selection
+Multi-Factor Authentication
+Correct selection
+Network Policy
+Correct selection
+Tri-Secret Secure Encryption
+Overall explanation
+Snowflake is a highly secured platform and provides multi-level security like Multi-Factor Authentication (MFA), provision to set up Network policy to block access by unwanted IPs, Single Sign On (SSO), Role-Based Access Control, and Tri Secret Secure, and so on. Tri-Secret Secure is the combination of a Snowflake-maintained key and a customer-managed key in the cloud provider platform that hosts your Snowflake account to create a composite master key to protect your Snowflake data.
+
+Domain
+Account Access & Security
+Question 63
+Skipped
+What is the best way to analyze the optimum warehouse size?
+Execute queries of widely-varying size and/or complexity on the same warehouse
+Correct answer
+Execute relatively homogeneous queries (size, complexity, data sets, etc.) on the same warehouse
+Overall explanation
+To achieve the best results, try to execute relatively homogeneous queries (size, complexity, data sets, etc.) on the same warehouse; executing queries of widely-varying size and/or complexity on the same warehouse makes it more difficult to analyze warehouse load, which can make it more difficult to select the best size to match the size, composition, and number of queries in your workload.
+Domain
+Performance Concepts
+Question 64
+Skipped
+The BI group is complaining about their queries taking too long to run. Checking the virtual warehouse information shows that the queued time is pretty high. What is the best way to fix this issue?
+Increase the size of the virtual warehouse
+Set the STATEMENT_QUEUED_TIMEOUT_IN_SECONDS parameter to a low value to cancel those queries if they get in the queue
+Correct answer
+Increase the virtual warehouse MAX_CLUSTER_COUNT property
+Determine which users have the high priority queries and set the other users
+Provide a virtual warehouse for every user in the group
+Overall explanation
+Queuing can be solved by SCALE-OUT (provision new clusters), i.e., increasing MAX_CLUSTER_COUNT helps in additional cluster provisioning to handle the concurrent workloads.
+Domain
+Performance Concepts
+Question 65
+Skipped
+What are the security layers that Snowflake takes care of? (Select 4)
+
+Correct selection
+Access
+Infrastructure
+Correct selection
+Authentication
+Correct selection
+Authorization
+Correct selection
+Data Protection
+Overall explanation
+Infrastructure Security is managed by the cloud provider.
+
+Domain
+Account Access & Security
+Question 66
+Skipped
+Choose the true statements about Secure views. (Select 2)
+Only materialized views can be defined as secure
+Secure views allow faster access than Standard views
+Correct selection
+Both non-materialized and materialized views can be defined as secure
+Only non-materialized views can be defined as secure
+Correct selection
+Secure views provide improved data privacy and data sharing
+Overall explanation
+Both non-materialized and materialized views can be defined as secure. Secure views have advantages over standard views, including improved data privacy and data sharing; however, they also have some performance impacts to take into consideration.
+
+Domain
+Account Access & Security
+Question 67
+Skipped
+How can we turn off the query result cache?
+Query result cache can be turned off.
+Setting the parameter USE_CACHED_INFO to FALSE
+Correct answer
+Setting the parameter USE_CACHED_RESULT to FALSE
+Setting the parameter USE_QUERY_CACHED to FALSE
+Overall explanation
+We can turn off the query result cache by setting the parameter USE_CACHED_RESULT to FALSE. Though the only reason we would really want to do this is if we are doing performance testing.
+Domain
+Performance Concepts
+Question 68
+Skipped
+Choose the false statements. (Select 2)
+Results are stored in SSD in Virtual Warehouse in case of Local Disk Cache.
+Correct selection
+Results are stored in the Cloud Storage layer in the case of Local Disk Cache.
+If Virtual Warehouse is suspended, then results in Local Disk Cache will be lost
+Correct selection
+Group and Execute similar queries on the different virtual warehouses to maximize local disk cache reuse, for performance and cost optimization.
+Group and Execute similar queries on the same virtual warehouse to maximize local disk cache reuse, for performance and cost optimization.
+Overall explanation
+As a best practice, Group and Execute similar queries on the same virtual warehouse to maximize local disk cache reuse for performance and cost optimization. The results get stored in the SSD of Virtual Warehouse. So, if the Virtual Warehouse gets suspended, then results get lost.
+Domain
+Performance Concepts
+Question 69
+Skipped
+The suspended warehouse cannot be resized until they resume. (True / False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+The suspended warehouse can be easily resized. Resizing a suspended warehouse does not provision any new compute resources for the warehouse. It simply instructs Snowflake to provision the additional compute resources when the warehouse is next resumed, at which time all the usage and credit rules associated with starting a warehouse apply.
+Domain
+Performance Concepts
+Question 70
+Skipped
+David ran a query that took around 30 mins to complete. He referred to the Query profiler and found the 'Bytes spilled to local storage' has a big number. What could be the issue?
+Correct answer
+David is using a comparatively smaller warehouse.
+David is using a comparatively larger warehouse.
+Warehouse size has no impact on Bytes spilling.
+David should contact Snowflake Personnel.
+Overall explanation
+If a node has insufficient memory to complete its portion of a query, it will "spill" to local SSD storage. This can negatively impact performance but is sometimes acceptable. If a node has insufficient local SSD storage to complete its portion of a query, it will "spill" to remote cloud storage. This is almost always very bad for performance. The solution, in either case, is to simplify the SQL query or increase the warehouse size.
+Domain
+Performance Concepts
+Question 71
+Skipped
+The closer the ratio of scanned micro-partitions and columnar data is to the ratio of actual data selected, the more efficient the pruning performed on the table. (TRUE/FALSE)
+
+Correct answer
+TRUE
+FALSE
+Overall explanation
+Snowflake uses columnar scanning of partitions so that an entire partition is not scanned if a query only filters by one column. The closer the ratio of scanned micro-partitions and columnar data is to the ratio of actual data selected, the more efficient is the pruning performed on the table
+Domain
+Performance Concepts
+Question 72
+Skipped
+You can create a user-level network policy using _____
+
+Snowsight
+Correct answer
+SQL
+Classic Web Interface
+Only Snowflake Support can create the Account level Network Policy
+Overall explanation
+You can set a policy at the user level, but this can only be done through the SQL commands. To activate a network policy for an individual user, set the NETWORK_POLICY parameter for the user using ALTER USER.
+
+Domain
+Account Access & Security
+Question 73
+Skipped
+What key insights can we get from the Explain plan in Snowflake? (Select 3)
+Estimated Query Time
+Correct selection
+Partition Pruning
+Correct selection
+Join Ordering
+Correct selection
+Join Types
+Exact Query Time
+Overall explanation
+The key insights that the explain plan gives us in its results output are information on partition pruning, join ordering, and join types. The explain plan is a useful tool for determining the efficiency of your query. It's a command that compiles your query to figure out all the steps Snowflake would have to work through if it were actually to run the query.
+Domain
+Performance Concepts
+Question 74
+Skipped
+Which IdP vendors provide native Snowflake support For federated authentication and SSO?(Select 2)
+
+Google G Suite
+Correct selection
+Microsoft ADFS
+Correct selection
+Okta
+Onelogin
+Microsoft Azure Active Directory
+Overall explanation
+Okta and Microsoft ADFS provide native Snowflake support for federated authentication and SSO.
+
+Domain
+Account Access & Security
+Question 75
+Skipped
+ACCOUNTADMIN role should not be used to create objects in Snowflake?(True/False)
+Correct answer
+TRUE
+FALSE
+Overall explanation
+The ACOOUNTADMIN role is intended for performing initial setup tasks in the system and managing account-level objects and tasks on a day-to-day basis. It should not be used to create objects in your account unless you absolutely need these objects to have the highest level of secure access.
+
+Domain
+Account Access & Security
+Question 76
+Skipped
+Suppose you have an auto-scaling mode setup with a Economy policy. In what situation does Snowflake spin up an additional cluster?
+Correct answer
+Only if the system estimates there’s enough query load to keep the cluster busy for at least 6 minutes.
+The first cluster starts immediately when either a query is queued or the system detects that there’s one more query than the currently-running clusters can execute.
+Overall explanation
+In Economy Scaling policy, Snowflake spins up an additional cluster only if the system estimates there’s enough query load to keep the cluster busy for a least 6 minutes
+Domain
+Performance Concepts
+Question 77
+Skipped
+Snowflake blocks certain IPs by default to ensure that customer is getting the highest level of Network security. (TRUE / FALSE)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+By default, Snowflake allows users to connect to the service from any computer or device IP address. A security administrator (or higher) can create a network policy to allow or deny access to a single IP address or a list of addresses.
+
+Domain
+Account Access & Security
+Question 78
+Skipped
+Which role is inherited to every other role in the account?
+ACCOUNTADMIN
+SYSADMIN
+USERADMIN
+SECURITYADMIN
+Correct answer
+PUBLIC
+Overall explanation
+The PUBLIC role is Pseudo-role, which is automatically granted to every user and every role in your account. This role is typically used in cases where explicit access control is not needed, and all users are viewed as equal with regard to their access rights.
+
+Domain
+Account Access & Security
+Question 79
+Skipped
+Which of these configurations will set up a warehouse in auto-scale mode?
+Minimum Clusters = 6 and Maximum Clusters = 6
+Correct answer
+Minimum Clusters = 2 and Maximum Clusters = 6
+Overall explanation
+Auto-scale mode is enabled by specifying different values for maximum and minimum number of clusters.
+Domain
+Performance Concepts
+Question 80
+Skipped
+Which of these SQL Queries can be answered completely by Metadata? (Select 3)
+Correct selection
+SHOW Commands
+Correct selection
+COUNT
+None of these
+Correct selection
+MIN, MAX (integers and dates)
+AVG
+Overall explanation
+SHOW Commands, MIN, MAX (integers and dates), and COUNT SQL queries take advantage of the Metadata cache and do not require the virtual warehouse, but you still have some cloud service charges.
+
+Domain
+Performance Concepts
+Question 81
+Skipped
+Which privilege is required to enable altering any properties of the resource monitor, such as changing the monthly credit quote?
+USAGE
+Correct answer
+MODIFY
+MONITOR
+Overall explanation
+MODIFY - Enables altering any properties of a resource monitor, such as changing the monthly credit quota.
+
+MONITOR - Enables viewing a resource monitor.
+
+Domain
+Account Access & Security
+Question 82
+Skipped
+How long do results remain in the Query results cache?
+16 hours
+12 hours
+1 hours
+31 hours
+Correct answer
+24 hours
+Overall explanation
+Results are retained for 24 hours in Query Result Cache. Snowflake resets the 24-hour retention period for the result, up to a maximum of 31 days from the date and time that the query was first executed. After 31 days, the result is purged and the next time the query is submitted, a new result is generated and persisted.
+Domain
+Performance Concepts
+Question 83
+Skipped
+Suppose you have an auto-scaling mode setup with a Standard policy. In what situation does Snowflake spin up an additional cluster?
+Correct answer
+The first cluster starts immediately when either a query is queued or the system detects that there’s one more query than the currently-running clusters can execute.
+Only if the system estimates there’s enough query load to keep the cluster busy for at least 6 minutes.
+Overall explanation
+In Standard Scaling policy, the first cluster starts immediately when either a query is queued, or the system detects that there’s one more query than the currently-running clusters can execute. Each successive cluster waits to start 20 seconds after the prior one has started. For example, if your warehouse is configured with ten max clusters, it can take 200+ seconds to start all 10 clusters.
+Domain
+Performance Concepts
+Question 84
+Skipped
+Which of these are kind of Cache in Snowflake?
+Query Result Cache
+Correct answer
+All of these
+Metadata Cache
+Data/Local Disk Cache
+Overall explanation
+Snowflake has three types of cache.
+
+The metadata cache that lives in the cloud services layer.
+
+The data cache/local disk cache that lives on the SSD drives in the virtual warehouses
+
+The query result cache. If a result is small, it will be stored in the cloud services layer, but larger results are going to be stored in the storage layer.
+
+Domain
+Performance Concepts
+Question 85
+Skipped
+Multi-cluster warehouses are beneficial in improving the performance of slow-running queries or data loading. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Multi-cluster warehouses are best utilized for scaling resources to improve concurrency for users/queries. They are not as beneficial for improving the performance of slow-running queries or data loading. For these types of operations, resizing the warehouse provides more benefits.
+Domain
+Performance Concepts
+Question 86
+Skipped
+During Warehouse provisioning, if any of the compute resources fail to provision, then Snowflake kills the entire warehouse provisioning and tries to provision a new warehouse of the same requested size. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Snowflake does not begin executing SQL statements submitted to a warehouse until all of the compute resources for the warehouse are successfully provisioned, unless any of the resources fail to provision: If any of the compute resources for the warehouse fail to provision during start-up, Snowflake attempts to repair the failed resources. During the repair process, the warehouse starts processing SQL statements once 50% or more of the requested compute resources are successfully provisioned.
+Domain
+Performance Concepts
+Question 87
+Skipped
+In a federated Snowflake environment, can a user still log into Snowflake using their Snowflake credentials?
+Correct answer
+Yes
+No
+Overall explanation
+Users can still log into Snowflake using their Snowflake credentials.
+
+Domain
+Account Access & Security
+Question 88
+Skipped
+Snowflake supports multi-factor authentication (i.e., MFA) to provide increased login security for users connecting to Snowflake. Which role is strongly recommended for using MFA?
+SYSADMIN
+Correct answer
+ACCOUNTADMIN
+USERADMIN
+USERADMIN
+Overall explanation
+Snowflake strongly recommends that all users with the ACCOUNTADMIN role be required to use MFA.
+
+Domain
+Account Access & Security
+Question 89
+Skipped
+Which of these roles is dedicated to user and role management only?
+Correct answer
+USERADMIN
+SYSADMIN
+SECURITYADMIN
+ORGADMIN
+ACCOUNTADMIN
+Overall explanation
+USERADMIN role is dedicated to user and role management only. More specifically, this role:
+
+Is granted the CREATE USER and CREATE ROLE security privileges.
+
+Can create users and roles in the account.
+
+This role can also manage users and roles that it owns. Only the role with the OWNERSHIP privilege on an object (i.e. user or role), or a higher role, can modify the object properties.
+
+Domain
+Account Access & Security
+Question 90
+Skipped
+What is the best practice after creating a custom role in a Snowflake account?
+Grant ownership of the role to itself so a member of the role can control access to the role.
+Grant the role to the USERADMIN role so users can be added to the role.
+Grant PUBLIC to the role so all database objects owned by PUBLIC will be available to the new role.
+Correct answer
+Grant the custom role to the SYSADMIN role so administrators can manage all objects in the account.
+Overall explanation
+The custom role gets mainly created for specific access to specific objects. As per best practice, grant ownership to SYSADMIN or a child role under SYSADMIN so that SYSADMIN can control access to the objects.
+
+Domain
+Account Access & Security
+Question 91
+Skipped
+Monica has run a query SELECT * FROM t1; After a couple of hours, John ran the same query. John has the same role as Monica and has the SELECT permissions on table t1. John got the result sooner than Monica. What could be the reason for the faster result?
+Correct answer
+John's query resulted from the Query Result cache.
+John's query resulted from the Metadata cache.
+John's query resulted from the Local Disk cache.
+John's query resulted from Remote disk.
+Overall explanation
+It is a typical use case of Query Result Cache. It is stored and managed by the Cloud Services Layer. It is used if the identical query is run and base tables (t1 in this case) have not changed. Query Result Cache doesn't require Virtual Warehouse and is available for other users in the same role with SELECT permissions on all tables in the query.
+Domain
+Performance Concepts
+Question 92
+Skipped
+Which objects are the securable objects in Snowflake? (Select all that apply)
+
+Correct selection
+File Format
+Correct selection
+Warehouse
+Correct selection
+Database
+Correct selection
+Table
+Overall explanation
+All of these are securable objects in Snowflake.   A securable Object is an entity to which access can be granted. Unless allowed by a grant, access will be denied.
+
+Domain
+Account Access & Security
+Question 93
+Skipped
+Which of these system-defined roles encapsulates the SYSADMIN and SECURITYADMIN roles?
+SECURITYADMIN
+Correct answer
+ACCOUNTADMIN
+ORGADMIN
+SYSADMIN
+USERADMIN
+Overall explanation
+ACCOUNTADMIN role encapsulates the SYSADMIN and SECURITYADMIN system-defined roles. It is the top-level role in the system and should be granted only to a limited/controlled number of users in your account.
+
+Domain
+Account Access & Security
+Question 94
+Skipped
+Dynamic Data Masking is supported by (Select all that apply)
+
+Standard Edition
+Correct selection
+Enterprise Edition
+Correct selection
+VPS
+Correct selection
+Business Critical
+Overall explanation
+Dynamic Data Masking features require Enterprise Edition (or higher).
+
+Domain
+Account Access & Security
+Question 95
+Skipped
+If a user is logged in to Snowflake in a federated environment and IdP times out, what does happen to the user's snowflake session?
+Correct answer
+It does not affect the user's Snowflake sessions. However, to initiate any new Snowflake sessions, the user must log into the IdP again.
+The Snowflake web interface is disabled, and the prompt for IdP authentication is displayed.
+Overall explanation
+After a specified period of time (defined by the IdP), a user’s session in the IdP automatically times out, but this does not affect their Snowflake sessions. Any Snowflake sessions that are active at the time remain open and do not require re-authentication. However, to initiate any new Snowflake sessions, the user must log into the IdP again.
+
+Domain
+Account Access & Security
+Question 96
+Skipped
+Which of these configurations will set up a warehouse in maximized mode?
+Minimum Clusters = 1 and Maximum Clusters = 1
+Minimum Clusters = 9 and Maximum Clusters = 10
+Correct answer
+Minimum Clusters = 6 and Maximum Clusters = 6
+Minimum Clusters = 1 and Maximum Clusters = 10
+Overall explanation
+Maximized mode is enabled by specifying the same value for both maximum and minimum number of clusters (note that the specified value must be larger than 1). In this mode, when the warehouse is started, Snowflake starts all the clusters so that maximum resources are available while the warehouse is running. This mode is effective for statically controlling the available compute resources, particularly if you have large numbers of concurrent user sessions and/or queries and the numbers do not fluctuate significantly.
+Domain
+Performance Concepts
+Question 97
+Skipped
+How can you create a "Super-User" or "Super-Role" in Snowflake who can bypass all the authorization checks?
+CREATE ROLE SUPER_ROLE;
+Correct answer
+There is no concept of SUPER-ROLE or SUPER-USER in Snowflake
+ACCOUNTADMIN role is same as Super-Role
+Contact Snowflake personnel to create a Super-Role or Super-User for your account
+Overall explanation
+There is no concept of a “super-user” or “super-role” in Snowflake that can bypass authorization checks. All-access requires appropriate access privileges. 
+
+Domain
+Account Access & Security
+Question 98
+Skipped
+Suppose we resize a warehouse to a larger size while it is executing SQL statements. In that case, the already running SQL statements will finish faster. (True / False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Resizing a warehouse doesn’t have any impact on statements that are currently being executed by the warehouse. When resizing to a larger size, the new compute resources, once fully provisioned, are used only to execute statements that are already in the warehouse queue, as well as all future statements submitted to the warehouse.
+
+Domain
+Performance Concepts
+Question 99
+Skipped
+Which SQL command determines whether a network policy is set on the account or for a specific user?
+SHOW NETWORK_POLICIES
+SHOW POLICY
+SHOW PARAMETER
+Correct answer
+SHOW PARAMETERS
+SHOW POLICIES
+Overall explanation
+The SHOW PARAMETERS command determines whether a network policy is set on the account or for a specific user.
+
+For Account level: SHOW PARAMETERS LIKE 'network_policy' IN ACCOUNT;
+
+For User level: SHOW PARAMETERS LIKE 'network_policy' IN USER <username>; 
+
+Example - SHOW PARAMETERS LIKE 'network_policy' IN USER john;
+
+Domain
+Account Access & Security
+Question 100
+Skipped
+A user cannot view the result set from a query that another user executed except for the ACCOUNTADMIN role. (True / False)
+
+TRUE
+Correct answer
+FALSE
+Overall explanation
+A user cannot view the result set from a query that another user executed. This behavior is intentional. For security reasons, only the user who executed a query can access the query results. This behavior is not connected to the Snowflake access control model for objects. Even a user with the ACCOUNTADMIN role cannot view the results for a query run by another user.
+
+Domain
+Account Access & Security
+Question 101
+Skipped
+The user access history can be found by querying the
+Account Usage ACCESS_REPORT view
+Information Schema ACCESS_HISTORY view
+Information Schema ACCESS_REPORT view
+Correct answer
+Account Usage ACCESS_HISTORY view
+Overall explanation
+Access History in Snowflake refers to when the user query reads column data and when the SQL statement performs a data write operation, such as INSERT, UPDATE, and DELETE, along with variations of the COPY command, from the source data object to the target data object. The user access history can be found by querying the Account Usage ACCESS_HISTORY view.
+
+Domain
+Account Access & Security
+Question 102
+Skipped
+What is the minimum billing charge for provisioning compute resources?
+30 seconds
+1 second
+120 seconds
+Correct answer
+60 seconds
+Overall explanation
+The minimum billing charge for provisioning compute resources is 1 minute (i.e. 60 seconds). There is no benefit to stopping a warehouse before the first 60-second period is over because the credits have already been billed for that period.
+Domain
+Performance Concepts
+Question 103
+Skipped
+How many network policies can be activated for a user at a time?
+Correct answer
+1
+100
+31
+99
+16
+Overall explanation
+Only a single network policy can be activated for each user at a time; however, different network policies can be activated for different users for granular control. Associating a network policy with a user automatically removes the currently-associated network policy (if any)
+
+Domain
+Account Access & Security
+Question 104
+Skipped
+Monica ran a SELECT query on a large table t1. The query took longer than expected. She looked into the query profile and found that ' Bytes spilled to local storage' and 'Bytes spilled to remote storage' are very high. What advice will you give to her to improve the query performance? (Select 3)
+Increasing the number of parallel queries running in the warehouse
+Correct selection
+Using a larger warehouse (effectively increasing the available memory/local disk space for the operation)
+Processing data in larger batches
+Correct selection
+Processing data in smaller batches
+Correct selection
+Trying to split the processing into several steps
+Overall explanation
+When Snowflake warehouse cannot fit an operation in memory, it starts spilling (storing) data first to the local disk of a warehouse node and then to remote storage. In such a case, Snowflake first tries to temporarily store the data on the warehouse's local disk. As this means extra IO operations, any query that requires spilling will take longer than a similar query running on similar data that is capable to fit the operations in memory. Also, if the local disk is insufficient to fit the spilled data, Snowflake further tries to write to the remote cloud storage, which will be shown in the query profile as "Bytes spilled to remote storage". 
+
+The spilling can't always be avoided, especially for large batches of data, but it can be decreased by: 
+
+Reducing the amount of data processed. For example, by trying to improve partition pruning or projecting only the columns that are needed in the output.
+
+Decreasing the number of parallel queries running in the warehouse.
+
+Trying to split the processing into several steps (for example, by replacing the CTEs with temporary tables).
+
+Using a larger warehouse - effectively means more memory and more local disk space.
+
+Domain
+Performance Concepts
+Question 105
+Skipped
+How many servers are available in a large-sized cluster warehouse?
+64
+16
+1
+Correct answer
+8
+128
+32
+Overall explanation
+There are eight servers available in a large-sized cluster warehouse.
+Domain
+Performance Concepts
