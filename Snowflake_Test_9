@@ -1,0 +1,1542 @@
+Question 1
+Skipped
+select * from t1 sample row(100); What would the above query return?
+Correct answer
+Return an entire table, including all rows in the table
+Return an empty sample
+Return a sample of a table in which each row has a 10% probability of being included in the sample
+samplingMethod is not applied in the query. The query will result in an error.
+Overall explanation
+Return an entire table, including all rows in the table. The sampling method is optional. If no method is applied after the sample keyword, the default it takes is BERNOULLI.
+
+Domain
+Data Transformation
+Question 2
+Skipped
+Which is generally the slowest option for selecting staged data files to load from a stage?
+Correct answer
+Using pattern matching to identify specific files by pattern
+Specifying a list of specific files to load
+By path (internal stages) / prefix (Amazon S3 bucket)
+Overall explanation
+Pattern matching using a regular expression is generally the slowest of the three options for identifying/specifying data files to load from a stage; however, this option works well if you exported your files in named order from your external application and want to batch load the files in the same order
+Domain
+Data Loading and Unloading
+Question 3
+Skipped
+John has to create a PIPE that will be triggered for loading by calling the Snowpipe REST endpoints. What parameter does he need to specify in CREATE PIPE statement?
+Correct answer
+AUTO_INGEST = FALSE
+API_INGEST = TRUE
+API_INGEST = FALSE
+AUTO_INGEST = TRUE
+Overall explanation
+AUTO_INGEST = TRUE enables automatic data loading. Snowpipe supports loading from external stages (Amazon S3, Google Cloud Storage, or Microsoft Azure). AUTO_INGEST = FALSE disables automatic data loading. You must make calls to the Snowpipe REST API endpoints to load data files.
+Domain
+Data Loading and Unloading
+Question 4
+Skipped
+The data objects stored by Snowflake are not directly visible nor accessible by customers; they are only accessible through SQL query operations run using Snowflake. (True/False)
+Correct answer
+TRUE
+FALSE
+Overall explanation
+Snowflake manages all aspects of how this data is stored — the organization, file size, structure, compression, metadata, statistics, and other aspects of data storage are handled by Snowflake. The data objects stored by Snowflake are not directly visible nor accessible by customers; they are only accessible through SQL query operations run using Snowflake.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 5
+Skipped
+Which IdP vendors provide native Snowflake support For federated authentication and SSO? (Select 2)
+
+Onelogin
+Correct selection
+Microsoft ADFS
+Google G Suite
+Correct selection
+Okta
+Microsoft Azure Active Directory
+Overall explanation
+Okta and Microsoft ADFS provide native Snowflake support for federated authentication and SSO.
+
+Domain
+Account Access & Security
+Question 6
+Skipped
+How can we add a Directory table explicitly to a stage to store a catalog of staged files?
+Correct answer
+Using CREATE STAGE command
+Using CREATE DIRECTORY TABLES command and then add to the stage by ALTER STAGE command
+Using CREATE DIRECTORY TABLE command and then add to the stage by ALTER STAGE command
+Overall explanation
+A Directory table is not a separate database object; it stores a catalog of staged files in cloud storage. Roles with sufficient privileges can query a directory table to retrieve file URLs to access the staged files and other metadata. A directory table can be added explicitly to a stage when the stage is created (using CREATE STAGE) or later (using ALTER STAGE) with supplying directoryTableParams. directoryTableParams (for internal stages) ::= [ DIRECTORY = ( ENABLE = { TRUE | FALSE } [ REFRESH_ON_CREATE = { TRUE | FALSE } ] ) ] ENABLE = TRUE | FALSE Specifies whether to add a directory table to the stage. When the value is TRUE, a directory table is created with the stage.
+Domain
+Data Transformation
+Question 7
+Skipped
+Which primary tool loads data to Snowflake from a local file system?
+External Stage
+ETL tools
+Snowflake UI
+Correct answer
+SnowSQL
+Overall explanation
+SnowSQL is the primary tool used to load data to Snowflake from a local file system. You can run it in either interactive shell or batch mode.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 8
+Skipped
+Time Travel can be disabled for an account by ACCOUNTADMIN. (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+Time Travel cannot be disabled for an account. A user with the ACCOUNTADMIN role can set DATA_RETENTION_TIME_IN_DAYS to 0 at the account level, which means that all databases (and subsequently all schemas and tables) created in the account have no retention period by default; however, this default can be overridden at any time for any database, schema, or table.
+
+Domain
+Data Protection and Data Sharing
+Question 9
+Skipped
+The major benefits of defining Clustering Keys:  (Select 2)
+
+Correct selection
+To help optimize table maintenance
+To help in organizing small tables (<1 GB)
+Correct selection
+To help improve query performance
+To help in faster data sharing
+Overall explanation
+Defining clustering keys for very large tables (in the multi-terabyte range) helps optimize table maintenance and query performance. Small tables are not a good candidate for clustering.
+
+Domain
+Performance Concepts
+Question 10
+Skipped
+Dynamic Data Masking is supported by (Select all that apply)
+
+Correct selection
+Enterprise Edition
+Standard Edition
+Correct selection
+VPS
+Correct selection
+Business Critical
+Overall explanation
+Dynamic Data Masking features require Enterprise Edition (or higher).
+
+Domain
+Account Access & Security
+Question 11
+Skipped
+Which services are managed by Snowflake's cloud services layer? (Select all that apply)
+Correct selection
+Metadata Management
+Correct selection
+Access Control
+Correct selection
+Authentication
+Correct selection
+Query Parsing and Optimization
+Correct selection
+Infrastructure Management
+Only Infrastructure Management
+Overall explanation
+The cloud services layer is a collection of services that coordinate activities across Snowflake. These services tie together all of the different components of Snowflake in order to process user requests, from login to query dispatch.   
+
+The cloud service layer manages Authentication, Infrastructure Management, Metadata Management, Query parsing and optimization, and Access control services.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 12
+Skipped
+Which of these are Snowgrid's capabilities? (Select all that apply)
+Zero-copy cloning
+Correct selection
+Secure, governed data sharing
+Correct selection
+Live, ready to query data
+Correct selection
+Share internally with private data exchange or externally with public data exchange
+ETL dependent
+Overall explanation
+Snowgrid allows you to use Secure Data Sharing features to provide access to live data, without any ETL or movement of files across environments.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 13
+Skipped
+Which algorithm does Snowflake use to estimate the approximate number of distinct values in a data set?
+HyperMeanLog
+HyerAccumulateLog
+HyperMedianLog
+Correct answer
+HyperLogLog
+HyperEstimateLog
+Overall explanation
+Snowflake uses HyperLogLog to estimate the approximate number of distinct values in a data set. HyperLogLog is a state-of-the-art cardinality estimation algorithm, capable of estimating distinct cardinalities of trillions of rows with an average relative error of a few percent.
+
+Domain
+Data Transformation
+Question 14
+Skipped
+Readers accounts enable providers to share data with consumers who are not already Snowflake customers without requiring the consumers to become Snowflake Customers. Which role can create the Reader account?
+SECURITYADMIN
+Correct answer
+ACCOUNTADMIN
+SYSADMIN
+USERADMIN
+Overall explanation
+ACCOUNTADMIN role (or a role granted the CREATE ACCOUNT global privilege) only can create the Reader account.
+Domain
+Account Access & Security
+Question 15
+Skipped
+The Snowflake Information Schema includes table functions you can query to retrieve information about your directory tables. Which table function can be used to query the history of data files registered in the metadata of specified objects and the credits billed for these operations?
+Correct answer
+AUTO_REFRESH_REGISTRATION_HISTORY
+DATABASE_REFRESH_HISTORY
+STAGE_STORAGE_USAGE_HISTORY
+STAGE_DIRECTORY_FILE_REGISTRATION_HISTORY
+Overall explanation
+AUTO_REFRESH_REGISTRATION_HISTORY table function can be used to query the history of data files registered in the metadata of specified objects and the credits billed for these operations. The table function returns the billing history within a specified date range for your entire Snowflake account. This function returns billing activity within the last 14 days. 
+
+
+
+Please note, STAGE_DIRECTORY_FILE_REGISTRATION_HISTORY table function can be used to query information about the metadata history for a directory table, including:     
+
+Files added or removed automatically as part of a metadata refresh.     
+
+Any errors found when refreshing the metadata.
+
+Domain
+Data Transformation
+Question 16
+Skipped
+Snowflake automatically and transparently maintains materialized views. (True/False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+Snowflake automatically and transparently maintains materialized views. A background service updates the materialized view after changes to the base table. This is more efficient and less error-prone than manually maintaining the equivalent of a materialized view at the application level.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 17
+Skipped
+Which of these are kind of Cache in Snowflake?
+Data/Local Disk Cache
+Query Result Cache
+Metadata Cache
+Correct answer
+All of these
+Overall explanation
+Snowflake has three types of cache.
+
+The metadata cache that lives in the cloud services layer.
+
+The data cache/local disk cache that lives on the SSD drives in the virtual warehouses, and
+
+The query result cache. If a result is small, it will be stored in the cloud services layer, but larger results are going to be stored in the storage layer.
+
+Domain
+Performance Concepts
+Question 18
+Skipped
+Which schema can be used to find out about storage, compute, and objects in a Snowflake account?
+RESOURCE_SCHEMA
+Correct answer
+INFORMATION_SCHEMA
+SNOWFLAKE_SCHEMA
+USAGE_SCHEMA
+Overall explanation
+INFORMATION_SCHEMA can be used to find out about storage, compute, and objects in a Snowflake account. Every database that you create on Snowflake has a schema called INFORMATION_SCHEMA that's automatically created, and inside that schema, you can find views and table functions that provide metadata information about objects in your account.
+
+Domain
+Performance Concepts
+Question 19
+Skipped
+If you create a Network Policy by providing both 'Allowed IP Addresses' and 'Blocked IP Addresses', which is applied first by Snowflake while validating the access?
+Correct answer
+Blocked IP Addresses
+Allowed IP Addresses
+Overall explanation
+If you provide both Allowed IP Addresses and Blocked IP Addresses, Snowflake applies the Blocked List first.
+
+Domain
+Account Access & Security
+Question 20
+Skipped
+Which of these types of VIEW does Snowflake support? (Select 3)
+EXTERNAL VIEW
+PERMANENT VIEW
+TEMPORARY VIEW
+Correct selection
+STANDARD VIEW
+Correct selection
+MATERIALIZED VIEW
+Correct selection
+SECURE VIEW
+Overall explanation
+Snowflake supports three types of views.
+
+Standard View, Secure View, and Materialized View.   
+
+Standard View: It is a default view type. Its underlying DDL is available to any role with access to the view. When you create a standard view, Snowflake saves a definition of the view. Snowflake does not run the query. When someone accesses the view, that is when the query is run. The standard view will always execute as the owning role.
+
+Secure View: The secure view is exactly like a standard view, except users cannot see how that view was defined. Sometimes a secure view will run a little slower than a standard view to protect the information in a secure view. Snowflake may bypass some of the optimizations.
+
+Materialized View: A materialized view is more like a table. Unlike a standard or secure view, Snowflake runs the query right away when you create a materialized view. It takes the results set and stores that result set as a table in Snowflake. Because Snowflake is storing that materialized view as a table, creating micro partitions. Snowflake is creating metadata about those micro partitions. So when you query a materialized view, if you put a filter on the view, you get the same benefit of micro partition pruning that you would get from a table. With Snowflake, the materialized view is automatically refreshed every time there is a transaction against the base table. So it is always going to be in sync. If you want, you can also create a secure materialized view, which again will hide the logic from the user. A note about materialized views, because Snowflake is auto-refreshing them in the background, they use some credits, so there is a little bit of a cost there. Moreover, there is some storage, and Snowflake stores the result set as a table in Snowflake. So materialized views use more storage and compute than standard or secure views.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 21
+Skipped
+What would you create (UDF or Stored procedure) if you need a function that can be called as part of a SQL statement and must return a value that will be used in the statement?
+Stored Procedure
+Correct answer
+UDF
+Overall explanation
+A UDF evaluates to a value and can be used in contexts in which a general expression can be used (e.g. SELECT my_function() ...). 
+
+
+
+A stored procedure does not evaluate to a value, and cannot be used in all contexts in which a general expression can be used. For example, you cannot execute SELECT my_stored_procedure()....
+
+Domain
+Data Transformation
+Question 22
+Skipped
+Which data does not fit into a predefined data model or schema?
+All of these
+Correct answer
+Unstructured Data
+Structured-data
+Semi-Structured Data
+Overall explanation
+Unstructured data is information that does not fit into a predefined data model or schema. Typically text-heavy, such as form responses and social media conversations, unstructured data encompasses images, video, and audio. Industry-specific file types such as VCF (genomics), KDF (semiconductors), or HDF5 (aeronautics) are included in this category.
+
+Domain
+Data Transformation
+Question 23
+Skipped
+Which view in the Account Usage Schema can be used to query the replication history for a specified database?
+Correct answer
+REPLICATION_USAGE_HISTORY
+REPLICATION_GROUP_REFRESH_HISTORY
+DATA_TRANSFER_HISTORY
+DATABASE_REFRESH_HISTORY
+Overall explanation
+This REPLICATION_USAGE_HISTORY view in the Account Usage Schema can be used to query the replication history for a specified database. The returned results include the database name, credits consumed, and bytes transferred for replication. Usage data is retained for 365 days (1 year).
+
+Domain
+Data Protection and Data Sharing
+Question 24
+Skipped
+How can we turn off the query result cache?
+Correct answer
+Setting the parameter USE_CACHED_RESULT to FALSE
+Setting the parameter USE_QUERY_CACHED to FALSE
+Query result cache can be turned off.
+Setting the parameter USE_CACHED_INFO to FALSE
+Overall explanation
+We can turn off the query result cache by setting the parameter USE_CACHED_RESULT to FALSE. Though the only reason we would really want to do this is if we are doing performance testing.
+
+Domain
+Performance Concepts
+Question 25
+Skipped
+When deciding whether to suspend a warehouse or leave it running, what should you consider?
+Consider suspending the warehouse if the warehouse is large and there are no active queries.
+Consider the trade-off between saving credits by suspending the warehouse versus the operational cost of resuming the warehouse when needed.
+Correct answer
+Consider the trade-off between saving credits by suspending the warehouse versus maintaining the cache of data from the previous queries to help with performance.
+Overall explanation
+Consider the trade-off between saving credits by suspending a warehouse versus maintaining the cache of data from previous queries to help with performance.
+
+Domain
+Performance Concepts
+Question 26
+Skipped
+For which object the Kafka connector does create a topic?
+
+One internal stage to temporarily store data files for each topic
+Correct answer
+All of these
+One table for each topic. If the table specified for each topic does not exist
+One pipe to ingest the data files for each topic partition
+Overall explanation
+The connector creates the following objects for each topic:
+
+One internal stage to temporarily store data files for each topic.
+
+One pipe to ingest the data files for each topic partition.
+
+One table for each topic. If the table specified for each topic does not exist, the connector creates it; otherwise, the connector creates the RECORD_CONTENT and RECORD_METADATA columns in the existing table and verifies that the other columns are nullable (and produces an error if they are not).
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 27
+Skipped
+Search optimization is a Database-level property applied to all the tables within the database with supported data types. (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+Search optimization is a table-level property and applies to all columns with supported data types. The search optimization service aims to significantly improve the performance of selective point lookup queries on tables. A point lookup query returns only one or a small number of distinct rows. A user can register one or more tables to the search optimization service.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 28
+Skipped
+Both external (external cloud storage) and internal (i.e., Snowflake) stages support unstructured data. (True / False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+True, both external (external cloud storage, such as, Amazon S3, Google Cloud Storage, Azure Blob Storage etc.) and internal (i.e. Snowflake) stages support unstructured data.
+Domain
+Data Transformation
+Question 29
+Skipped
+If an account has federated authentication enabled. Can Snowflake admins still maintain user IDs and passwords in Snowflake?
+No
+Correct answer
+Yes
+Overall explanation
+With federated authentication enabled on an account, Snowflake still allows maintaining and using Snowflake user credentials (login name and password). In other words:   
+
+Account and security administrators can still create users with passwords maintained in Snowflake.   
+
+Users can still log into Snowflake using their Snowflake credentials.   
+
+
+
+However, if federated authentication is enabled for an account, Snowflake does not recommend maintaining user passwords in Snowflake. Instead, user passwords should be maintained solely in your IdP.    
+
+Domain
+Account Access & Security
+Question 30
+Skipped
+Monica ran a SELECT query on a large table t1. The query took longer than expected. She looked into the query profile and found that ' Bytes spilled to local storage' and 'Bytes spilled to remote storage' are very high. What advice will you give to her to improve the query performance? (Select 3)
+Correct selection
+Trying to split the processing into several steps
+Correct selection
+Using a larger warehouse (effectively increasing the available memory/local disk space for the operation)
+Processing data in larger batches
+Correct selection
+Processing data in smaller batches
+Increasing the number of parallel queries running in the warehouse
+Overall explanation
+When Snowflake warehouse cannot fit an operation in memory, it starts spilling (storing) data first to the local disk of a warehouse node and then to remote storage. In such a case, Snowflake first tries to temporarily store the data on the warehouse's local disk. As this means extra IO operations, any query that requires spilling will take longer than a similar query running on similar data that is capable to fit the operations in memory. Also, if the local disk is insufficient to fit the spilled data, Snowflake further tries to write to the remote cloud storage, which will be shown in the query profile as "Bytes spilled to remote storage". 
+
+The spilling can't always be avoided, especially for large batches of data, but it can be decreased by: 
+
+Reducing the amount of data processed. For example, by trying to improve partition pruning or projecting only the columns that are needed in the output.
+
+Decreasing the number of parallel queries running in the warehouse.
+
+Trying to split the processing into several steps (for example, by replacing the CTEs with temporary tables).
+
+Using a larger warehouse - effectively means more memory and more local disk space.
+
+Domain
+Performance Concepts
+Question 31
+Skipped
+David ran a query that took approximately 30 minutes to finish. He checked the Query profiler and noticed a high number for 'Bytes spilled to local storage'. What might be the problem?
+
+David should contact Snowflake Personnel.
+David is using a comparatively larger warehouse.
+Warehouse size has no impact on Bytes spilling.
+Correct answer
+David is using a comparatively smaller warehouse.
+Overall explanation
+If a node lacks enough memory to finish its part of a query, it will resort to spilling to local SSD storage, which can harm performance but may still be tolerable. On the other hand, if the node lacks sufficient local SSD storage to complete its query, it will spill to remote cloud storage, which severely impacts performance. To resolve the issue, either the SQL query needs to be simplified or the warehouse size needs to be increased.
+
+Domain
+Performance Concepts
+Question 32
+Skipped
+Snowflake is available in four editions. Which are those? (Select 4)
+Correct selection
+Virtual Private Snowflake (VPS)
+Professional
+Professional Plus
+Correct selection
+Business Critical
+Correct selection
+Enterprise
+Correct selection
+Standard
+Overall explanation
+Snowflake is available in four editions: Standard, Enterprise, Business Critical, and Virtual Private Snowflake (VPS). Standard comes with most of the available features. Enterprise adds on to Standard with things like: extra days of time travel, materialized view support, and data masking. Business Critical brings to the table: HIPAA support, Tri-secret Secure, and more. And Virtual Private Snowflake is everything that Business Critical has, but with the ability to have customer-dedicated metadata stores and customer-dedicated virtual service.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 33
+Skipped
+You have a table with a 30-day retention period. If you decrease the retention period to 20 days, how would it affect the data that would have been removed after 30 days?
+
+Correct answer
+The data will now retain for a shorter period of 20 days
+The data will still retain for 30-day before moving to Fail-safe
+Overall explanation
+Decreasing Retention reduces the amount of time data is retained in Time Travel:
+
+For active data modified after the retention period is reduced, the new shorter period applies.
+
+For data that is currently in Time Travel:     
+
+If the data is still within the new shorter period, it remains in Time Travel.     
+
+If the data is outside the new period, it moves into Fail-safe. 
+
+
+
+For example, if you have a table with a 30-day retention period and you decrease the period to 20-day, data from days 21 to 30 will be moved into Fail-safe, leaving only the data from day 1 to 20 accessible through Time Travel.  However, the process of moving the data from Time Travel into Fail-safe is performed by a background process, so the change is not immediately visible. Snowflake guarantees that the data will be moved, but does not specify when the process will complete; until the background process completes, the data is still accessible through Time Travel.
+
+Domain
+Data Protection and Data Sharing
+Question 34
+Skipped
+Which of these Snowflake Editions automatically stores data in an encrypted state?
+
+Standard
+Enterprise
+Business Critical
+Virtual Private Snowflake(VPS)
+Correct answer
+All of the Snowflake Editions
+Overall explanation
+All of the Snowflake Editions (Standard, Enterprise, Business Critical, Virtual Private Snowflake) automatically store data in an encrypted state.
+
+Domain
+Data Protection and Data Sharing
+Question 35
+Skipped
+The user access history can be found by querying the
+Information Schema ACCESS_HISTORY view
+Account Usage ACCESS_REPORT view
+Correct answer
+Account Usage ACCESS_HISTORY view
+Information Schema ACCESS_REPORT view
+Overall explanation
+Access History in Snowflake refers to when the user query reads column data and when the SQL statement performs a data write operation, such as INSERT, UPDATE, and DELETE, along with variations of the COPY command, from the source data object to the target data object. The user access history can be found by querying the Account Usage ACCESS_HISTORY view.
+
+Domain
+Account Access & Security
+Question 36
+Skipped
+How long do results remain in the Query results cache?
+16 hours
+Correct answer
+24 hours
+12 hours
+31 hours
+1 hours
+Overall explanation
+Results are retained for 24 hours in Query Result Cache. Snowflake resets the 24-hour retention period for the result, up to a maximum of 31 days from the date and time that the query was first executed. After 31 days, the result is purged and the next time the query is submitted, a new result is generated and persisted.
+
+Domain
+Performance Concepts
+Question 37
+Skipped
+If a user is logged in to Snowflake in a federated environment and IdP times out, what does happen to the user's snowflake session?
+The Snowflake web interface is disabled, and the prompt for IdP authentication is displayed.
+Correct answer
+It does not affect the user's Snowflake sessions. However, to initiate any new Snowflake sessions, the user must log into the IdP again.
+Overall explanation
+After a specified period of time (defined by the IdP), a user’s session in the IdP automatically times out, but this does not affect their Snowflake sessions. Any Snowflake sessions that are active at the time remain open and do not require re-authentication. However, to initiate any new Snowflake sessions, the user must log into the IdP again.
+Domain
+Account Access & Security
+Question 38
+Skipped
+File URL is ideal for
+None of these
+business intelligence applications or reporting tools that need to display the unstructured file contents
+
+Correct answer
+custom applications that require access to unstructured data files
+
+use in custom applications, providing unstructured data to other accounts via a share
+
+Overall explanation
+File URL: URL that identifies the database, schema, stage, and file path to a set of files. A role that has sufficient privileges on the stage can access the files. Ideal for custom applications that require access to unstructured data files.
+
+
+
+Scoped URL: Encoded URL that permits temporary access to a staged file without granting privileges to the stage. The URL expires when the persisted query result period ends (i.e., the results cache expires), which is currently 24 hours. Ideal for use in custom applications, providing unstructured data to other accounts via a share, or for downloading and ad hoc analysis of unstructured data via Snowsight.
+
+
+
+Pre-signed URL: Simple HTTPS URL used to access a file via a web browser. A file is temporarily accessible to users via this URL using a pre-signed access token. The expiration time for the access token is configurable. Ideal for business intelligence applications or reporting tools that need to display unstructured file contents.
+
+Domain
+Data Transformation
+Question 39
+Skipped
+In what situations should you consider User-Managed Tasks over Serverless Tasks? (Select 2)
+Consider when adherence to the schedule interval is highly important.
+Correct selection
+Consider when you can fully utilize a single warehouse by scheduling multiple concurrent tasks to take advantage of available compute resources.
+Correct selection
+Consider when adherence to the schedule interval is less important.
+Consider when you cannot fully utilize a warehouse because too few tasks run concurrently or they run to completion quickly (in less than 1 minute).
+Overall explanation
+User-managed Tasks is recommended when you can fully utilize a single warehouse by scheduling multiple concurrent tasks to take advantage of available compute resources. Also, recommended when adherence to the schedule interval is less critical. Serverless Tasks is recommended when you cannot fully utilize a warehouse because too few tasks run concurrently or they run to completion quickly (in less than 1 minute). Also, recommended when adherence to the schedule interval is critical.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 40
+Skipped
+How can you unload the data from Snowflake using COPY INTO location statements in a Single file?
+By specifying copy option MULTIPLE=FALSE
+By specifying copy option MULTIPLE_FILES=FALSE
+By specifying copy option ONE_FILE=TRUE
+Correct answer
+By specifying copy option SINGLE=TRUE
+Overall explanation
+To unload data to a single output file (at the potential cost of decreased performance), specify the SINGLE = TRUE copy option in your statement. You can optionally specify a name for the file in the path.
+
+Domain
+Data Loading and Unloading
+Question 41
+Skipped
+Which of these Snowflake features does enable accessing historical data (i.e., data that has been changed or deleted) at any point within a defined period?
+Zero Copy Cloning
+Search Optimization Service
+Correct answer
+Time Travel
+Data Sharing
+Overall explanation
+Snowflake Time Travel enables accessing historical data (i.e. data that has been changed or deleted) at any point within a defined period. It serves as a powerful tool for performing the following tasks: 
+
+Restoring data-related objects (tables, schemas, and databases) that might have been accidentally or intentionally deleted. - Duplicating and backing up data from key points in the past.
+
+Analyzing data usage/manipulation over specified periods of time.
+
+Domain
+Data Protection and Data Sharing
+Question 42
+Skipped
+If you recreate a pipe using CREATE OR REPLACE PIPE command. What does happen to load history if the Snowpipe gets recreated?
+Snowflake still keeps load history
+Correct answer
+The load history gets reset to empty
+The recreated Pipe still has tracks of the files loaded by the old Pipe
+The pipe can not be recreated
+Overall explanation
+When you recreate a pipe, if you do CREATE OR REPLACE PIPE, that load history is reset to empty, so Snowflake doesn't know which files we've already loaded.
+Domain
+Data Loading and Unloading
+Question 43
+Skipped
+Monica has successfully created a task with the 5 minutes schedule. It has been 30 minutes, but the task did not run. What could be the reason?
+Task schedule should not be less than 60 minutes
+Monica should run the ALTER TASK command to SUSPEND the task, and then again run the ALTER TASK command to RESUME the task
+Correct answer
+Monica should run the ALTER TASK command to RESUME the task
+Monica doesn't have the authority to run the task
+Overall explanation
+The first time we create the TASK, we need to run the ALTER TASK command to RESUME the task.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 44
+Skipped
+Which is not the DML (Data Manipulation Language) command?
+Correct answer
+UNDROP
+INSERT
+MERGE
+TRUNCATE
+UPDATE
+DELETE
+Overall explanation
+DML commands are used for managing data within database objects. In Snowflake, typical DML commands include INSERT (to insert data into a table), MERGE (to merge rows into a table), UPDATE (to update existing data within a table), DELETE (to delete records from a table), and TRUNCATE (to delete all records from a table but not the table itself).
+
+UNDROP, on the other hand, is not a DML command. It is used to restore dropped objects, such as tables, which is more aligned with data recovery operations rather than manipulation of the data within the tables.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 45
+Skipped
+What authentication methods does Snowflake support for REST API authentication? (Select 2)
+
+Authentication is not required in case Snowflake SQL API
+Correct selection
+OAuth
+Correct selection
+Key Pair Authentication
+Snowflake Account User ID and Password
+Overall explanation
+Snowflake SQL API supports Oauth, and Key Pair authentication.
+
+Domain
+Data Transformation
+Question 46
+Skipped
+What will happen if a policy is assigned to a user who is already signed in?
+There will be no interruption until the user logoffs and signs in again.
+Correct answer
+The user can't do anything else until signed in and signed back in again.
+The user can continue running the SQL queries in the currently opened session.
+Overall explanation
+If a policy is assigned to a user who already signed in, they can't do anything else until they sign and signed back in again to make use of the new policy
+Domain
+Account Access & Security
+Question 47
+Skipped
+Which of the Snowflake editions provides a federated authorization feature?
+Standard
+Business Critical
+Virtual Private Snowflake(VPS)
+Enterprise
+Correct answer
+All of the Snowflake Editions
+Overall explanation
+All Snowflake Editions (Standard, Enterprise, Business Critical, Virtual Private Snowflake) provide Federated Authentication.
+Domain
+Account Access & Security
+Question 48
+Skipped
+Monica wants to delete all the data from table t1. She wants to keep the table structure, so she does not need to create the table again. Which command will be appropriate for her need?
+DELETE
+REMOVE
+Correct answer
+TRUNCATE
+DROP
+UNDROP
+Overall explanation
+TRUNCATE will delete all of the data from a single table. So, once Monica truncates table t1, table t1's structure remains, but the data will be deleted. DELETE is usually used for deleting single rows of data.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 49
+Skipped
+What are the supported file formats for data unloading in Snowflake?
+
+Correct selection
+JSON
+
+Correct selection
+Parquet
+
+ORC
+
+XML
+
+Avro
+
+Overall explanation
+Currently, only JSON and Parquet file formats are supported for data unloading. Other formats are not supported at this time. However, all of these file formats are supported for data loading.
+
+Domain
+Data Loading and Unloading
+Question 50
+Skipped
+A user's default role is
+Correct answer
+the role a user gets set to each time the user logs in to Snowflake.
+the name used to log in to the Snowflake WebUI.
+changed each time the user logs in to Snowflake.
+always the default PUBLIC role.
+Overall explanation
+A user's default role is the role a user gets set to each time the user logs in to Snowflake. Snowflake uses roles to control the objects (virtual warehouses, databases, tables, etc.) that users can access:     
+
+Snowflake provides a set of predefined roles, as well as a framework for defining a hierarchy of custom roles.     
+
+All Snowflake users are automatically assigned the predefined PUBLIC role, which enables login to Snowflake and basic object access.     
+
+In addition to the PUBLIC role, each user can be assigned additional roles, with one of these roles designated as their default role.
+
+A user’s default role determines the role used in the Snowflake sessions initiated by the user; however, this is only a default. Users can change roles within a session at any time.     
+
+Roles can be assigned at user creation or afterward.
+
+Domain
+Account Access & Security
+Question 51
+Skipped
+Which privileges are provided with a share by the provider? (Select 2)
+Grant access(USAGE) to the specific tables in the database
+Grant access(MODIFY) to the specific tables in the database
+Grant access(OPERATE) to the database and the schema containing the tables to share
+Correct selection
+Grant access(SELECT) to the specific tables in the database
+Correct selection
+Grant access(USAGE) to the database and the schema containing the tables to share
+Overall explanation
+Shares are named Snowflake objects that encapsulate all of the information required to share a database. Each share consists of:
+
+The privileges that grant access to the database(s) and the schema containing the objects to share.
+
+The privileges that grant access to the specific objects in the database.
+
+The consumer accounts with which the database and its objects are shared. 
+
+
+
+Example: CREATE SHARE "SHARED_DATA" COMMENT=''; GRANT USAGE ON DATABASE "DEMO_DB" TO SHARE "SHARED_DATA"; GRANT USAGE ON SCHEMA "DEMO_DB"."TWITTER_DATA" TO SHARE "SHARED_DATA"; GRANT SELECT ON VIEW "DEMO_DB"."TWITTER_DATA"."FOLLOWERS" TO SHARE "SHARED_DATA";
+
+Domain
+Data Protection and Data Sharing
+Question 52
+Skipped
+A user cannot view the result set from a query that another user executed except for the ACCOUNTADMIN role. (True / False)
+
+TRUE
+Correct answer
+FALSE
+Overall explanation
+A user cannot view the result set from a query that another user executed. This behavior is intentional. For security reasons, only the user who executed a query can access the query results. This behavior is not connected to the Snowflake access control model for objects. Even a user with the ACCOUNTADMIN role cannot view the results for a query run by another user.
+
+Domain
+Account Access & Security
+Question 53
+Skipped
+How can an ACCOUNTADMIN view the billing for Automatic Clustering? (Select all that apply)
+
+Correct selection
+Snowsight: Select Admin > Usage
+Correct selection
+Query - AUTOMATIC_CLUSTERING_HISTORY table function (in the Snowflake Information Schema)
+There is no way to check the Automatic Clustering billing without contacting Snowflake Support Team
+Classic Web Interface: Click on Account > Billing & Usage under storage named 'AUTOMATIC_CLUSTERING'
+Correct selection
+Query - AUTOMATIC_CLUSTERING_HISTORY View (in Account Usage)
+Correct selection
+Classic Web Interface: Click on Account > Billing & Usage under warehouse named 'AUTOMATIC_CLUSTERING'
+Overall explanation
+Users with the ACCOUNTADMIN role can view the billing for Automatic Clustering using Snowsight, the classic web interface, or SQL: Snowsight: Select Admin » Usage. Classic Web Interface: Click on Account tab » Billing & Usage
+
+The billing for Automatic Clustering shows up as a separate Snowflake-provided warehouse named AUTOMATIC_CLUSTERING. 
+
+SQL:Query either of the following: AUTOMATIC_CLUSTERING_HISTORY table function (in the Snowflake Information Schema). AUTOMATIC_CLUSTERING_HISTORY View (in Account Usage).
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 54
+Skipped
+What would happen if we suspend the warehouse while it is executing the SQL statement?
+All the compute resources of the warehouse will be shut down immediately, and the running statement will be canceled.
+Correct answer
+Only idle compute resources of the warehouse will be shut down, allowing any compute resources executing statements to continue until the statement is complete.
+When trying to suspend the warehouse, we will get an error while the same warehouse is executing SQL statements.
+All compute resources of the warehouse will be up until the statement is complete.
+Overall explanation
+When we suspend a warehouse, Snowflake immediately shuts down all idle compute resources for the warehouse. However, it allows any compute resources executing statements to continue until the statements are complete. At this time, the resources are shut down, and the warehouse status changes to “Suspended”. Compute resources waiting to shut down are considered to be in “quiesce” mode.
+
+Domain
+Performance Concepts
+Question 55
+Skipped
+Which of these SQL functions does Snowflake support? (Select all that apply)
+
+Correct selection
+Scalar
+Correct selection
+System
+Correct selection
+User-Defined
+Correct selection
+Window
+Correct selection
+Table
+Correct selection
+Aggregate
+Overall explanation
+Snowflake Supports all these SQL functions.
+Domain
+Data Transformation
+Question 56
+Skipped
+The VALIDATION_MODE parameter does not support COPY statements that transform data during a load. (True / False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+True. 
+
+VALIDATION_MODE instructs the COPY command to validate the data files instead of loading them into the specified table; i.e., the COPY command tests the files for errors but does not load them.
+
+
+
+The command validates the data to be loaded and returns results based on the validation option specified: 
+
+Syntax: VALIDATION_MODE = RETURN_n_ROWS | RETURN_ERRORS | RETURN_ALL_ERRORS
+
+RETURN_n_ROWS (e.g. RETURN_10_ROWS) - Validates the specified number of rows, if no errors are encountered; otherwise, fails at the first error encountered in the rows. 
+
+RETURN_ERRORS - Returns all errors (parsing, conversion, etc.) across all files specified in the COPY statement. 
+
+RETURN_ALL_ERRORS - Returns all errors across all files specified in the COPY statement, including files with errors that were partially loaded during an earlier load because the ON_ERROR copy option was set to CONTINUE during the load."
+
+Domain
+Data Transformation
+Question 57
+Skipped
+Which stream type is supported for streams on the external table only?
+Standard
+External
+Update-only
+Correct answer
+Insert-only
+Append-only
+Overall explanation
+Insert-only is supported for streams on external tables only. An insert-only stream tracks row inserts only; they do not record delete operations that remove rows from an inserted set (i.e. no-ops).
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 58
+Skipped
+Select the type of function that can operate on a subset of rows within the set of input rows.
+Scalar Function
+User-Defined Function
+System Function
+Correct answer
+Window Function
+Aggregate Function
+Table Function
+Overall explanation
+A window function is any function that operates over a window of rows.
+Domain
+Data Transformation
+Question 59
+Skipped
+Which of these system-defined roles can manage operations at the organization level?
+USERADMIN
+SYSADMIN
+ACCOUNTADMIN
+SECURITYADMIN
+Correct answer
+ORGADMIN
+Overall explanation
+ORGADMIN role manages operations at the organizational level. More specifically, this role:
+
+Can create accounts in the organization.
+
+Can view all accounts in the organization (using SHOW ORGANIZATION ACCOUNTS) and all regions enabled for the organization (using SHOW REGIONS).
+
+Can view usage information across the organization.
+
+Domain
+Account Access & Security
+Question 60
+Skipped
+Only the user who generated the scoped URL can use the URL to access the referenced file. (True/False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+True, only the user who generated the scoped URL can use the URL to access the referenced file. I case of File URL, any role that has sufficient privileges on the stage can access the file.
+Domain
+Data Transformation
+Question 61
+Skipped
+John is trying to load JSON data sets with a huge array containing multiple records. Considering the VARIANT data type imposed size of 16 MB, what do you recommend to John for optimally loading the data?
+Separate the documents with line break of commas
+Correct answer
+Enable the STRIP_OUTER_ARRAY file format option for the COPY INTO <table> command
+Enable VARIANT_OUTER_ARRAY file format for the COPY INTO <table> command
+No need to remove the outer array structure as Snowflake Intelligent Engine will take care of that
+Overall explanation
+If the data exceeds 16 MB, enable the STRIP_OUTER_ARRAY file format option for the COPY INTO <table> command to remove the outer array structure and load the records into separate table rows: copy into <table> from @~/<file>.json file_format = (type = 'JSON' strip_outer_array = true);
+Domain
+Data Loading and Unloading
+Question 62
+Skipped
+What all options are available for data transformation while loading data into a table using the COPY command? (Select all that apply)
+
+Correct selection
+Truncation of Text Strings
+Correct selection
+Column reordering
+Correct selection
+Column omission
+Join
+Correct selection
+Casts
+Overall explanation
+Snowflake supports transforming data while loading it into a table using the COPY command. Options include:
+
+Column reordering
+
+Column omission
+
+Casts
+
+Truncating text strings that exceed the target column length
+
+Domain
+Data Transformation
+Question 63
+Skipped
+While transforming Semi-structure data, If you want expansion for all the sub-elements recursively using FLATTEN function, what argument would you need to set with FLATTEN function?
+OUTER => TRUE
+Correct answer
+RECURSIVE => TRUE
+RECURSIVE => FALSE
+OUTER => FALSE
+Overall explanation
+The expansion is performed for all sub-elements recursively by argument RECURSIVE => TRUE. Only the element referenced by PATH is expanded BY RECURSIVE => FALSE. The OUTER argument is used to handle the input rows that cannot be expanded, either because they cannot be accessed in the path or because they have zero fields or entries.
+
+Domain
+Data Transformation
+Question 64
+Skipped
+Which of the following file format is not supported by Snowflake?
+AVRO
+ORC
+CSV
+JSON
+PARQUET
+Correct answer
+EDI
+Overall explanation
+Snowflake supports - CSV, TSV, JSON, AVRO, ORC, PARQUET. Snowflake also supports XML which is a Preview feature as of now. EDI format is not supported by Snowflake.
+Domain
+Data Loading and Unloading
+Question 65
+Skipped
+A stored procedure can simultaneously run the caller’s and the owner’s rights. (True / False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+A stored procedure runs with either the caller’s rights or the owner’s rights. It cannot run with both at the same time. A caller’s rights stored procedure runs with the privileges of the caller. The primary advantage of a caller’s rights stored procedure is that it can access information about that caller or about the caller’s current session. For example, a caller’s rights stored procedure can read the caller’s session variables and use them in a query. An owner’s rights stored procedure runs mostly with the privileges of the stored procedure’s owner. The primary advantage of an owner’s rights stored procedure is that the owner can delegate specific administrative tasks, such as cleaning up old data, to another role without granting that role more general privileges, such as privileges to delete all data from a specific table. At the time that the stored procedure is created, the creator specifies whether the procedure runs with owner’s rights or caller’s rights. The default is owner’s rights.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 66
+Skipped
+What value will be returned by the following query? 
+
+
+
+SELECT * FROM TABLE(FLATTEN(input => parse_json('[]'))) f;
+
+Correct answer
+nothing will return / output of the input row will be omitted
+NULL
+0
+[]
+Overall explanation
+If you don’t specify OUTER argument with FLATTEN, it would be defaulted to FALSE. The OUTER => FALSE argument with FLATTEN omits the output of the input rows that cannot be expanded, either because they cannot be accessed in the path or because they have zero fields or entries.
+Domain
+Data Transformation
+Question 67
+Skipped
+What all locations do Snowflake support for staging the data? (Select all that apply)
+
+Correct selection
+Google Cloud Storage
+Correct selection
+Amazon S3
+Oracle Cloud Storage
+Correct selection
+Microsoft Azure Blob Storage
+Correct selection
+Snowflake Internal Stages
+Overall explanation
+Snowflake supports loading data from files staged in any of the following locations (except Oracle Cloud Storage), regardless of the cloud platform for your Snowflake account:
+
+Internal (i.e. Snowflake) stages
+
+Amazon S3
+
+Google Cloud Storage
+
+Microsoft Azure blob storage
+
+Domain
+Data Loading and Unloading
+Question 68
+Skipped
+Snowflake Query history page allows you to view the details of all the queries executed in the last 31 days. (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+Snowflake Query history page allows you to view the details of all the queries executed in the last 14 days. You can query the Query_History view in Snowflake's Account Usage schema for older queries.
+
+Domain
+Performance Concepts
+Question 69
+Skipped
+Which systems function can help find the overlap depth of a table's micro-partitions?
+Correct selection
+SYSTEM$CLUSTERING_DEPTH
+SYSTEM$CLUSTERING_ALL
+SYSTEM$CLUSTERING_WEIGHT
+SYSTEM$CLUSTERING_INFO
+Correct selection
+SYSTEM$CLUSTERING_INFORMATION
+Overall explanation
+For example, if you have an EMPLOYEE table - you can run any of these queries to find the depth - SELECT SYSTEM$CLUSTERING_INFORMATION('EMPLOYEE'); SELECT SYSTEM$CLUSTERING_DEPTH('EMPLOYEE');
+Domain
+Snowflake Data Platform Features and Architecture
+Question 70
+Skipped
+Which of these functions helps generate the FILE URL to access the unstructured data file?
+BUILD_SCOPED_FILE_URL
+Correct answer
+BUILD_STAGE_FILE_URL
+
+GET_PRESIGNED_URL
+GET_ABSOLUTE_PATH
+GET_RELATIVE_PATH
+GET_STAGE_LOCATION
+Overall explanation
+BUILD_STAGE_FILE_URL generates a Snowflake-hosted file URL to a staged file using the stage name and relative file path as inputs. A file URL permits prolonged access to a specified file. That is, the file URL does not expire. File URL: URL that identifies the database, schema, stage, and file path to a set of files. A role that has sufficient privileges on the stage can access the files.
+
+Domain
+Data Transformation
+Question 71
+Skipped
+Which SQL command determines whether a network policy is set on the account or for a specific user?
+SHOW POLICY
+SHOW NETWORK_POLICIES
+SHOW PARAMETER
+Correct answer
+SHOW PARAMETERS
+SHOW POLICIES
+Overall explanation
+The SHOW PARAMETERS command determines whether a network policy is set on the account or for a specific user.
+
+For Account level: SHOW PARAMETERS LIKE 'network_policy' IN ACCOUNT;
+
+For User level : SHOW PARAMETERS LIKE 'network_policy' IN USER <username>; 
+
+Example - SHOW PARAMETERS LIKE 'network_policy' IN USER john;
+
+Domain
+Account Access & Security
+Question 72
+Skipped
+A task can execute any one of the following types of SQL code: (Select 3)
+Correct selection
+Procedural logic using Snowflake Scripting
+Correct selection
+Single SQL Statement
+Multiple SQL statements
+Correct selection
+Call to a stored procedure
+Overall explanation
+A task can execute any one of the following types of SQL code:
+
+Single SQL statement
+
+Call to a stored procedure
+
+Procedural logic using Snowflake Scripting.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 73
+Skipped
+The suspended warehouse cannot be resized until they resume. (True / False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+The suspended warehouse can be easily resized. Resizing a suspended warehouse does not provision any new compute resources for the warehouse. It simply instructs Snowflake to provision the additional compute resources when the warehouse is next resumed, at which time all the usage and credit rules associated with starting a warehouse apply.
+
+Domain
+Performance Concepts
+Question 74
+Skipped
+Which copyOptions can help load a file with expired metadata (if the LAST_MODIFIED date is older than 64 days and the initial set of data was loaded into the table more than 64 days earlier (and if the file was loaded into the table, that also occurred more than 64 days earlier))? (Select 2)
+ON_ERROR = CONTINUE
+LOAD_CERTAIN_FILES = TRUE
+FORCE = FALSE
+Correct selection
+LOAD_UNCERTAIN_FILES = TRUE
+LOAD_FILES = TRUE
+Correct selection
+FORCE = TRUE
+Overall explanation
+To load files whose metadata has expired, set the LOAD_UNCERTAIN_FILES copy option to true. The copy option references load metadata, if available, to avoid data duplication, but also attempts to load files with expired load metadata. Alternatively, set the FORCE option to load all files, ignoring load metadata if it exists. Note that this option reloads files, potentially duplicating data in a table.
+Domain
+Data Loading and Unloading
+Question 75
+Skipped
+Permissions on database objects such as databases or tables are granted to:
+Correct answer
+Roles
+Users
+Schemas
+Virtual Warehouses
+Overall explanation
+Snowflake supports Role-Based Access control. Permissions on database objects such as databases or tables are granted to Roles.
+
+Domain
+Account Access & Security
+Question 76
+Skipped
+Which of these roles is dedicated to user and role management only?
+SECURITYADMIN
+ACCOUNTADMIN
+ORGADMIN
+SYSADMIN
+Correct answer
+USERADMIN
+Overall explanation
+USERADMIN role is dedicated to user and role management only. More specifically, this role:
+
+Is granted the CREATE USER and CREATE ROLE security privileges.
+
+Can create users and roles in the account.
+
+This role can also manage users and roles that it owns.
+
+Only the role with the OWNERSHIP privilege on an object (i.e. user or role), or a higher role, can modify the object properties.
+
+Domain
+Account Access & Security
+Question 77
+Skipped
+Suppose you have an auto-scaling mode setup with an Economy policy. In what situation does Snowflake spin up an additional cluster?
+
+Correct answer
+Only if the system estimates there’s enough query load to keep the cluster busy for at least 6 minutes.
+The first cluster starts immediately when either a query is queued or the system detects that there’s one more query than the currently-running clusters can execute.
+Overall explanation
+In the Economy Scaling policy, Snowflake spins up an additional cluster only if the system estimates there’s enough query load to keep the cluster busy for a least 6 minutes.
+
+Domain
+Performance Concepts
+Question 78
+Skipped
+What is the expiration period of a File URL?
+The URL expires when the persisted query result period ends
+Length of time specified in the expiration_time argument
+Correct answer
+It is Permanent
+Overall explanation
+The expiration period of Scoped URL: The URL expires when the persisted query result period ends.
+
+The expiration period of the File URL: It is permanent.
+
+The expiration period of Pre-Signed URL: Length of time specified in the expiration_time argument.
+
+Domain
+Data Transformation
+Question 79
+Skipped
+Which of these SQL functions helps returns the absolute path of a staged file using the stage name and path of the file relative to its location in the stage as inputs.?
+GET_RELATIVE_PATH
+GET_STAGE_LOCATION
+Correct answer
+GET_ABSOLUTE_PATH
+BUILD_STAGE_FILE_URI
+GET_PRESIGNED_URL
+BUILD_SCOPED_FILE_URL
+Overall explanation
+GET_ABSOLUTE_PATH returns the absolute path of a staged file using the stage name and path of the file relative to its location in the stage as inputs.
+
+Domain
+Data Transformation
+Question 80
+Skipped
+There are two modes to set up a multi-cluster warehouse. Select those from the given choices.
+Correct selection
+Auto-scaling mode
+Minimum mode
+Minimized mode
+Maximum mode
+Correct selection
+Maximized mode
+Overall explanation
+There are two ways to set up a multi-cluster warehouse: in maximized mode, or auto-scaling mode.
+
+Maximized mode - You simply set your minimum equal to your maximum, and those values are something greater than one.
+
+Auto-Scaling mode - Specify different values for the maximum and the minimum number of clusters. In this mode, Snowflake starts and stops clusters as needed to dynamically manage the load on the warehouse:
+
+As the number of concurrent user sessions and/or queries for the warehouse increases, and queries start to queue due to insufficient resources, Snowflake automatically starts additional clusters, up to the maximum number defined for the warehouse.
+
+Similarly, as the load on the warehouse decreases, Snowflake automatically shuts down clusters to reduce the number of running clusters and, correspondingly, the number of credits used by the warehouse.
+
+Domain
+Performance Concepts
+Question 81
+Skipped
+Which object parameter can users with the ACCOUNTADMIN role use to set the default retention period for their account?
+DATA_RETENTION_TIME_IN_HOURS
+Correct answer
+DATA_RETENTION_TIME_IN_DAYS
+DATA_RETENTION_IN_TIME_TRAVEL
+DATA_RETENTION_TIME_MAX
+Overall explanation
+Users can use the DATA_RETENTION_TIME_IN_DAYS object parameter with the ACCOUNTADMIN role to set the default retention period for their account.
+
+Domain
+Data Protection and Data Sharing
+Question 82
+Skipped
+If we make any changes to the original table, then
+The changes get immediately reflected in the cloned table
+The cloned table data get refreshed with the entire new data of the source table
+Correct answer
+The changes do not reflect in the cloned table
+Overall explanation
+Zero-copy cloning allows us to make a snapshot of any table, schema, or database without actually copying data. A clone is writable and is independent of its source (i.e., changes made to the source or clone are not reflected in the other object). A new clone of a table points to the original table's micro partitions, using no data storage. If we make any changes in the cloned table, then only its changed micro partitions are written to storage.
+
+Domain
+Data Protection and Data Sharing
+Question 83
+Skipped
+What is the purpose of VALIDATION_MODE in the COPY INTO <table> command?
+VALIDATION_MODE is used to validate the load file, skip the errored data and then load it into the specified table.
+Correct answer
+VALIDATION_MODE is used to validate the load file for errors instead of loading it into the specified table.
+VALIDATION_MODE is used to validate the load file and load it into the specified table if there is no error.
+Overall explanation
+VALIDATION_MODE instructs the COPY command to validate the data files instead of loading them into the specified table; i.e., the COPY command tests the files for errors but does not load them. The command validates the data to be loaded and returns results based on the validation option specified: Syntax : VALIDATION_MODE = RETURN_n_ROWS | RETURN_ERRORS | RETURN_ALL_ERRORS RETURN_n_ROWS (e.g. RETURN_10_ROWS) - Validates the specified number of rows, if no errors are encountered; otherwise, fails at the first error encountered in the rows. RETURN_ERRORS - Returns all errors (parsing, conversion, etc.) across all files specified in the COPY statement. RETURN_ALL_ERRORS - Returns all errors across all files specified in the COPY statement, including files with errors that were partially loaded during an earlier load because the ON_ERROR copy option was set to CONTINUE during the load.
+Domain
+Data Loading and Unloading
+Question 84
+Skipped
+Which database objects can be shared using the Snowflake Secure Data Sharing feature? (Select all that apply)
+Correct selection
+Secure Views
+Correct selection
+Secure UDFs
+Correct selection
+Secure Materialized View
+Roles
+Correct selection
+External Tables
+Correct selection
+Tables
+Overall explanation
+Secure Data Sharing enables sharing selected objects in a database in your account with other Snowflake accounts. The following Snowflake database objects can be shared: 
+
+Tables 
+
+External tables 
+
+Secure views 
+
+Secure materialized views 
+
+Secure UDFs 
+
+Snowflake enables the sharing of databases through shares created by data providers and “imported” by data consumers.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 85
+Skipped
+How many maximum columns (or expressions) are recommended for a cluster key?
+Correct answer
+3 to 4
+12 to 16
+7 to 8
+Higher the number of columns (or expressions) in the key, better will be the performance
+Overall explanation
+A single clustering key can contain one or more columns or expressions. Snowflake recommends a maximum of 3 or 4 columns (or expressions) per key for most tables. Adding more than 3-4 columns tends to increase costs more than benefits.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 86
+Skipped
+Which command will list the pipes for which you have access privileges?
+Correct answer
+SHOW PIPES;
+DESCRIBE PIPES;
+LIST PIPES;
+SHOW PIPES();
+LIST PIPES();
+Overall explanation
+SHOW PIPES Command lists the pipes for which you have access privileges. This command can list the pipes for a specified database or schema (or the current database/schema for the session), or your entire account.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 87
+Skipped
+Select the correct statements for Table Clustering. (Select 3)
+Snowflake doesn’t charge for Reclustering
+Automatic clustering can not be suspended or resumed
+Automatic Clustering doesn’t consume credit
+Correct selection
+Snowflake recommends a maximum of three or four columns (or expressions) per key
+Correct selection
+Clustering keys are not for every table
+Correct selection
+Tables in multi-terabytes range are good candidate for clustering keys
+Overall explanation
+Clustering keys are not for every table. Tables in the multi-terabyte range are good candidates for clustering keys. Both automatic clustering and reclustering consume credit. A single clustering key can contain one or more columns or expressions. Snowflake recommends a maximum of three or four columns (or expressions) per key for most tables. Adding more than 3-4 columns tends to increase costs more than benefits.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 88
+Skipped
+Multi-cluster warehouses are beneficial in improving the performance of slow-running queries or data loading. (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+Multi-cluster warehouses are best utilized for scaling resources to improve concurrency for users/queries. They are not as beneficial for improving the performance of slow-running queries or data loading. For these types of operations, resizing the warehouse provides more benefits.
+
+Domain
+Performance Concepts
+Question 89
+Skipped
+Snowflake blocks certain IPs by default to ensure that customer is getting the highest level of Network security. (TRUE / FALSE)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+By default, Snowflake allows users to connect to the service from any computer or device IP address. A security administrator (or higher) can create a network policy to allow or deny access to a single IP address or a list of addresses.
+
+Domain
+Account Access & Security
+Question 90
+Skipped
+You can create an an account level network policy using _____ (Select all that apply)
+Only Snowflake Support can create the Account level Network Policy
+Correct selection
+Classic Web Interface
+Correct selection
+Snowsight
+Correct selection
+SQL
+Overall explanation
+Only security administrators (i.e., users with the SECURITYADMIN role) or higher or a role with the global CREATE NETWORK POLICY privilege can create network policies using Snowsight, Classic Web Interface, and SQL.
+Domain
+Account Access & Security
+Question 91
+Skipped
+Which of these are not supported by the Search Optimization Service? (Select all that apply)
+Correct selection
+Materialized Views
+Correct selection
+Casts on table columns
+Correct selection
+Column Concatenation
+Correct selection
+External Tables
+Correct selection
+Analytical Expressions
+Correct selection
+Columns defined with COLLATE clause
+Overall explanation
+None of these are currently supported by the Search Optimization Service. Additionally, Tables and views protected by row access policies cannot be used with the Search Optimization Search.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 92
+Skipped
+Micro-partitioning is the on-demand feature of Snowflake. It is required to be enabled explicitly by ACCOUNTADMIN. (True / False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Micro-partitioning is automatically performed on all Snowflake tables. Tables are transparently partitioned using the Ordering of the data as inserted or loaded.
+
+Domain
+Snowflake Data Platform Features and Architecture
+Question 93
+Skipped
+An account-level resource monitor overrides the resource monitor assignment for individual warehouses. (True/False)
+TRUE
+Correct answer
+FALSE
+Overall explanation
+An account-level resource monitor does not override resource monitor assignments for individual warehouses. If either the account resource monitor or the warehouse resource monitor reaches its defined threshold and a suspend action has been defined, the warehouse is suspended.
+Domain
+Performance Concepts
+Question 94
+Skipped
+In which of the cloud platforms a Snowflake account can be hosted? (Select 3)
+Correct selection
+AWS
+IBM Cloud
+Correct selection
+GCP
+Correct selection
+AZURE
+Oracle Cloud
+Overall explanation
+A Snowflake account can be hosted on any of the following cloud platforms: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure (Azure). On each platform, Snowflake provides one or more regions where the account is provisioned.
+Domain
+Snowflake Data Platform Features and Architecture
+Question 95
+Skipped
+Which objects are not available for replication in the Standard Edition of Snowflake? (Select 3)
+Correct selection
+Integrations
+Correct selection
+Users
+Database
+Shares
+Correct selection
+Roles
+Overall explanation
+Database and share replication are available in all editions, including the Standard edition. Replication of all other objects is only available for Business Critical Edition (or higher).
+Domain
+Data Protection and Data Sharing
+Question 96
+Skipped
+At what frequency does Snowflake rotate the object keys?
+60 Days
+1 Year
+Correct answer
+30 Days
+16 Days
+Overall explanation
+All Snowflake-managed keys are automatically rotated by Snowflake when they are more than 30 days old. Active keys are retired, and new keys are created. When Snowflake determines the retired key is no longer needed, the key is automatically destroyed. When active, a key is used to encrypt data and is available for usage by the customer. When retired, the key is used solely to decrypt data and is only available for accessing the data.
+
+Domain
+Account Access & Security
+Question 97
+Skipped
+If you drop or disable a user in Snowflake in an Okta IdP federated environment, the user can still access Snowflake login through Okta. (True/False)
+Correct answer
+FALSE
+TRUE
+Overall explanation
+Users who are dropped or disabled in Snowflake are still able to log into their Okta accounts, but they will receive an error message when they attempt to connect to Snowflake. You must recreate or enable the user before they can log in.
+Domain
+Account Access & Security
+Question 98
+Skipped
+A user can be assigned multiple roles. (True / False)
+FALSE
+Correct answer
+TRUE
+Overall explanation
+Roles are the entities to which privileges on securable objects can be granted and revoked. Roles are assigned to users to allow them to perform actions required for business functions in their organization. A user can be assigned multiple roles. It allows users to switch roles (i.e., choose which role is active in the current Snowflake session) to perform different actions using separate sets of privileges.
+
+Domain
+Account Access & Security
+Question 99
+Skipped
+What happens to the data when the retention period ends for an object?
+Data can be restored by increasing the retention period
+Correct answer
+Data is moved to Snowflake Fail-safe
+SYSADMIN can restore the data from Fail-safe
+Data is permanently lost
+Overall explanation
+When the retention period ends for an object, the historical data is moved into Snowflake Fail-safe. Snowflake support needs to be contacted to get the data restored from Fail-safe.
+
+Domain
+Data Protection and Data Sharing
+Question 100
+Skipped
+Which of the following languages does Snowflake support for writing UDFs (User-Defined Functions)? (Select 4)
+
+C#
+Correct selection
+Python
+Correct selection
+SQL
+Correct selection
+JAVA
+Correct selection
+JavaScript
+GO
+Overall explanation
+User-defined functions (UDFs) let you extend the system to perform operations that are not available through the built-in, system-defined functions provided by Snowflake. Snowflake currently supports the following languages for writing UDFs: Java: A Java UDF lets you use the Java programming language to manipulate data and return either scalar or tabular results. JavaScript: A JavaScript UDF lets you use the JavaScript programming language to manipulate data and return either scalar or tabular results. Python: A Python UDF lets you use the Python programming language to manipulate data and return either scalar or tabular results. SQL: A SQL UDF evaluates an arbitrary SQL expression and returns either scalar or tabular results.
+
+Domain
+Data Transformation
