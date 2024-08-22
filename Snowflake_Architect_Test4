@@ -1,0 +1,1237 @@
+Question 1
+Skipped
+Which columns can be included in an external table schema? (Choose three.)
+
+Correct selection
+VALUE
+
+METADATA$ISUPDATE
+
+METADATA$EXTERNAL_TABLE_PARTITION
+
+Correct selection
+METADATA$FILENAME
+
+METADATA$ROW_ID
+
+Correct selection
+METADATA$FILE_ROW_NUMBER
+
+Overall explanation
+All external tables include the following columns:
+
+VALUE
+
+A VARIANT type column that represents a single row in the external file.
+
+METADATA$FILENAME
+
+A pseudocolumn that identifies the name of each staged data file included in the external table, including its path in the stage.
+
+METADATA$FILE_ROW_NUMBER
+
+A pseudocolumn that shows the row number for each record in a staged data file.
+
+See this link.
+
+Question 2
+Skipped
+A table for IOT devices that measures water usage is created. The table quickly becomes large and contains more than 2 billion rows.
+
+
+
+
+
+The general query patterns for the table are:
+
+1. Deviceld, IOT_timestamp and Customerld are frequently used in the filter predicate for the select statement
+
+2. The columns City and DeviceManufacturer are often retrieved
+
+3. There is often a count on Uniqueld
+
+
+
+Which field(s) should be used for the clustering key?
+
+Correct answer
+DeviceId and CustomerId
+
+City and DeviceManufacturer
+
+UniqueId
+
+IOT_timestamp
+
+Overall explanation
+Based on the provided information about the table water_iot and the general query patterns, the best field(s) to use for the clustering key are those that are frequently used in filter predicates. This will help to optimize query performance by clustering data that is commonly queried together.
+
+Given this information about general query patterns, the optimal clustering key would be DeviceId and CustomerId
+
+About the options:
+
+DeviceId and CustomerId are frequently used in filter predicates, clustering the data based on these fields will improve query performance for common queries. But, what about IOT_timestamp?
+
+IOT_timestamp is also frequently used in filters, combining it with DeviceId and CustomerId may not be as beneficial as DeviceId and CustomerId together but timestamp fields have high cardinality. A column with very high cardinality is also typically not a good candidate to use as a clustering key directly. For example, a column that contains nanosecond timestamp values would not make a good clustering key.
+
+City and DeviceManufacturer are often retrieved but are not primarily used in filter predicates.
+
+UniqueId is often used for counting, but it doesn't help with filtering and clustering related data together.
+
+About Strategies for Selecting Clustering Keys, see this link.
+
+Question 3
+Skipped
+Based on the architecture in the image, how can the data from DB1 be copied into TBL2? (Choose two.)
+
+
+
+
+
+
+
+Correct selection
+E
+
+C
+
+D
+
+B
+
+Correct selection
+A
+
+Overall explanation
+A & E are the only ones with qualified names that will work.
+
+Review object name resolution and qualifications article.
+
+See this link.
+
+Question 4
+Skipped
+What considerations need to be taken when using database cloning as a tool for data lifecycle management in a development environment? (Choose two.)
+
+The clone inherits all granted privileges of all child objects in the source object, including the database.
+
+Any pipes in the source are not cloned.
+
+Correct selection
+Any pipes in the source referring to internal stages are not cloned.
+
+Any pipes in the source referring to external stages are not cloned.
+
+Correct selection
+The clone inherits all granted privileges of all child objects in the source object, excluding the database.
+
+Overall explanation
+Only pipes referencing external stages are cloned:
+
+When a database or schema is cloned, any pipes in the source container that reference an internal (i.e. Snowflake) stage are not cloned.
+
+See this link.
+
+
+
+Clone inherits all grants to child objects but not the database itself:
+
+If the source object is a database or schema, the clone inherits all granted privileges on the clones of all child objects contained in the source object:
+
+For databases, contained objects include schemas, tables, views, etc.
+
+For schemas, contained objects include tables, views, etc.
+
+Note that the clone of the container itself (database or schema) does not inherit the privileges granted on the source container.
+
+See this link.
+
+Question 5
+Skipped
+What are characteristics of the use of transactions in Snowflake? (Choose two.)
+
+Explicit transactions can contain DDL, DML, and query statements.
+
+Correct selection
+Explicit transactions should contain only DML statements and query statements. All DDL statements implicitly commit active transactions.
+
+A transaction can be started explicitly by executing a BEGIN TRANSACTION statement and end explicitly by executing an END TRANSACTION statement.
+
+Correct selection
+A transaction can be started explicitly by executing a BEGIN WORK statement and end explicitly by executing a COMMIT WORK statement.
+
+The AUTOCOMMIT setting can be changed inside a stored procedure.
+
+Overall explanation
+A transaction can be started explicitly by executing a BEGIN statement. Snowflake supports the synonyms BEGIN WORK and BEGIN TRANSACTION. Snowflake recommends using BEGIN TRANSACTION.
+
+A transaction can be ended explicitly by executing COMMIT or ROLLBACK. Snowflake supports the synonym COMMIT WORK for COMMIT, and the synonym ROLLBACK WORK for ROLLBACK.
+
+Explicit transactions should contain only DML statements and query statements. DDL statements implicitly commit active transactions
+
+See this link.
+
+Question 6
+Skipped
+What transformations are supported in the below SQL statement? (Choose three.)
+
+
+
+CREATE PIPE ... AS COPY ... FROM (...)
+
+Correct selection
+Type casts are supported.
+
+Correct selection
+Columns can be omitted.
+
+The ON_ERROR - ABORT_STATEMENT command can be used.
+
+Correct selection
+Columns can be reordered.
+
+Incoming data can be joined with other tables.
+
+Data can be filtered by an optional WHERE clause.
+
+Overall explanation
+The COPY command supports:
+
+Column reordering, column omission, and casts using a SELECT statement. There is no requirement for your data files to have the same number and ordering of columns as your target table.
+
+The ENFORCE_LENGTH | TRUNCATECOLUMNS option, which can truncate text strings that exceed the target column length.
+
+See this link.
+
+Question 7
+Skipped
+What step will improve the performance of queries executed against an external table?
+
+Convert the source files' character encoding to UTF-8.
+
+Shorten the names of the source files.
+
+Use an internal stage instead of an external stage to store the source files.
+
+Correct answer
+Partition the external table.
+
+Overall explanation
+Benefits of partitioning include improved query performance. Because the external data is partitioned into separate slices/parts, query response time is faster when processing a small part of the data instead of scanning the entire data set.
+
+See this link.
+
+Question 8
+Skipped
+An Architect clones a database and all of its objects, including tasks. After the cloning, the tasks stop running.
+
+
+
+Why is this occurring?
+
+The Architect has insufficient privileges to alter tasks on the cloned database.
+
+Correct answer
+Cloned tasks are suspended by default and must be manually resumed.
+
+Tasks cannot be cloned.
+
+The objects that the tasks reference are not fully qualified.
+
+Overall explanation
+When a database or schema that contains tasks is cloned, the tasks in the clone are suspended by default.
+
+The tasks can be resumed individually (using ALTER TASK … RESUME).
+
+See this link.
+
+Question 9
+Skipped
+What does a Snowflake Architect need to consider when implementing a Snowflake Connector for Kafka?
+
+The default retention time for Kafka topics is 14 days.
+
+The Kafka connector supports key pair authentication, OAUTH, and basic authentication (for example, username and password).
+
+Correct answer
+Every Kafka message is in JSON or Avro format.
+
+The Kafka connector will create one table and one pipe to ingest data for each topic. If the connector cannot create the table or the pipe it will result in an exception.
+
+Overall explanation
+Each Kafka message is passed to Snowflake in JSON format or Avro format. The Kafka connector stores that formatted information in a single column of type VARIANT. The data is not parsed, and the data is not split into multiple columns in the Snowflake table.
+
+The Kafka connector relies on key pair authentication rather than basic authentication (i.e. username and password).
+
+The connector creates the following objects for each topic:
+
+One internal stage to temporarily store data files for each topic.
+
+One pipe to ingest the data files for each topic partition.
+
+One table for each topic. If the table specified for each topic does not exist, the connector creates it; otherwise, the connector creates the RECORD_CONTENT and RECORD_METADATA columns in the existing table and verifies that the other columns are nullable (and produces an error if they are not).
+
+Kafka Topics can be configured with a limit on storage space or retention time. The default retention time is 7 days.
+
+See this link.
+
+Question 10
+Skipped
+What is a key consideration when setting up search optimization service for a table?
+
+Search optimization service can help to optimize storage usage by compressing the data into a GZIP format.
+
+Correct answer
+Search optimization service works best with a column that has a minimum of 100 K distinct values.
+
+Search optimization service can significantly improve query performance on partitioned external tables.
+
+The table must be clustered with a key having multiple columns for effective search optimization.
+
+Overall explanation
+Search optimization works best to improve the performance of queries with the following characteristics:
+
+The query involves a column or columns other than the primary cluster key.
+
+The query typically runs for a few seconds or longer (before applying search optimization). In most cases, search optimization will not substantially improve the performance of a query that has a sub-second execution time.
+
+At least one of the columns accessed by the query filter operation has on the order of 100,000 distinct values or more.
+
+See this link.
+
+Question 11
+Skipped
+A Snowflake Architect of a company that currently uses the Standard edition of Snowflake implements external tables to reference data in a cloud storage data lake. Users report that accessing the external tables is slow.
+
+
+
+How can performance be improved?
+
+Add search optimization service to the external tables.
+
+Correct answer
+Partition by an optimized folder structure on the external tables.
+
+Refresh the external tables.
+
+Implement materialized views over the external tables.
+
+Overall explanation
+Materialized views and Search optimization services are discarded because require Enterprise Edition (or higher)
+
+Partitioning divides your external table data into multiple parts using partition columns. Benefits of partitioning include improved query performance. Because the external data is partitioned into separate slices/parts, query response time is faster when processing a small part of the data instead of scanning the entire data set.
+
+See this link.
+
+Question 12
+Skipped
+How can the Snowpipe REST API be used to keep a log of data load history?
+
+Correct answer
+Call insertReport every 8 minutes for a 10-minute time range.
+
+Call loadHistoryScan every minute for the maximum time range.
+
+Call loadHistoryScan every 10 minutes for a 15-minute time range.
+
+Call insertReport every 20 minutes, fetching the last 10,000 entries.
+
+Overall explanation
+The Snowpipe API provides REST endpoints for fetching load reports. These are some of the endpoints:
+
+
+
+insertReport
+
+Retrieves a report of files submitted via insertFiles whose contents were recently ingested into a table. Note that for large files, this may only be part of the file.
+
+loadHistoryScan
+
+Fetches a report about ingested files whose contents have been added to table. Note that for large files, this may only be part of the file. This endpoint differs from insertReport in that it views the history between two points in time. There is a maximum of 10,000 items returned, but multiple calls can be issued to cover the desired time range.
+
+This endpoint is rate limited to avoid excessive calls. To help avoid exceeding the rate limit (error code 429), we recommend relying more heavily on insertReport than loadHistoryScan. When calling loadHistoryScan, specify the most narrow time range that includes a set of data loads. For example, reading the last 10 minutes of history every 8 minutes would work well. Trying to read the last 24 hours of history every minute will result in 429 errors indicating a rate limit has been reached. The rate limits are designed to allow each history record to be read a handful of times.
+
+See this link.
+
+Question 13
+Skipped
+When activating Tri-Secret Secure in a hierarchical encryption model in a Snowflake account, at what level is the customer-managed key used?
+
+
+
+
+
+At the root level (HSM)
+
+At the table level (TMK)
+
+Correct answer
+At the account level (AMK)
+
+At the micro-partition level
+
+Overall explanation
+When activating Tri-Secret Secure in a hierarchical encryption model in a Snowflake account, the customer-managed key is used at at the account level (AMK)
+
+Tri-Secret Secure is the combination of a Snowflake-maintained key and a customer-managed key in the cloud provider platform that hosts your Snowflake account to create a composite master key to protect your Snowflake data. The composite master key acts as an account master key (AMK) and wraps all of the keys in the hierarchy; however, the composite master key never encrypts raw data.
+
+About key management in Snowflake, see this link.
+
+About Tri-Secret Secure, see this link.
+
+Question 14
+Skipped
+An Architect configured single sign-on (SSO) using Okta with Muiti-Factor Authentication (MFA) on a Snowflake deployment. The Data Analyst team uses DBeaver to query data in Snowflake. The Analysts frequently get prompted to enter their credentials to the point where it impacts productivity.
+
+
+
+What change needs to be made to address this issue?
+
+Configure the CLIENT_SESSION_KEEP_ALIVE parameter at the session level in the JDBC connect string to Snowflake from DBeaver.
+
+Configure the CLIENT_SESSION_KEEP_ALIVE parameter at the account level.
+
+Correct answer
+Configure ALLOW_CLIENT_MFA_CACHING at the account level.
+
+Configure ALLOW_CLIENT_MFA_CACHING at the session level in the JDBC connect string to Snowflake from DBeaver.
+
+Overall explanation
+While true, users are not prompted to respond to additional MFA prompts.
+
+See this link.
+
+Question 15
+Skipped
+Is it possible for a data provider account with a Snowflake Business Critical edition to share data with an Enterprise edition data consumer account?
+
+Correct answer
+If a user in the provider account with a share owning role which also has OVERRIDE SHARE RESTRICTIONS privilege SHARE_RESTRICTIONS set to False when adding an Enterprise consumer account, it can import the share.
+
+If a user in the provider account with role authority to CREATE or ALTER SHARE adds an Enterprise account as a consumer, it can import the share.
+
+A Business Critical account cannot be a data sharing provider to an Enterprise consumer. Any consumer accounts must also be Business Critical.
+
+If a user in the provider account with a share owning role sets SHARE_RESTRICTIONS to False when adding an Enterprise consumer account, it can import the share.
+
+Overall explanation
+By default, Snowflake does not allow sharing data with a direct share from a Business Critical to a non-Business Critical account. For more details, see Data sharing and Business Critical accounts.
+
+To override this default setting, a user with a role granted the OVERRIDE SHARE RESTRICTIONS global privilege can specify the SHARE_RESTRICTIONS parameter for a specific share offered by their provider account.
+
+See this link.
+
+https://docs.snowflake.com/en/user-guide/override_share_restrictions
+
+Question 16
+Skipped
+How can multiple DML operations be run simultaneously using a stream on a single table without offsetting the stream between the DML operations?
+
+Create multiple streams on top of the table and use them for the DML operations.
+
+Create clones of the tables and streams on top of the tables to be used for DML operations.
+
+Correct answer
+Place the DML operations in a transaction block to execute.
+
+Create clones of the stream and use them for the DML operations.
+
+Overall explanation
+A DML statement that selects from a stream consumes all of the change data in the stream as long as the transaction commits successfully. To ensure multiple statements access the same change records in the stream, surround them with an explicit transaction statement (BEGIN .. COMMIT). This locks the stream. DML updates to the source object in parallel transactions are tracked by the change tracking system but do not update the stream until the explicit transaction statement is committed and the existing change data is consumed.
+
+See this link.
+
+Question 17
+Skipped
+Which data models can be used when modeling tables in a Snowflake environment? (Choose three.)
+
+Data lake
+
+Correct selection
+Dimensional/Kimball
+
+Correct selection
+Data vault
+
+Graph model
+
+Correct selection
+Inmon/3NF
+
+Bayesian hierarchical model
+
+Overall explanation
+Actually this is not a Snowflake related question, it is quite simple to answer with basic data modeling knowledge.
+
+About the options:
+
+Dimensional/Kimball, widely known type of modeling introduced by the father of the DWH, Kimball. It organizes data into fact and dimension tables, facilitating fast retrieval for analytical queries.
+
+Inmon/3NF, Inmon's approach focuses on creating a normalized data model (3NF) to ensure data integrity and minimize redundancy.
+
+Data Vault, Lindsted's approach is designed for long-term historical storage of data from multiple operational systems. It provides a highly scalable way to manage and track historical data, focusing on auditability and resilience.
+
+Question 18
+Skipped
+A Snowflake Architect created a new data share and would like to verify that only specific records in secure views are visible within the data share by the consumers.
+
+
+
+What is the recommended way to validate data accessibility by the consumers?
+
+Correct answer
+Set the session parameter called SIMULATED_DATA_SHARING_CONSUMER as shown below in order to impersonate the consumer accounts.
+
+alter session set simulated_data_sharing_consumer = 'Consumer Acct1'
+
+Alter the share settings as shown below, in order to impersonate a specific consumer account.
+
+alter share sales_share set accounts = 'Consumer1' share_restrictions = true
+
+Create a row access policy as shown below and assign it to the data share.
+
+create or replace row access policy rap_acct as (acct_id varchar) returns boolean -> case when 'acct1_role' = current_role() then true else false end;
+
+Create reader accounts as shown below and impersonate the consumers by logging in with their credentials.
+
+create managed account reader_acct1 admin_name = user1 , admin_password = 'Sdfed43da!44' , type = reader;
+
+Overall explanation
+When defining a secure object to share with consumer accounts, a key/vital additional step to perform is validating that the object is configured correctly to display only the data you wish to display. This is particularly important if you wish to limit data access based on the account the data is shared with. To facilitate performing this validation, Snowflake provides the SIMULATED_DATA_SHARING_CONSUMER session parameter. The SIMULATED_DATA_SHARING_CONSUMER session parameter only supports secure views and secure materialized views, but does not support secure UDFs. Setting this parameter in a session enables you to simulate querying a secure view as a user in any of the consumer account(s) you plan to share the view with.
+
+See this link.
+
+Question 19
+Skipped
+How can the Snowflake context functions be used to help determine whether a user is authorized to see data that has column-level security enforced? (Choose two.)
+
+Set masking policy conditions using IS_ROLE_IN_SESSION targeting the role in use for the current account.
+
+Correct selection
+Set masking policy conditions using INVOKER_ROLE targeting the executing role in a SQL statement.
+
+Correct selection
+Set masking policy conditions using CURRENT_ROLE targeting the role in use for the current session.
+
+Determine if there are OWNERSHIP privileges on the masking policy that would allow the use of any function.
+
+Assign the ACCOUNTADMIN role to the user who is executing the object.
+
+Overall explanation
+Applying masking policies supported by context functions is a common way to apply Dynamic Data Masking on a table.
+
+Column-level Security supports using Context Functions in the conditions of the masking policy body to enforce whether a user has authorization to see data.
+
+The context functions CURRENT_SESSION, INVOKER_ROLE and IS_ROLE_IN_SESSION support the implementation of masking policies.
+
+Of these 3 options, the option that would be discarded in this question is IS_ROLE_IN_SESSION because it refers to current account when it actually returns TRUE/FALSE if the current role matches at session level.
+
+See this link.
+
+Question 20
+Skipped
+An Architect is designing a file ingestion recovery solution. The project will use an internal named stage for file storage. Currently, in the case of an ingestion failure, the Operations team must manually download the failed file and check for errors.
+
+
+
+Which downloading method should the Architect recommend that requires the LEAST amount of operational overhead?
+
+Correct answer
+Use the GET command in SnowSQL to retrieve the file.
+
+Use the GET command in Snowsight to retrieve the file.
+
+Use the Snowflake Connector for Python, connect to remote storage and download the file.
+
+Use the Snowflake API endpoint and download the file.
+
+Overall explanation
+GET command in SnowSQL can be executed directly in SnowSQL, Snowflake's CLI client. It is simple and doesn't require additional development or configuration (only basic connection configuration), making it the least operationally intensive.
+
+GET command downloads data files from one of the following internal stage types to a local directory or folder on a client machine
+
+About other options:
+
+Snowflake Connector for Python can automate processes but it requires additional setup and scripting, which might add operational overhead.
+
+GET command in Snowsight, GET command cannot be executed from the Worksheets page in either Snowflake web interface; instead, use the SnowSQL client to download data files, or check the documentation for the specific Snowflake client to verify support for this command.
+
+Snowflake API endpoint requires additional setup for authentication, scripting, and possibly managing API rate limits and other configurations, leading to more operational overhead.
+
+About SnowSQL, see this link.
+
+About GET command, see this link.
+
+Question 21
+Skipped
+When using the COPY INTO [table] command with the CSV file format, how does the MATCH_BY_COLUMN_NAME parameter behave?
+
+The command will return an error stating that the file has unmatched columns.
+
+The parameter will be ignored.
+
+The command will return an error.
+
+Correct answer
+It expects a header to be present in the CSV file, which is matched to a case-sensitive table column name.
+
+Overall explanation
+MATCH_BY_COLUMN_NAME = CASE_SENSITIVE | CASE_INSENSITIVE | NONE
+
+Definition
+
+String that specifies whether to load semi-structured data into columns in the target table that match corresponding columns represented in the data.
+
+MATCH_BY_COLUMN_NAME supports CSV among other datatypes (JSON, Avro, Parquet, ORC) so i won't be ignored nor return an error.
+
+See this link.
+
+Question 22
+Skipped
+When a user connects to Snowflake and starts a session, Snowflake determines the active warehouse for the session based on which hierarchy?
+
+1. Default warehouse declared in the configuration file for the driver/connector used to connect to Snowflake
+
+- overriden by -
+
+2. Default warehouse for the user
+
+- overriden by -
+
+3. Warehouse specified on the client command line
+
+1. Warehouse specified on the client command line
+
+- overridden by -
+
+2. Default warehouse declared in the configuration file for the driver/connector used to connect to Snowflake
+
+- overridden by -
+
+3. Default warehouse for the user
+
+1. Default warehouse for the user
+
+- overridden by -
+
+2. Warehouse specified on the client command line
+
+- overridden by -
+
+3. Default warehouse declared in the configuration file for the driver/connector used to connect to Snowflake
+
+Correct answer
+1. Default warehouse for the user
+
+- overridden by -
+
+2. Default warehouse declared in the configuration file for the driver/connector used to connect to Snowflake
+
+- overridden by -
+
+3. Warehouse specified on the client command line
+
+Overall explanation
+When a user connects to Snowflake and start a session, Snowflake determines the default warehouse for the session in the following order:
+
+1. Default warehouse for the user,
+
+» overridden by…
+
+2. Default warehouse in the configuration file for the client utility (SnowSQL, JDBC driver, etc.) used to connect to Snowflake (if the client supports configuration files),
+
+» overridden by…
+
+3. Default warehouse specified on the client command line or through the driver/connector parameters passed to Snowflake.
+
+
+
+See this link.
+
+Question 23
+Skipped
+Which query will identify the specific days and virtual warehouses that would benefit from a multi-cluster warehouse to improve the performance of a particular workload?
+
+Correct answer
+SELECT TO_DATE(START_TIME) AS DATE,
+       WAREHOUSE_NAME,
+       SUM(AVG_RUNNING) AS SUM_RUNNING,
+       SUM(AVG_QUEUED_LOAD) AS SUM_QUEUED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_LOAD_HISTORY"
+GROUP BY 1,2
+HAVING SUM(AVG_QUEUED_LOAD) > 0;
+SELECT TO_DATE(START_TIME) AS DATE,
+       WAREHOUSE_NAME,
+       BYTES_SCANNED,
+       BYTES_SPILLED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+HAVING BYTES_SPILLED>BYTES_SCANNED;
+SELECT TO_DATE(START_TIME) AS DATE,
+       WAREHOUSE_NAME,
+       BYTES_SCANNED,
+       BYTES_SPILLED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_LOAD_HISTORY"
+HAVING BYTES_SPILLED>BYTES_SCANNED;
+SELECT TO_DATE(START_TIME) AS DATE,
+       WAREHOUSE_NAME,
+       BYTES_SPILLED_TO_LOCAL_STORAGE,
+       SUM(AVG_QUEUED_LOAD) AS SUM_QUEUED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+HAVING BYTES_SPILLED_TO_LOCAL_STORAGE > 0;
+Overall explanation
+To identify the specific days and virtual warehouses that would benefit from a multi-cluster warehouse to improve the performance of a particular workload, we should find those virtual warehouses with a significant queued load.
+
+About the options:
+
+With BYTES_SPILLED metric we can identify whether data is spilling to storage. This can have a negative impact on query performance (especially if the query has to spill to remote storage). To alleviate this, Snowflake recommends using a larger warehouse (Scaling up, not what the question is asking)
+
+AVG_QUEUED_LOAD shows the value for queries queued because the warehouse was overloaded, thus the query must contain this metric
+
+By grouping the results and filtering with HAVING SUM(AVG_QUEUED_LOAD) > 0, it highlights the days and virtual warehouses where there is a significant queued load. This indicates that these warehouses may benefit from a multi-cluster configuration to improve performance by handling more concurrent queries and reducing queuing times.
+
+About reducing queues, see this link.
+
+About WAREHOUSE_LOAD_HISTORY, see this link.
+
+Question 24
+Skipped
+When using Multi-Factor Authentication (MFA) with the following command:
+
+
+
+--mfa-passcode-in-password
+
+
+
+The following password prompt is forced:
+
+
+
+$ snowsql ... -P ...
+
+
+
+What will the password be if the MFA token is 123456 and the password is SNOWFLAKE?
+
+123456-SNOWFLAKE
+
+123456SNOWFLAKE
+
+Correct answer
+SNOWFLAKE123456
+
+SNOWFLAKE-123456
+
+Overall explanation
+Check the following example from the documentation:
+
+
+
+See this link.
+
+Question 25
+Skipped
+How does Snowflake store security-related information for an external function that calls code that is executed outside of Snowflake?
+
+Correct answer
+API integration
+
+Restricted access
+
+Secure storage
+
+Access control
+
+Overall explanation
+Snowflake stores security-related external function information in an API integration.
+
+
+
+
+See this link.
+
+Question 26
+Skipped
+Which Snowflake objects can be used in a data share? (Choose two.)
+
+Correct selection
+Secure view
+
+Stored procedure
+
+Stream
+
+Standard view
+
+Correct selection
+External table
+
+Overall explanation
+Secure Data Sharing lets you share selected objects in a database in your account with other Snowflake accounts. You can share the following Snowflake objects:
+
+Databases
+
+Tables
+
+Dynamic tables
+
+External tables
+
+Iceberg tables
+
+Secure views
+
+Secure materialized views
+
+Secure user-defined functions (UDFs)
+
+See this link.
+
+Question 27
+Skipped
+Which performance optimization techniques in Snowflake have storage costs associated with them? (Select THREE).
+
+Using the query acceleration service
+
+Using a muiti-cluster virtual warehouse
+
+Rekeying
+
+Correct selection
+Using a matenalized view
+
+Correct selection
+Clustering a table
+
+Correct selection
+Using the search optimization service
+
+Overall explanation
+
+See this link.
+
+Question 28
+Skipped
+A group of Data Analysts have been granted the role ANALYST_ROLE. They need a Snowflake database where they can create and modify tables, views, and other objects to load with their own data. The Analysts should not have the ability to give other Snowflake users outside of their role access to this data.
+
+
+
+How should these requirements be met?
+
+Grant SYSADMIN OWNERSHIP of the database, but grant the create schema privilege on the database to the ANALYST_ROLE.
+
+Grant ANALYST_ROLE OWNERSHIP on the database, but grant the OWNERSHIP ON FUTURE [object types] in database privilege to SYSADMIN.
+
+Grant ANALYST_ROLE OWNERSHIP on the database, but make sure that ANALYST_ROLE does not have the MANAGE GRANTS privilege on the account.
+
+Correct answer
+Make every schema in the database a MANAGED ACCESS schema, owned by SYSADMIN, and grant create privileges on each schema to the ANALYST_ROLE for each type of object that needs to be created.
+
+Overall explanation
+Managed access schemas ensure that only the role that owns the schema (SYSADMIN in this case) can manage access to the schema and its objects. The ANALYST_ROLE would have the ability to create and modify objects within these schemas, but they would not be able to change access controls or grant permissions to these objects.
+
+See this link.
+
+https://docs.snowflake.com/en/user-guide/security-access-control-configure#label-managed-access-schemas
+
+Question 29
+Skipped
+A company needs to share its product catalog data with one of its partners. The product catalog data is stored in two database tables: PRODUCT_CATEGORY, and PRODUCT_DETAILS. Both tables can be joined by the PRODUCT_ID column. Data access should be governed, and only the partner should have access to the records.
+
+
+
+The partner is not a Snowflake customer. The partner uses Amazon S3 for cloud storage.
+
+
+
+Which design will be the MOST cost-effective and secure, while using the required Snowflake features?
+
+Correct answer
+Create a reader account for the partner and share the data sets as secure views.
+
+Publish PRODUCT_CATEGORY and PRODUCT_DETAILS data sets on the Snowflake Marketplace.
+
+Use Secure Data Sharing with an S3 bucket as a destination.
+
+Create a database user for the partner and give them access to the required data sets.
+
+Overall explanation
+Few insights:
+
+The partner uses Amazon S3 for cloud storage: Snowflake's Secure Data Sharing does not allow data to be directly shared into an S3 bucket.
+
+We want to share two tables that can be joined by the same id: we could create a view to join both tables
+
+Data access should be governed: security is a must in this business case
+
+Partner is not a Snowflake customer: in the case of choosing Data Sharing this would force us to use a reader account.
+
+Non-secure views are not compatible with Data Sharing.
+
+Statement is asking for the MOST cost-effective solution: Marketplace is more oriented towards monetization and broader data distribution, not secure one-to-one sharing.
+
+Question 30
+Skipped
+A company is designing high availability and disaster recovery plans and needs to maximize redundancy and minimize recovery time objectives for their critical application processes.
+
+
+
+Cost is not a concern as long as the solution is the best available.
+
+
+
+The plan so far consists of the following steps:
+
+1. Deployment of Snowflake accounts on two different cloud providers.
+
+2. Selection of cloud provider regions that are geographically far apart.
+
+3. The Snowflake deployment will replicate the databases and account data between both cloud provider accounts.
+
+4. Implementation of Snowflake client redirect.
+
+
+
+What is the MOST cost-effective way to provide the HIGHEST uptime and LEAST application disruption if there is a service event?
+
+Connect the applications using the - URL.
+
+Use the Enterprise Snowflake edition.
+
+Correct answer
+Connect the applications using the - URL.
+
+Use the Business Critical Snowflake edition.
+
+Connect the applications using the - URL.
+
+Use the Virtual Private Snowflake (VPS) edition.
+
+Connect the applications using the - URL.
+
+Use the Standard Snowflake edition.
+
+Overall explanation
+Business Critical Snowflake edition offers:
+
+Enhanced security and data protection.
+
+Failover and failback between Snowflake accounts for business continuity and disaster recovery.
+
+Redirecting client connections between Snowflake accounts for business continuity and disaster recovery.
+
+It is cheaper than VPS edition.
+
+See this link.
+
+Question 31
+Skipped
+The Business Intelligence team reports that when some team members run queries for their dashboards in parallel with others, the query response time is getting significantly slower.
+
+What can a Snowflake Architect do to identify what is occurring and troubleshoot this issue?
+
+Increase the size of the warehouse cache to speed up concurrent queries. Identify the concurrent queries using this query:
+
+SELECT WAREHOUSE_NAME, COUNT(*) AS QUERY_COUNT, SUM(BYTES_SCANNED) AS BYTES_SCANNED, 
+SUM(BYTES_SCANNED*PERCENTAGE_SCANNED_FROM_CACHE) AS BYTES_SCANNED_FROM_CACHE, 
+SUM(BYTES_SCANNED*PERCENTAGE_SCANNED_FROM_CACHE) / SUM(BYTES_SCANNED) AS PERCENT_SCANNED_FROM_CACHE
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+WHERE START_TIME >= DATEADD(month, -1, current_timestamp()) AND BYTES_SCANNED > 0 
+GROUP BY 1 ORDER BY 5;
+Correct answer
+Introduce multi-cluster warehouses to help with concurrent queries. Identify the concurrent queries by running this query:
+
+SELECT TO_DATE(START_TIME) AS DATE,
+WAREHOUSE_NAME,
+SUM(AVG_RUNNING) AS SUM_RUNNING,
+SUM(AVG_QUEUED_LOAD) AS SUM_QUEUED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_LOAD_HISTORY"
+WHERE TO_DATE(START_TIME) >= DATEADD(month, -1, CURRENT_TIMESTAMP())
+GROUP BY 1,2 HAVING SUM(AVG_QUEUED_LOAD) > 0;
+Use larger warehouses to speed up the queries running in parallel. Identify the queries running in parallel using this query:
+
+SELECT QUERY_ID,
+USER_NAME,
+WAREHOUSE_NAME,
+WAREHOUSE_SIZE,
+BYTES_SCANNED,
+BYTES_SPILLED_TO_REMOTE_STORAGE,
+BYTES_SPILLED_TO_REMOTE_STORAGE / BYTES_SCANNED AS SPILLING_READ_RATIO
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+WHERE BYTES_SPILLED_TO_REMOTE_STORAGE > BYTES_SCANNED * 5
+ORDER BY SPILLING_READ_RATIO DESC;
+Identify which queries are spilled to remote storage and change the warehouse parameters to address this issue. Identify the issue by running this query:
+
+SELECT QUERY_ID,
+SUBSTR(QUERY_TEXT, 1, 50) PARTIAL_QUERY_TEXT,
+USER_NAME,
+WAREHOUSE_NAME,
+WAREHOUSE_SIZE,
+BYTES_SCANNED,
+BYTES_SPILLED_TO_REMOTE_STORAGE,
+START_TIME, END_TIME,
+TOTAL_ELAPSED_TIME/1000 TOTAL_ELAPSED_TIME
+FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
+WHERE BYTES_SPILLED_TO_REMOTE_STORAGE > 0
+AND START_TIME > DATEADD('days', -45, CURRENT_DATE)
+ORDER BY BYTES_SPILLED_TO_REMOTE_STORAGE DESC LIMIT 10;
+Overall explanation
+The query response time is getting significantly slower when several members run queries in parallel. This is a queuing and concurrency problem, which is solved with Multicluster Warehouses and scale out.
+
+Multi-cluster warehouses are designed specifically for handling queuing and performance issues related to large numbers of concurrent users and/or queries. In addition, multi-cluster warehouses can help automate this process if your number of users/queries tend to fluctuate.
+
+
+
+About reducing queues, see this link.
+
+About managing concurrency, see this link.
+
+Question 32
+Skipped
+A company has a Snowflake environment running in AWS us-west-2 (Oregon). The company needs to share data privately with a customer who is running their Snowflake environment in Azure East US 2 (Virginia).
+
+
+
+What is the recommended sequence of operations that must be followed to meet this requirement?
+
+1. Create a reader account in Azure East US 2 (Virginia)
+
+2. Create a share and add the database privileges to the share
+
+3. Add the reader account to the share
+
+4. Share the reader account's URL and credentials with the customer
+
+1. Create a share and add the database privileges to the share
+
+2. Create a new listing on the Snowflake Marketplace
+
+3. Alter the listing and add the share
+
+4. Instruct the customer to subscribe to the listing on the Snowflake Marketplace
+
+1. Ask the customer to create a new Snowflake account in Azure EAST US 2 (Virginia)
+
+2. Create a share and add the database privileges to the share
+
+3. Alter the share and add the customer's Snowflake account to the share
+
+Correct answer
+1. Create a new Snowflake account in Azure East US 2 (Virginia)
+
+2. Set up replication between AWS us-west-2 (Oregon) and Azure East US 2 (Virginia) for the database objects to be shared
+
+3. Create a share and add the database privileges to the share
+
+4. Alter the share and add the customer's Snowflake account to the share
+
+Overall explanation
+Use to allow data providers to securely share data with data consumers across different regions and cloud platforms.
+
+
+
+See this link.
+
+Question 33
+Skipped
+Why might a Snowflake Architect use a star schema model rather than a 3NF model when designing a data architecture to run in Snowflake? (Choose two.)
+
+Snowflake cannot handle the joins implied in a 3NF data model.
+
+The Architect wants to remove data duplication from the data stored in Snowflake.
+
+Correct selection
+The BI tool needs a data model that allows users to summarize facts across different dimensions, or to drill down from the summaries.
+
+The Architect is designing a landing zone to receive raw data into Snowflake.
+
+Correct selection
+The Architect wants to present a simple flattened single view of the data to a particular group of end users.
+
+Overall explanation
+About the options:
+
+Snowflake can handle the joins implied in a 3NF data model. Databricks (based on Spark) does not recommends highly normalized models, but this is not the case with Snowflake.
+
+Star schemas are designed to facilitate efficient querying. They are particularly well-suited for BI tools that need to summarize facts across various dimensions and allow users to drill down into detailed data. This structure supports fast aggregation and query performance, which is crucial for reporting and analytics.
+
+A star schema presents data in a denormalized, flattened structure, which simplifies data access and querying. This is beneficial for end users who need quick access to data without understanding complex joins and relationships typical in a 3NF model.
+
+3NF is chosen to avoid duplicates in different entities, just the opposite of Star Schema.
+
+Question 34
+Skipped
+An Architect is integrating an application that needs to read and write data to Snowflake without installing any additional software on the application server.
+
+
+
+How can this requirement be met?
+
+Use SnowSQL.
+
+Correct answer
+Use the Snowflake SQL REST API.
+
+Use the Snowflake ODBC driver.
+
+Use the Snowpipe REST API.
+
+Overall explanation
+About the options:
+
+SnowSQL is a command-line interface (CLI) for interacting with Snowflake. It requires installation on the server where it will be used, which does not meet the requirement of not installing additional software.
+
+The Snowpipe REST API is specifically designed for continuous data ingestion into Snowflake and is not intended for general-purpose reading and writing of data.
+
+The ODBC driver also requires installation on the application server, which does not meet the requirement.
+
+Snowflake SQL REST API allows to interact with Snowflake (peform queries, management, etc.) over HTTP without requiring any additional software installation.
+
+See this link.
+
+Question 35
+Skipped
+For which Snowflake object type is it possible to copy permissions when cloning the object?
+
+Pipes
+
+Correct answer
+Tables
+
+Stages
+
+Materialized views
+
+Overall explanation
+CLONE statements for most objects do not copy grants on the source object to the object clone. However, CREATE <object> commands that support the COPY GRANTS clause (e.g. CREATE TABLE, CREATE VIEW) enable you to optionally copy grants to object clones.
+
+See this link.
+
+
+
+The CREATE TABLE … CLONE syntax includes the COPY GRANTS keywords
+
+See this link
+
+Question 36
+Skipped
+What is a characteristic of Role-Based Access Control (RBAC) as used in Snowflake?
+
+A user can use a "super-user" access along with SECURITYADMIN to bypass authorization checks and access all databases, schemas, and underlying objects.
+
+Privileges can be granted at the database level and can be inherited by all underlying objects.
+
+Correct answer
+A user can create managed access schemas to support future grants and ensure only schema owners can grant privileges to other roles.
+
+A user can create managed access schemas to support current and future grants and ensure only object owners can grant privileges to other roles.
+
+Overall explanation
+There is no concept of a “super-user” or “super-role” in Snowflake that can bypass authorization checks.
+
+In managed access schemas, object owners lose the ability to make grant decisions. Only the schema owner or a role with the MANAGE GRANTS privilege can grant privileges on objects in the schema, including future grants, centralizing privilege management.
+
+See this link.
+
+Question 37
+Skipped
+During the investigation of a slow query, how can an Architect obtain detailed statistics about each step in the query?
+
+Correct answer
+Use the Query Profile.
+
+Use the clustering information .
+
+Use the QUERY_HISTORY command.
+
+Use an EXPLAIN Command.
+
+Overall explanation
+Query Profile provides execution details for a query. For the selected query, it provides a graphical representation of the main components of the processing plan for the query, with statistics for each component, along with details and statistics for the overall query.
+
+Explain command returns the logical execution plan for the specified SQL statement.
+
+See this link.
+
+Question 38
+Skipped
+Which SQL ALTER command will MAXIMIZE memory and compute resources for a Snowpark stored procedure when executed on the snowpark_opt_wh warehouse?
+
+alter warehouse snowpark_opt_wh set max_concurrency_level = 16;
+
+Correct answer
+alter warehouse snowpark_opt_wh set max_concurrency_level = 1;
+
+alter warehouse snowpark_opt_wh set max_concurrency_level = 2;
+
+alter warehouse snowpark_opt_wh set max_concurrency_level = 8;
+
+Overall explanation
+To maximize CPU and memory resources when running Snowpark UDFs or stored procedures, set the MAX_CONCURRENCY_LEVEL parameter for your warehouse when using the CREATE WAREHOUSE or ALTER WAREHOUSE command. For example:
+
+alter warehouse snowpark_opt_wh set max_concurrency_level = 1;
+See this link.
+
+Question 39
+Skipped
+Data is being imported and stored as JSON in a VARIANT column. Query performance was fine, but most recently, poor query performance has been reported.
+
+
+
+What could be causing this?
+
+There were variations in string lengths for the JSON values in the recent data imports.
+
+Correct answer
+There were JSON nulls in the recent data imports.
+
+The order of the keys in the JSON was changed.
+
+The recent data imports contained fewer fields than usual.
+
+Overall explanation
+JSON with a ‘null’ value will have a query performance impact.
+
+JSON NULL is different from SQL NULL. JSON null is those element values are ‘null’ which is still a string that will prevent the elements from being extracted, SQL null is an empty value. As a result, JSON with a ‘null’ value will have a query performance impact.
+
+See this link.
+
+Snowflake recommends some strategies to avoid the performance impact for elements that were not extracted, do the following:
+
+See this link.
+
+Question 40
+Skipped
+Which of the following ingestion methods can be used to auto-ingest near real-time data by using the messaging services provided by a cloud provider?
+
+Snowflake streams
+
+Snowflake Connector for Kafka
+
+Correct answer
+Snowpipe
+
+Spark
+
+Overall explanation
+Snowpipe enables continuous data ingestion into Snowflake by automatically loading data as it becomes available in cloud storage. Snowpipe can be integrated with messaging services provided by cloud providers (SQS, Pub/Sub, etc) to trigger data loading events.
+
+
+
+About other options:
+
+Snowflake streams are used for change data capture within Snowflake but are not designed for direct integration with external messaging services.
+
+Kafka can be used for near real-time data ingestion, but different purposes and use cases. It ideal for scenarios where the data pipeline involves Kafka as the primary message broker or for Snowpipe Streaming
+
+Spark can be used for stream processing, but it is not directly tied to cloud messaging services and would require additional components for integration.
+
+About Snowpipe, see this link.
+
+About auto loading data using cloud messaging, see this link.
+
+About Snowpipe and Amazon SQS, see this link.
+
+About Snowpipe and GCP Pub/Sub, see this link.
+
+About Snowpipe and Azure Eveng Grid, see this link.
