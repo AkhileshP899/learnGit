@@ -1,3 +1,15 @@
+SELECT 
+    REGEXP_SUBSTR(data_column, '♦') AS diamond_pattern,  -- Match the diamond symbol (literal)
+    REGEXP_SUBSTR(data_column, '[一-龥]+') AS chinese_characters -- Match Chinese characters
+FROM 
+    data_table
+WHERE 
+    REGEXP_LIKE(data_column, '♦') -- Filters rows with the diamond shape
+    OR 
+    REGEXP_LIKE(data_column, '[一-龥]+'); -- Filters rows with Chinese characters
+
+
+
 ### Project Documentation for Snowflake Data Integration and Loading
 
 #### Step 1: Create Table and Views
