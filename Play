@@ -1,0 +1,56 @@
+"create or replace view V_SR_ACT_CERTIFICATIONXXXX(
+	ACTIVITY_KEY,
+	CERT_EXP_DATE,
+	CERT_EXP_DAY,
+	CERT_EXP_MONTH,
+	CERT_EXP_YEAR,
+	CERT_NUMOF_EXP_DAYS
+) as 
+
+SELECT P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ACTIVITY.activity_pk as activity_key,
+          
+    DECODE
+       (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
+                0, 'Never Expire',
+                1, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MM-DD-YYYY'),
+                2, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MM-DD-YYYY'),
+                3, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MM-DD-YYYY')
+               ) AS cert_exp_date,
+          DECODE
+                (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
+                 0, 'Never Expire',
+                 1, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY'),
+                 2, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY'),
+                 3, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY')
+                ) AS cert_exp_day,
+          DECODE
+              (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
+               0, 'Never Expire',
+               1, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MON'),
+               2, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MON'),
+               3, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'MON')
+              ) AS cert_exp_month,
+          DECODE
+               (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
+                0, 'Never Expire',
+                1, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'YYYY'),
+                2, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'YYYY'),
+                3, TO_CHAR (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'YYYY')
+               ) AS cert_exp_year,
+          DECODE
+             (P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
+              1, P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationparamvalue
+             ) AS cert_numof_exp_days
+     FROM P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ACTIVITY, P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI,
+          P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT
+    WHERE P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ACTIVITY.activity_pk = P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.activityfk(+)
+      AND P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ACTIVITY.activity_pk = P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.activityfk(+);"
+
+
+3,	12-19-2008,	DAY,	Dec,	2008,	365;
+3,	12-19-2008,	DAY,	Dec,	2008,	365;
+3,	06-01-2010,	DAY,	Jun,	2010,	365;
+
+3,	12-19-2008,	MONDAY,	Dec,	2008,	365;
+3,	12-19-2008,	TUESDAY,	Dec,	2008,	365;
+3,	06-01-2010,	FRIDAY,	Jun,	2010,	365;
