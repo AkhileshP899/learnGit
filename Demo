@@ -20,9 +20,9 @@ SELECT
     DECODE(
         P2L_BO_STAGING_OWNER.CLD_TBL_TMX_REQUIREDACTIVI.expirationrule,
         0, 'Never Expire',
-        1, DAYNAME(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate),
-        2, DAYNAME(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate),
-        3, DAYNAME(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate)
+        1, UPPER(TO_CHAR(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY')),
+        2, UPPER(TO_CHAR(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY')),
+        3, UPPER(TO_CHAR(P2L_BO_STAGING_OWNER.CLD_TBL_TMX_ATTEMPT.expirationdate, 'DAY'))
     ) AS cert_exp_day,
 
     DECODE(
