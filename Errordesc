@@ -1,88 +1,22 @@
-Here’s a structured sequence of the issues you encountered and how they were resolved. This can be formatted for a document, covering all the steps:
-
----
-
-# Migration of View from Oracle to Snowflake: Issue Resolution Log
-
-## 1. **Initial Issue: Timezone Error**
-- **Error Message:**
-  ```
-  "Timestamp 'GMT' is not recognized"
-  ```
-- **Description:**  
-  The error occurred because Snowflake didn’t recognize `'GMT'` as a valid timezone in the `CONVERT_TIMEZONE` function.
-  
-- **Resolution:**  
-  We replaced `'GMT'` with the valid UTC offset `'+00:00'`, which represents the same time zone. In Snowflake, explicit time zone offsets are more reliable.
-  
-  **Updated Query:**
-  ```sql
-  CONVERT_TIMEZONE('+00:00', TO_TIMESTAMP(TO_CHAR(b.startdt, 'MM/DD/YYYY HH24:MI:SS'), 'MM/DD/YYYY HH24:MI:SS'))
-  ```
-
-## 2. **Subsequent Issue: Timezone 'UTC' Error**
-- **Error Message:**
-  ```
-  "Timestamp 'UTC' is not recognized"
-  ```
-- **Description:**  
-  Similar to the previous issue with `'GMT'`, Snowflake did not recognize `'UTC'` in the `CONVERT_TIMEZONE` function.
-  
-- **Resolution:**  
-  Once again, we used `'+00:00'` as the timezone offset instead of `'UTC'`.
-
-  **Updated Query:**
-  ```sql
-  CONVERT_TIMEZONE('+00:00', TO_TIMESTAMP(TO_CHAR(b.startdt, 'MM/DD/YYYY HH24:MI:SS'), 'MM/DD/YYYY HH24:MI:SS'))
-  ```
-
-## 3. **Issue: Negative or Invalid Position Error**
-- **Error Message:**
-  ```
-  "Invalid parameter value: -1. Reason: Position must be positive"
-  ```
-- **Description:**  
-  This error was caused by the `REGEXP_INSTR` function when it didn't find the backslash (`\\`) pattern, returning `-1` or `0`, which caused an invalid position when passed to the `SUBSTR` function.
-  
-- **Resolution:**  
-  To fix this, we used a `CASE` statement to check if `REGEXP_INSTR` returns a valid position (greater than `0`). If not, the original value was returned.
-
-  **Updated Query:**
-  ```sql
-  CASE
-      WHEN REGEXP_INSTR(b.inst_nt, '\\\\\\\\', 1, 1) > 0
-      THEN SUBSTR(b.inst_nt, REGEXP_INSTR(b.inst_nt, '\\\\\\\\', 1, 1) + 1, LENGTH(b.inst_nt))
-      ELSE b.inst_nt
-  END AS inst_nt
-  ```
-
-## 4. **Issue: Proper Escaping of Backslashes in REGEXP_INSTR**
-- **Error Message:**
-  ```
-  "Invalid parameter value: -1. Reason: Position must be positive"
-  ```
-- **Description:**  
-  Even after handling the invalid position issue, the `REGEXP_INSTR` function failed to correctly process the backslashes in the pattern. Backslashes in Snowflake need to be escaped properly.
-  
-- **Resolution:**  
-  We escaped the backslashes correctly by doubling them, ensuring that the regular expression searched for the correct literal backslash characters.
-
-  **Final Updated Query:**
-  ```sql
-  CASE
-      WHEN REGEXP_INSTR(b.inst_nt, '\\\\\\\\', 1, 1) > 0
-      THEN SUBSTR(b.inst_nt, REGEXP_INSTR(b.inst_nt, '\\\\\\\\', 1, 1) + 1, LENGTH(b.inst_nt))
-      ELSE b.inst_nt
-  END AS inst_nt
-  ```
-
----
-
-### Summary of Fixes:
-1. Replaced `'GMT'` and `'UTC'` with `'+00:00'` in `CONVERT_TIMEZONE`.
-2. Added a `CASE` statement to handle the `REGEXP_INSTR` function to avoid negative or zero positions.
-3. Escaped backslashes correctly in `REGEXP_INSTR` by using `\\\\\\\\` in the pattern.
-
----
-
-This sequence outlines the key issues encountered during the migration of the view from Oracle to Snowflake and provides the necessary resolutions.
+WITH LatestMetadata AS (
+    SELECT metadatafk,
+           metadatakey,
+           metadatavalue,
+           IDENTIFIER,
+           ROW_NUMBER() OVER (PARTITION BY metadatafk, metadatakey ORDER BY IDENTIFIER DESC) AS rn
+      FROM P2L_BO_STAGING_OWNER.CLD_CNTMDATA_EX
+)
+SELECT m.metadatafk,
+       MAX(CASE WHEN a.metadatakey = 'stringelement' THEN a.metadatavalue END) AS activity_sponsors,
+       MAX(CASE WHEN a.metadatakey = 'stringelement2' THEN a.metadatavalue END) AS act_experts,
+       MAX(CASE WHEN a.metadatakey = 'stringelement3' THEN a.metadatavalue END) AS activity_reviewers,
+       MAX(CASE WHEN a.metadatakey = 'stringelement4' THEN a.metadatavalue END) AS act_train_representatives,
+       MAX(CASE WHEN a.metadatakey = 'stringelement5' THEN a.metadatavalue END) AS review_outcome,
+       MAX(CASE WHEN a.metadatakey = 'stringelement6' THEN a.metadatavalue END) AS notes,
+       MAX(CASE WHEN a.metadatakey = 'dateelement' THEN a.metadatavalue END) AS review_date,
+       MAX(CASE WHEN a.metadatakey = 'dateelement2' THEN a.metadatavalue END) AS next_review_date
+  FROM P2L_BO_STAGING_OWNER.CLD_CNTMDATA_EX m
+  LEFT JOIN LatestMetadata a
+    ON a.metadatafk = m.metadatafk
+   AND a.rn = 1
+ GROUP BY m.metadatafk;
