@@ -1,8 +1,131 @@
+### Documentation for Changes Made to the View Script
+
+#### **Original Issue:**
+The original script for creating the view `V_SR_ACT_MAINTENANCE` was failing with the error:
+
+**"Unsupported subquery type cannot be evaluated"**
+
+This issue occurs because Snowflake does not support complex subqueries within the `SELECT` clause in this context. In the original script, several subqueries were used within the `SELECT` clause to fetch specific metadata values based on certain conditions. This caused performance issues and led to the error.
+
+#### **Refactoring Strategy:**
+To resolve the issue, the subqueries were removed and replaced with a more efficient approach using **Common Table Expressions (CTEs)** and **JOINs**. The main changes involved:
+1. **Moving subqueries into a CTE (Common Table Expression)** to improve performance and eliminate unsupported operations.
+2. **Using `ROW_NUMBER()`** to identify the latest `metadatavalue` based on the maximum `IDENTIFIER`.
+3. **Using `CASE` statements with aggregation functions** to pivot the `metadatakey` values into individual columns such as `ACTIVITY_SPONSORS`, `ACT_EXPERTS`, etc.
+4. **Eliminating repeated subqueries** that referenced the same table, which reduced complexity and made the query easier to read and maintain.
+
+---
+
+### **Changes Made:**
+
+#### 1. **Introduction of a CTE:**
+
+   A CTE named `LatestMetadata` was added to replace the repetitive subqueries that fetched metadata values based on the `metadatafk`, `metadatakey`, and the maximum `IDENTIFIER`.
+
+   **Purpose:** 
+   - The CTE selects all relevant rows from the `CLD_CNTMDATA_EX` table, calculating a `ROW_NUMBER()` for each combination of `metadatafk` and `metadatakey` based on the `IDENTIFIER` column in descending order.
+   - This allows us to fetch only the latest value for each key without repeating the same logic multiple times within the main query.
+
+   ```sql
+   WITH LatestMetadata AS (
+       SELECT metadatafk,
+              metadatakey,
+              metadatavalue,
+              ROW_NUMBER() OVER (PARTITION BY metadatafk, metadatakey ORDER BY IDENTIFIER DESC) AS rn
+         FROM P2L_BO_STAGING_OWNER.CLD_CNTMDATA_EX
+   )
+   ```
+
+#### 2. **Removing Subqueries:**
+
+   In the original script, multiple subqueries were written within the `SELECT` clause to fetch values based on the `metadatakey` and the maximum `IDENTIFIER`. This pattern was repeated for each field (e.g., `ACTIVITY_SPONSORS`, `ACT_EXPERTS`, `REVIEW_OUTCOME`).
+
+   **Changes:**
+   - Each subquery was removed.
+   - The logic of fetching the latest metadata was centralized in the `LatestMetadata` CTE.
+   - In the main `SELECT` statement, the `MAX()` function combined with `CASE` expressions was used to pivot the `metadatakey` values into respective columns.
+
+   **Before (subquery):**
+   ```sql
+   (SELECT metadatavalue
+      FROM P2L_BO_STAGING_OWNER.CLD_CNTMDATA_EX a
+     WHERE metadatakey = 'stringelement'
+       AND a.metadatafk = m.metadatafk
+       AND IDENTIFIER = (SELECT MAX (IDENTIFIER) FROM ...)
+   ) AS activity_sponsors
+   ```
+
+   **After (refactored):**
+   ```sql
+   MAX(CASE WHEN a.metadatakey = 'stringelement' THEN a.metadatavalue END) AS activity_sponsors
+   ```
+
+#### 3. **Using `ROW_NUMBER()` and `JOIN`:**
+
+   The new approach uses `ROW_NUMBER()` to rank the rows and selects only the latest one by joining back the CTE to the main query. This ensures that for each `metadatafk`, only the latest value is fetched.
+
+   ```sql
+   LEFT JOIN LatestMetadata a
+     ON a.metadatafk = m.metadatafk
+    AND a.rn = 1
+   ```
+
+   **Purpose:**
+   - The join ensures that we only pull the most recent row for each combination of `metadatafk` and `metadatakey`.
+   - It also removes the need for multiple subqueries that calculate the maximum `IDENTIFIER` for each row.
+
+#### 4. **Simplifying the Main Query:**
+
+   The `SELECT` statement was simplified to use `MAX(CASE)` to fetch the relevant `metadatavalue` for each `metadatakey` by treating the different `metadatakey` values as a condition in the `CASE` expression.
+
+   **Before (subquery for each key):**
+   ```sql
+   (SELECT metadatavalue FROM ... WHERE metadatakey = 'stringelement' ...) AS activity_sponsors
+   ```
+
+   **After (simplified with CASE):**
+   ```sql
+   MAX(CASE WHEN a.metadatakey = 'stringelement' THEN a.metadatavalue END) AS activity_sponsors
+   ```
+
+   This logic was applied for all columns (e.g., `ACTIVITY_SPONSORS`, `ACT_EXPERTS`, `REVIEW_OUTCOME`, etc.).
+
+#### 5. **GROUP BY Clause:**
+
+   Since we are using aggregation (`MAX`), the `GROUP BY` clause was added to group by `metadatafk`, ensuring that the results are grouped correctly.
+
+   ```sql
+   GROUP BY m.metadatafk
+   ```
+
+---
+
+### **Benefits of Refactoring:**
+- **Performance Improvement:** Eliminating repetitive subqueries reduces execution time and makes the query more efficient.
+- **Readability:** Using a CTE and `JOIN` makes the query more modular and easier to understand.
+- **Scalability:** The query is more flexible and scalable, as the logic for fetching the latest metadata is now centralized in the CTE.
+- **Maintenance:** Future changes, such as adding or modifying columns, are easier to implement since the logic is streamlined.
+
+---
+
+### **Final Refactored Query:**
+
+```sql
+CREATE OR REPLACE VIEW V_SR_ACT_MAINTENANCE (
+    METADATAFK,
+    ACTIVITY_SPONSORS,
+    ACT_EXPERTS,
+    ACTIVITY_REVIEWERS,
+    ACT_TRAIN_REPRESENTATIVES,
+    REVIEW_OUTCOME,
+    NOTES,
+    REVIEW_DATE,
+    NEXT_REVIEW_DATE
+) AS 
 WITH LatestMetadata AS (
     SELECT metadatafk,
            metadatakey,
            metadatavalue,
-           IDENTIFIER,
            ROW_NUMBER() OVER (PARTITION BY metadatafk, metadatakey ORDER BY IDENTIFIER DESC) AS rn
       FROM P2L_BO_STAGING_OWNER.CLD_CNTMDATA_EX
 )
@@ -20,3 +143,8 @@ SELECT m.metadatafk,
     ON a.metadatafk = m.metadatafk
    AND a.rn = 1
  GROUP BY m.metadatafk;
+```
+
+---
+
+This refactoring resolves the issue while preserving the functionality of the original query.
