@@ -110,3 +110,61 @@ AS startdt,
               AND b.startdt IS NULL
               AND a.z_act_startdt IS NULL
              );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT 
+    b.act_key, 
+    b.code, 
+    b.activityname,
+    convert_timezone( 
+        '+00:00',
+        TO_TIMESTAMP ( 
+            TO_CHAR(b.startdt,'m/dd/yyyy hh24:mi:ss'),
+            'mm/dd/yyyy hh24:mi:ss')
+    ) AS startdt,
+    (NVL(LPAD(TO_CHAR(FLOOR(TRY_TO_NUMBER(b.DURATION) / 3600)), 2, '0'), '00')
+        || ':' || NVL(LPAD(TO_CHAR(FLOOR(MOD(TRY_TO_NUMBER(b.DURATION), 3600) / 60)), 2, '0'), '00')
+        || ':' || NVL(LPAD(TO_CHAR(FLOOR(MOD(TRY_TO_NUMBER(b.DURATION), 60))), 2, '0'), '00')
+    ) AS contact_hrs,
+    b.actlabel_name, 
+    b.inst_key, 
+    b.inst_guid,
+    CASE
+        WHEN REGEXP_INSTR(b.inst_nt, '\\\\', 1, 1) > 0
+        THEN SUBSTR(b.inst_nt, REGEXP_INSTR(b.inst_nt, '\\\\', 1, 1) + 1, LENGTH(b.inst_nt))
+        ELSE b.inst_nt
+    END AS inst_nt,
+    b.inst_fname, 
+    b.inst_lname, 
+    b.inst_email, 
+    b.isresponsible,
+    b.loc_name, 
+    b.facility, 
+    b.TIMEZONE, 
+    b.esig_req, 
+    b.rev_num, 
+    b.rev_dt
+FROM 
+    (
+        -- Subquery logic here
+    ) b
+    INNER JOIN
+    (
+        -- Inner join logic here
+    ) a
+    ON (b.code = a.z_activitycode AND b.startdt = a.z_act_startdt)
+    OR (b.code = a.z_activitycode AND b.startdt IS NULL AND a.z_act_startdt IS NULL)
+-- Filter by act_key
+WHERE b.act_key = <your_specific_act_key>;
